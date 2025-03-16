@@ -36,7 +36,7 @@
 		(uuid "36a9130e-d721-4593-90fe-0b44fd412486")
 	)
 	(sheet
-		(at 114.3 73.66)
+		(at 77.47 137.16)
 		(size 27.94 17.78)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -52,7 +52,7 @@
 		)
 		(uuid "5f0d062d-9fa8-4c48-be05-0b92e4e6324b")
 		(property "Sheetname" "Power"
-			(at 114.3 72.9484 0)
+			(at 77.47 136.4484 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61,7 +61,7 @@
 			)
 		)
 		(property "Sheetfile" "Power.kicad_sch"
-			(at 114.3 92.0246 0)
+			(at 77.47 155.5246 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -78,7 +78,7 @@
 		)
 	)
 	(sheet
-		(at 114.3 99.06)
+		(at 129.54 78.74)
 		(size 27.94 17.78)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -94,7 +94,7 @@
 		)
 		(uuid "88b70e7a-287d-4532-b010-31738ffe5518")
 		(property "Sheetname" "Microcontroller"
-			(at 114.3 98.3484 0)
+			(at 129.54 78.0284 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -103,7 +103,7 @@
 			)
 		)
 		(property "Sheetfile" "Microcontroller.kicad_sch"
-			(at 114.3 117.4246 0)
+			(at 129.54 97.1046 0)
 			(effects
 				(font
 					(size 1.27 1.27)
