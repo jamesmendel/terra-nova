@@ -1,0 +1,21 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "acca4a2f-1cc7-44b0-a26a-921257f6c268")
+	(paper "A4")
+	(title_block
+		(title "Microcontroller")
+		(date "2025-03-15")
+		(rev "${REVISION}")
+		(company "J. MENDEL")
+		(comment 1 "${TITLE}")
+	)
+	(lib_symbols)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
