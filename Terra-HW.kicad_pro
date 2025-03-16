@@ -411,6 +411,14 @@
     [
       "acca4a2f-1cc7-44b0-a26a-921257f6c268",
       "Root"
+    ],
+    [
+      "88b70e7a-287d-4532-b010-31738ffe5518",
+      "Microcontroller"
+    ],
+    [
+      "5f0d062d-9fa8-4c48-be05-0b92e4e6324b",
+      "Power"
     ]
   ],
   "text_variables": {
