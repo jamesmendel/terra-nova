@@ -100,7 +100,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 0 -2.54 0)
 				(length 7.62)
 				(name "GND"
@@ -118,7 +118,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 0 -5.08 0)
 				(length 7.62)
 				(name "GND"
@@ -154,7 +154,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 0 -10.16 0)
 				(length 7.62)
 				(name "GND"
@@ -190,7 +190,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 0 -15.24 0)
 				(length 7.62)
 				(name "GND"
@@ -226,7 +226,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 0 -20.32 0)
 				(length 7.62)
 				(name "GND"
@@ -255,24 +255,6 @@
 					)
 				)
 				(number "11"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin unspecified line
-				(at 0 -27.94 0)
-				(length 7.62)
-				(name "BV"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "12"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -334,7 +316,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -2.54 180)
 				(length 7.62)
 				(name "GND"
@@ -352,7 +334,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -7.62 180)
 				(length 7.62)
 				(name "GND"
@@ -370,7 +352,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -10.16 180)
 				(length 7.62)
 				(name "GND"
@@ -388,7 +370,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -12.7 180)
 				(length 7.62)
 				(name "GND"
@@ -406,7 +388,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -15.24 180)
 				(length 7.62)
 				(name "GND"
@@ -424,7 +406,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at 45.72 -17.78 180)
 				(length 7.62)
 				(name "RX"
@@ -442,7 +424,7 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin output line
 				(at 45.72 -20.32 180)
 				(length 7.62)
 				(name "TX"
@@ -460,7 +442,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -22.86 180)
 				(length 7.62)
 				(name "GND"
@@ -478,25 +460,7 @@
 					)
 				)
 			)
-			(pin unspecified line
-				(at 45.72 -25.4 180)
-				(length 7.62)
-				(name "FIX"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "18"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -27.94 180)
 				(length 7.62)
 				(name "GND"
@@ -514,7 +478,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -30.48 180)
 				(length 7.62)
 				(name "GND"
@@ -532,7 +496,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 45.72 -33.02 180)
 				(length 7.62)
 				(name "GND"
@@ -564,7 +528,7 @@
 					(color 255 255 194 1)
 				)
 			)
-			(pin unspecified line
+			(pin input line
 				(at 0 -22.86 0)
 				(length 7.62)
 				(name "~{HW_RST}"
@@ -582,7 +546,25 @@
 					)
 				)
 			)
-			(pin unspecified line
+			(pin passive line
+				(at 0 -27.94 0)
+				(length 7.62)
+				(name "BV"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "12"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
 				(at 45.72 -5.08 180)
 				(length 7.62)
 				(name "HW_STBY"
@@ -593,6 +575,24 @@
 					)
 				)
 				(number "26"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 45.72 -25.4 180)
+				(length 7.62)
+				(name "FIX"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "18"
 					(effects
 						(font
 							(size 1.27 1.27)

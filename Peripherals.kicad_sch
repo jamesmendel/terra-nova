@@ -109,7 +109,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 0 -2.54 0)
 					(length 7.62)
 					(name "GND"
@@ -127,7 +127,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 0 -5.08 0)
 					(length 7.62)
 					(name "GND"
@@ -163,7 +163,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 0 -10.16 0)
 					(length 7.62)
 					(name "GND"
@@ -199,7 +199,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 0 -15.24 0)
 					(length 7.62)
 					(name "GND"
@@ -235,7 +235,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 0 -20.32 0)
 					(length 7.62)
 					(name "GND"
@@ -264,24 +264,6 @@
 						)
 					)
 					(number "11"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 0 -27.94 0)
-					(length 7.62)
-					(name "BV"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "12"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -343,7 +325,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -2.54 180)
 					(length 7.62)
 					(name "GND"
@@ -361,7 +343,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -7.62 180)
 					(length 7.62)
 					(name "GND"
@@ -379,7 +361,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -10.16 180)
 					(length 7.62)
 					(name "GND"
@@ -397,7 +379,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -12.7 180)
 					(length 7.62)
 					(name "GND"
@@ -415,7 +397,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -15.24 180)
 					(length 7.62)
 					(name "GND"
@@ -433,7 +415,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin input line
 					(at 45.72 -17.78 180)
 					(length 7.62)
 					(name "RX"
@@ -451,7 +433,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin output line
 					(at 45.72 -20.32 180)
 					(length 7.62)
 					(name "TX"
@@ -469,7 +451,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -22.86 180)
 					(length 7.62)
 					(name "GND"
@@ -487,25 +469,7 @@
 						)
 					)
 				)
-				(pin unspecified line
-					(at 45.72 -25.4 180)
-					(length 7.62)
-					(name "FIX"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "18"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -27.94 180)
 					(length 7.62)
 					(name "GND"
@@ -523,7 +487,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -30.48 180)
 					(length 7.62)
 					(name "GND"
@@ -541,7 +505,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 45.72 -33.02 180)
 					(length 7.62)
 					(name "GND"
@@ -573,7 +537,7 @@
 						(color 255 255 194 1)
 					)
 				)
-				(pin unspecified line
+				(pin input line
 					(at 0 -22.86 0)
 					(length 7.62)
 					(name "~{HW_RST}"
@@ -591,7 +555,25 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
+					(at 0 -27.94 0)
+					(length 7.62)
+					(name "BV"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
 					(at 45.72 -5.08 180)
 					(length 7.62)
 					(name "HW_STBY"
@@ -602,6 +584,24 @@
 						)
 					)
 					(number "26"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 45.72 -25.4 180)
+					(length 7.62)
+					(name "FIX"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2781,6 +2781,18 @@
 		)
 		(uuid db1f3449-6725-4936-a7ae-7f2afc47ec15)
 	)
+	(text "ADDR_{(7)} = 0x5A"
+		(exclude_from_sim no)
+		(at 52.578 161.544 0)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1588)
+				(color 0 132 132 1)
+			)
+		)
+		(uuid "13abbbda-cee5-4879-ac3e-a960ec7329cb")
+	)
 	(text "+ Known compatibility\n+ Includes compass"
 		(exclude_from_sim no)
 		(at 172.466 32.766 0)
@@ -2803,13 +2815,14 @@
 		)
 		(uuid "2f46cb85-7e4f-479c-83ef-862546df7f3d")
 	)
-	(text "0x28"
+	(text "ADDR_{(7)} = 0x28"
 		(exclude_from_sim no)
-		(at 168.91 145.288 0)
+		(at 151.638 161.544 0)
 		(effects
 			(font
 				(size 1 1)
 				(thickness 0.1588)
+				(color 0 132 132 1)
 			)
 		)
 		(uuid "31763f20-2731-4050-b6cc-123b7836c71e")
@@ -2862,6 +2875,19 @@
 		)
 		(uuid "5cbb5dca-e90a-45bf-8f11-93c1f2d4fac6")
 	)
+	(text "COMPASS HMC5883L\nADDR_{(7)} = 0x1E"
+		(exclude_from_sim no)
+		(at 235.204 89.408 0)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1588)
+				(color 0 132 132 1)
+			)
+			(justify right)
+		)
+		(uuid "6b0f301c-ac43-408f-9b28-f01f89783c09")
+	)
 	(text "GPS Options"
 		(exclude_from_sim no)
 		(at 54.864 19.05 0)
@@ -2873,6 +2899,18 @@
 			)
 		)
 		(uuid "8571f849-2a50-4df9-bd94-1eb1b34719ca")
+	)
+	(text "<30 μA"
+		(exclude_from_sim no)
+		(at 61.976 70.104 0)
+		(effects
+			(font
+				(size 1 1)
+				(color 132 0 132 1)
+			)
+			(justify left)
+		)
+		(uuid "8ecf3d7d-6e08-4df6-bc63-3e7296f59ba8")
 	)
 	(text "PS0=PS1=0 => I2C"
 		(exclude_from_sim no)

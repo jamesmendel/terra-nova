@@ -131,7 +131,17 @@
 	)
 	(wire
 		(pts
-			(xy 137.16 120.65) (xy 152.4 120.65)
+			(xy 137.16 130.81) (xy 152.4 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1767c8fb-082b-4c99-abde-351b8b20d466")
+	)
+	(wire
+		(pts
+			(xy 137.16 121.92) (xy 152.4 121.92)
 		)
 		(stroke
 			(width 0)
@@ -191,6 +201,16 @@
 	)
 	(wire
 		(pts
+			(xy 137.16 128.27) (xy 152.4 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "651339da-b9ab-42ab-bbdc-e00cdfb21337")
+	)
+	(wire
+		(pts
 			(xy 137.16 90.17) (xy 152.4 90.17)
 		)
 		(stroke
@@ -241,6 +261,16 @@
 	)
 	(wire
 		(pts
+			(xy 137.16 124.46) (xy 152.4 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d54a8a37-8fff-4dbc-9b2b-51cd00a999ad")
+	)
+	(wire
+		(pts
 			(xy 137.16 83.82) (xy 152.4 83.82)
 		)
 		(stroke
@@ -248,6 +278,16 @@
 			(type default)
 		)
 		(uuid "dfaec9d3-5d8e-4746-bf4b-2905aeece1a7")
+	)
+	(wire
+		(pts
+			(xy 137.16 133.35) (xy 152.4 133.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ef273afe-4134-42b6-b89e-635ac6a1a910")
 	)
 	(image
 		(at 277.9475 173.6679)
@@ -575,6 +615,24 @@
 			"AH6toPEAVwCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
 		)
 	)
@@ -582,7 +640,7 @@
 		(lib_id "Mechanical:MountingHole")
 		(at 19.05 181.61 0)
 		(unit 1)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
@@ -646,7 +704,7 @@
 		(lib_id "Mechanical:MountingHole")
 		(at 19.05 186.69 0)
 		(unit 1)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
@@ -710,7 +768,7 @@
 		(lib_id "Mechanical:MountingHole")
 		(at 19.05 191.77 0)
 		(unit 1)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
@@ -844,7 +902,7 @@
 	)
 	(sheet
 		(at 109.22 101.6)
-		(size 27.94 22.86)
+		(size 27.94 35.56)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -868,7 +926,7 @@
 			)
 		)
 		(property "Sheetfile" "Peripherals.kicad_sch"
-			(at 109.22 125.0446 0)
+			(at 109.22 137.7446 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -927,8 +985,48 @@
 			)
 		)
 		(pin "CMP_INT" output
-			(at 137.16 120.65 0)
+			(at 137.16 121.92 0)
 			(uuid "c1ca2902-8077-48ee-83a6-f91256c45f70")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "GPS_FIX" output
+			(at 137.16 128.27 0)
+			(uuid "33833435-50f0-40c5-8d42-ec8c2c9bcba7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "GPS_STBY" input
+			(at 137.16 130.81 0)
+			(uuid "da4d7de5-b73f-4d57-827a-8dcaa9c71b47")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CMP_~{RST}" output
+			(at 137.16 124.46 0)
+			(uuid "f6da5cbf-c8d4-4206-8589-850466d6a2a3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "GPS_~{RST}" input
+			(at 137.16 133.35 0)
+			(uuid "2e3765a8-3616-4dfb-a490-9e0e41fa6a4d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -946,7 +1044,7 @@
 	)
 	(sheet
 		(at 152.4 76.2)
-		(size 27.94 48.26)
+		(size 27.94 60.96)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -970,7 +1068,7 @@
 			)
 		)
 		(property "Sheetfile" "Microcontroller.kicad_sch"
-			(at 152.4 125.0446 0)
+			(at 152.4 137.7446 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1059,8 +1157,48 @@
 			)
 		)
 		(pin "CMP_INT" input
-			(at 152.4 120.65 180)
+			(at 152.4 121.92 180)
 			(uuid "5b699249-aac0-4ceb-806a-32ba7614fc16")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GPS_STBY" output
+			(at 152.4 130.81 180)
+			(uuid "afb8bbef-90e0-409e-b6ba-151e2b782f36")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GPS_~{RST}" output
+			(at 152.4 133.35 180)
+			(uuid "ace378a8-3e15-420c-9fcc-2aad4c5f4b0f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GPS_FIX" input
+			(at 152.4 128.27 180)
+			(uuid "4341f6ac-63b1-4b15-9f76-8ee3fe2209c5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CMP_~{RST}" output
+			(at 152.4 124.46 180)
+			(uuid "9d6b0599-dfda-49aa-b8a2-8bfb8a176d2e")
 			(effects
 				(font
 					(size 1.27 1.27)
