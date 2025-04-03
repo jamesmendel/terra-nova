@@ -1,5 +1,5 @@
 ﻿
-EN   Your download at 03/19/2025 on PARTcommunity/PARTserver/3Dfindit.com:
+EN   Your download at 04/03/2025 on PARTcommunity/PARTserver/3Dfindit.com:
 
        Dear user,
        
@@ -7,7 +7,7 @@ EN   Your download at 03/19/2025 on PARTcommunity/PARTserver/3Dfindit.com:
 
        
 
-       STEP, KSS221GLFS, KSS221GLFS.stp
+       STEP, KSS323GLFG, KSS323GLFG.stp
 	
        Information for use:
 

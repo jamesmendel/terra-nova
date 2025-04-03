@@ -2,4 +2,5 @@
   (version 7)
   (lib (name "Symbols")(type "KiCad")(uri "${KIPRJMOD}/Symbols")(options "")(descr ""))
   (lib (name "M20048-1")(type "KiCad")(uri "${KIPRJMOD}/Symbols/M20048-1")(options "")(descr ""))
+  (lib (name "C&K")(type "KiCad")(uri "${KIPRJMOD}/Symbols/CKSWITCHES/footprints.pretty")(options "")(descr ""))
 )

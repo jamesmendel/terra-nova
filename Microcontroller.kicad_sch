@@ -5205,7 +5205,7 @@
 		)
 		(uuid "c669d1e0-83f0-4fc1-97ae-1386ea8e19d5")
 	)
-	(label "CMP_FIX"
+	(label "GPS_FIX"
 		(at 251.46 157.48 0)
 		(effects
 			(font
