@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-03-23")
+		(date "2025-04-05")
 		(rev "${REVISION}")
 		(company "J. MENDEL")
 	)
@@ -3288,18 +3288,6 @@
 		)
 		(uuid "af15854d-61f6-41c4-80fa-b37e8da62edd")
 	)
-	(text "Note: Parasitic is 32pF\nD7, D6 Compatible with\nUSB 1.1 FS (<! 75pF)"
-		(exclude_from_sim no)
-		(at 237.49 92.964 0)
-		(effects
-			(font
-				(size 1 1)
-				(color 132 0 132 1)
-			)
-			(justify right)
-		)
-		(uuid "caae86ce-6aa4-466c-9635-442eb7756864")
-	)
 	(text_box "Sheet: ${SHEETNAME}"
 		(exclude_from_sim no)
 		(at 177.8 167.64 0)
@@ -5973,6 +5961,15 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "KMR231NG"
+			(at 35.56 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ab5b5123-2451-402a-94ad-89c38331c0ce")
 		)
@@ -6580,6 +6577,15 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
+			(at 67.31 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "KMR231NG"
 			(at 67.31 165.1 0)
 			(effects
 				(font
@@ -7907,7 +7913,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "ESD5B5.0ST1G"
+		(property "Value" "DESD5V0U1BB-7"
 			(at 232.41 74.676 0)
 			(effects
 				(font
@@ -7925,7 +7931,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/esd5b5.0st1-d.pdf"
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/DESD5V0U1BB.pdf"
 			(at 229.87 77.47 0)
 			(effects
 				(font
@@ -7935,6 +7941,15 @@
 			)
 		)
 		(property "Description" "ESD protection diode, 5.0Vrwm, SOD-523"
+			(at 229.87 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "DESD5V0U1BB-7"
 			(at 229.87 77.47 0)
 			(effects
 				(font
@@ -7977,7 +7992,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "ESD5B5.0ST1G"
+		(property "Value" "DESD5V0U1BB-7"
 			(at 230.378 43.18 90)
 			(effects
 				(font
@@ -7995,7 +8010,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/esd5b5.0st1-d.pdf"
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/DESD5V0U1BB.pdf"
 			(at 232.41 43.18 0)
 			(effects
 				(font
@@ -8005,6 +8020,15 @@
 			)
 		)
 		(property "Description" "ESD protection diode, 5.0Vrwm, SOD-523"
+			(at 232.41 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "DESD5V0U1BB-7"
 			(at 232.41 43.18 0)
 			(effects
 				(font
@@ -8266,7 +8290,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/858/LTST-C190GKT.pdf"
 			(at 208.28 115.57 0)
 			(effects
 				(font
@@ -8739,7 +8763,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "ESD5B5.0ST1G"
+		(property "Value" "DESD5V0U1BB-7"
 			(at 223.266 74.676 0)
 			(effects
 				(font
@@ -8757,7 +8781,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/esd5b5.0st1-d.pdf"
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/DESD5V0U1BB.pdf"
 			(at 226.06 77.47 0)
 			(effects
 				(font
@@ -8767,6 +8791,15 @@
 			)
 		)
 		(property "Description" "ESD protection diode, 5.0Vrwm, SOD-523"
+			(at 226.06 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "DESD5V0U1BB-7"
 			(at 226.06 77.47 0)
 			(effects
 				(font

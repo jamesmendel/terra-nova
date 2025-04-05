@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-03-23")
+		(date "2025-04-05")
 		(rev "${REVISION}")
 		(company "J. MENDEL")
 	)
@@ -6292,6 +6292,15 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "0532610671"
+			(at 184.15 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "4"
 			(uuid "865c6762-3bc4-4e90-89eb-755a07a053ed")
 		)
@@ -7623,6 +7632,15 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "BNO055"
+			(at 162.56 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "11"
 			(uuid "b84b9238-3d62-4789-9dd4-3db4b323befc")
 		)
@@ -7817,7 +7835,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://search.murata.co.jp/Ceramy/image/img/P02/JELF243B-9117.pdf"
 			(at 118.11 40.64 0)
 			(effects
 				(font
@@ -7907,6 +7925,15 @@
 			)
 		)
 		(property "Description" "Haptic driver for LRAs and ERMs with effect library, 2-5.2V, VSSOP-10"
+			(at 53.34 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "DRV2605LDGS"
 			(at 53.34 129.54 0)
 			(effects
 				(font
@@ -8204,6 +8231,15 @@
 			)
 		)
 		(property "Description" "Generic connectable mounting pin connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 243.84 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "B8B-PH-SM4-TB"
 			(at 243.84 40.64 0)
 			(effects
 				(font
