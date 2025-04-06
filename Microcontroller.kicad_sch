@@ -6139,7 +6139,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "5.1k"
+		(property "Value" "10k"
 			(at 35.56 152.4 90)
 			(effects
 				(font
@@ -6156,7 +6156,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
 			(at 35.56 152.4 0)
 			(effects
 				(font
@@ -6166,6 +6166,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 35.56 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-0710KL"
 			(at 35.56 152.4 0)
 			(effects
 				(font
@@ -6427,7 +6436,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
 			(at 201.93 109.22 0)
 			(effects
 				(font
@@ -6437,6 +6446,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 201.93 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-071K5L"
 			(at 201.93 109.22 0)
 			(effects
 				(font
@@ -6507,6 +6525,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 147.32 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CL10A226MP8NUNE"
 			(at 147.32 39.37 0)
 			(effects
 				(font
@@ -6917,7 +6944,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
 			(at 38.1 78.74 0)
 			(effects
 				(font
@@ -6927,6 +6954,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 38.1 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-075K1L"
 			(at 38.1 78.74 0)
 			(effects
 				(font
@@ -7591,7 +7627,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
 			(at 228.6 57.15 0)
 			(effects
 				(font
@@ -7601,6 +7637,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-075K1L"
 			(at 228.6 57.15 0)
 			(effects
 				(font
@@ -7738,6 +7783,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 137.16 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CL10B104KO8NNNC"
 			(at 137.16 39.37 0)
 			(effects
 				(font
@@ -8221,7 +8275,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
 			(at 43.18 78.74 0)
 			(effects
 				(font
@@ -8231,6 +8285,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 43.18 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-075K1L"
 			(at 43.18 78.74 0)
 			(effects
 				(font
@@ -8711,7 +8774,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
 			(at 228.6 54.61 0)
 			(effects
 				(font
@@ -8721,6 +8784,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 228.6 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-075K1L"
 			(at 228.6 54.61 0)
 			(effects
 				(font
@@ -8870,6 +8942,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 43.18 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CL10A105KO8NNNC"
 			(at 43.18 165.1 0)
 			(effects
 				(font
