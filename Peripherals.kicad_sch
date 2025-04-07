@@ -6,9 +6,11 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-04-05")
+		(date "2025-04-06")
 		(rev "${REVISION}")
-		(company "J. MENDEL")
+		(company "${COMPANY}")
+		(comment 1 "${LICENSE}")
+		(comment 2 "${COPYRIGHT}")
 	)
 	(lib_symbols
 		(symbol "2025-03-22_21-29-02:M20048-1"
@@ -3385,8 +3387,8 @@
 	)
 	(text_box "Sheet: ${SHEETNAME}"
 		(exclude_from_sim no)
-		(at 177.8 167.64 0)
-		(size 106.68 12.7)
+		(at 213.36 167.64 0)
+		(size 71.12 12.7)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
 			(width -0.0001)
@@ -6401,6 +6403,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -7906,7 +7909,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2410121551_Taiyo-Yuden-HK16081N8S-T_C222661.pdf"
+		(property "Datasheet" "https://search.murata.co.jp/Ceramy/image/img/P02/JELF243B-0002.pdf"
 			(at 118.11 40.64 0)
 			(effects
 				(font
@@ -7924,7 +7927,25 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "HK16081N8S-T"
+		(property "MPN" "LQG18HN1N8S00D"
+			(at 118.11 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Alt1" "BSCH001608081N8S00"
+			(at 118.11 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Alt2" "7447860018"
 			(at 118.11 40.64 90)
 			(effects
 				(font

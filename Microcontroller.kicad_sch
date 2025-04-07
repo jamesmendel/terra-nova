@@ -6,9 +6,11 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-04-05")
+		(date "2025-04-06")
 		(rev "${REVISION}")
-		(company "J. MENDEL")
+		(company "${COMPANY}")
+		(comment 1 "${LICENSE}")
+		(comment 2 "${COPYRIGHT}")
 	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"
@@ -3290,8 +3292,8 @@
 	)
 	(text_box "Sheet: ${SHEETNAME}"
 		(exclude_from_sim no)
-		(at 177.8 167.64 0)
-		(size 106.68 12.7)
+		(at 213.36 167.64 0)
+		(size 71.12 12.7)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
 			(width -0.0001)

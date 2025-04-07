@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.0
+          "min_clearance": 0.2
         }
       },
       "diff_pair_dimensions": [
@@ -561,10 +561,10 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "Outputs/Fab/",
-      "pos_files": "Outputs/Assy/",
+      "plot": "Outputs/X01-003/Fab/Gerber/",
+      "pos_files": "Outputs/X01-003/Assy/",
       "specctra_dsn": "",
-      "step": "Terra-HW.step",
+      "step": "Outputs/X01-003/Integration/Terra-HW-X01-003-Simple.step",
       "svg": "",
       "vrml": ""
     },
@@ -792,7 +792,7 @@
     },
     "net_format_name": "",
     "page_layout_descr_file": "",
-    "plot_directory": "plots/",
+    "plot_directory": "Outputs/X01-003/Fab/",
     "space_save_all_events": true,
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",
@@ -822,9 +822,11 @@
     ]
   ],
   "text_variables": {
-    "COPYRIGHT": "2025",
+    "COMPANY": "JRM | MODEM WORKS",
+    "COPYRIGHT": "Copyright 2025",
     "DRAWN_BY": "J. MENDEL",
+    "LICENSE": "Licensed under GNU GPL v3.0",
     "REVISION": "X01",
-    "TITLE": "TERRA 2.0"
+    "TITLE": "Terra 2.0"
   }
 }
