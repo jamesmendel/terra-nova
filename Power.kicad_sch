@@ -6705,7 +6705,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KSS312GLFG"
+		(property "MPN" "KSS321GLFS"
 			(at 110.49 60.96 0)
 			(effects
 				(font
@@ -6714,7 +6714,7 @@
 				(hide yes)
 			)
 		)
-		(property "Alt1" "KSS322GLFG"
+		(property "Alt1" "KSS331GLFS"
 			(at 110.49 60.96 90)
 			(effects
 				(font
@@ -6723,7 +6723,7 @@
 				(hide yes)
 			)
 		)
-		(property "Alt2" "KSS323GLFG"
+		(property "Alt2" "KSS351GLFS"
 			(at 110.49 60.96 90)
 			(effects
 				(font

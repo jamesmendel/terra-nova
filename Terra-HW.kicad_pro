@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.0,
-          "height": 0.95,
-          "width": 0.9
+          "height": 0.3,
+          "width": 1.45
         },
         "silk_line_width": 0.16,
         "silk_text_italic": false,
@@ -560,9 +560,9 @@
     "last_paths": {
       "gencad": "",
       "idf": "",
-      "netlist": "",
-      "plot": "Outputs/X01-003/Fab/Gerber/",
-      "pos_files": "Outputs/X01-003/Assy/",
+      "netlist": "./",
+      "plot": "Outputs/X01-004/Fab/Gerber/",
+      "pos_files": "Outputs/X01-004/Assy/",
       "specctra_dsn": "",
       "step": "Outputs/X01-003/Integration/Terra-HW-X01-003-Simple.step",
       "svg": "",
@@ -651,7 +651,7 @@
             "group_by": false,
             "label": "Alt1",
             "name": "Alt1",
-            "show": false
+            "show": true
           },
           {
             "group_by": false,
@@ -664,6 +664,12 @@
             "label": "#",
             "name": "${ITEM_NUMBER}",
             "show": false
+          },
+          {
+            "group_by": false,
+            "label": "Alt2",
+            "name": "Alt2",
+            "show": true
           }
         ],
         "filter_string": "",
@@ -741,7 +747,7 @@
           "group_by": false,
           "label": "Alt1",
           "name": "Alt1",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -754,6 +760,12 @@
           "label": "#",
           "name": "${ITEM_NUMBER}",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Alt2",
+          "name": "Alt2",
+          "show": true
         }
       ],
       "filter_string": "",
