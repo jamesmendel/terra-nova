@@ -31,4 +31,4 @@
 #include "images/checkpoints/checkpoint_9.h"
 #include "images/checkpoints/checkpoint_10.h"
 
-#endif
+#endif // IMAGELIST_H

@@ -10,4 +10,4 @@ const double stopLons[] = { 4.8788037, 4.8816387, 4.8841152, 4.8866618, 4.883104
 
 const int numberOfStops = 9;
 
-#endif
+#endif  // CONFIG_H

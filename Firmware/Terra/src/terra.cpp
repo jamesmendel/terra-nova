@@ -1,17 +1,19 @@
-// Latest working code as of March 26 2024.
-
-bool debugMode = true;
-
 // Include Libraries
+#include <Arduino.h>
+#include "terra.h"
+
 #include <TinyGPSPlus.h>
 #include <TFT_eSPI.h>
 #include <Wire.h>
+#include <Adafruit_DRV2605.h>
 #include <map>
-#include "Adafruit_DRV2605.h"
 
 // Include Configurations and Images
 #include "config.h"     // Assumes this contains GPS waypoints and number of stops
 #include "imagelist.h"  // Assumes this includes declarations for images
+
+// Global debug mode
+bool debugMode = true;
 
 // Sensor and Display Setup
 #define CMPS12_ADDRESS 0x60
@@ -41,46 +43,7 @@ int vibrationTrigger = 20;   // When to trigger vibration to indicate the checkp
 unsigned long lastVibrationTime = 0;   // Tracks the last time vibration was triggered
 int proximityVibrationDelayMs = 500;   // To determine the time between vibrations when close to the current stop.
 
-// Image Types Enum
-enum ImageType {
-  NONE,
-  PENDING,
-  GOTOSTART,
-  ARROW_N,
-  ARROW_NNE,
-  ARROW_NE,
-  ARROW_ENE,
-  ARROW_E,
-  ARROW_ESE,
-  ARROW_SE,
-  ARROW_SSE,
-  ARROW_S,
-  ARROW_SSW,
-  ARROW_SW,
-  ARROW_WSW,
-  ARROW_W,
-  ARROW_WNW,
-  ARROW_NW,
-  ARROW_NNW,
-  CHECKPOINT_1,
-  CHECKPOINT_2,
-  CHECKPOINT_3,
-  CHECKPOINT_4,
-  CHECKPOINT_5,
-  CHECKPOINT_6,
-  CHECKPOINT_7,
-  CHECKPOINT_8,
-  CHECKPOINT_9,
-  CHECKPOINT_10
-};
 ImageType currentDisplayedImage = NONE;
-
-enum NavigationState {
-  NOT_STARTED,
-  NAVIGATING,
-  AT_CHECKPOINT,
-  TRAIL_ENDED
-};
 
 // Initialize your navigation state
 NavigationState navigationState = NOT_STARTED;  // Initial navigation state
@@ -94,22 +57,6 @@ bool dataReceived = false;
 bool screenOn = false;
 double distance;  // Distance to the next checkpoint
 
-// Function Prototypes
-void setup();
-void loop();
-void handleGPSData();
-bool readSerialGPS();
-bool readGPS();
-void determineTrailStatusAndNavigate();
-void processGPSData(double lat, double lon);
-bool nonBlockingDelay(unsigned long ms);
-void displayImage(ImageType image);
-void fadeOut();
-void fadeIn();
-double getDistanceTo(double lat, double lon);
-String getCardinalTo(double lat, double lon);
-int getCourseTo(double lat, double lon);
-int readCompass();
 
 // Setup Function
 void setup() {
@@ -226,7 +173,7 @@ void determineTrailStatusAndNavigate() {
 
   if (navigationState == NOT_STARTED) {
     if (!dataReceived) {
-      displayImage(PENDING);  // Show PENDING only when waiting for the first GPS data
+      displayImage(I_PENDING);  // Show I_PENDING only when waiting for the first GPS data
     } else {
       Serial.println("Please proceed to the start of the trail.");
       displayImage(GOTOSTART);  // Now we're sure we've received data, show GOTOSTART
@@ -277,8 +224,8 @@ void determineTrailStatusAndNavigate() {
         // Check if this is the final stop
         if (currentStop == numberOfStops) {
           Serial.println("Final stop reached. Trail is complete.");
-          // Display PENDING image to indicate completion
-          displayImage(PENDING);
+          // Display I_PENDING image to indicate completion
+          displayImage(I_PENDING);
           // Optionally, you might want to change the navigation state or take other actions here
           navigationState = TRAIL_ENDED;  // Resetting the state to NOT_STARTED or another appropriate state
         }
@@ -341,7 +288,7 @@ void displayImage(ImageType image) {
     }
     tft.fillScreen(TFT_BLACK);  // This line is common to all cases
     switch (image) {
-      case PENDING:
+      case I_PENDING:
         drawBitmap(pending);
         Serial.println("Drawn pending.h");
         break;
