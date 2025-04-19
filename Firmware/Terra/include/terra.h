@@ -4,43 +4,43 @@
 
 // Nagigation States
 enum NavigationState {
-    NOT_STARTED,
-    NAVIGATING,
-    AT_CHECKPOINT,
-    TRAIL_ENDED
+    E_NOT_STARTED,
+    E_NAVIGATING,
+    E_AT_CHECKPOINT,
+    E_TRAIL_ENDED
   };
   
 // Image Types
 enum ImageType {
-    NONE,
-    I_PENDING,
-    GOTOSTART,
-    ARROW_N,
-    ARROW_NNE,
-    ARROW_NE,
-    ARROW_ENE,
-    ARROW_E,
-    ARROW_ESE,
-    ARROW_SE,
-    ARROW_SSE,
-    ARROW_S,
-    ARROW_SSW,
-    ARROW_SW,
-    ARROW_WSW,
-    ARROW_W,
-    ARROW_WNW,
-    ARROW_NW,
-    ARROW_NNW,
-    CHECKPOINT_1,
-    CHECKPOINT_2,
-    CHECKPOINT_3,
-    CHECKPOINT_4,
-    CHECKPOINT_5,
-    CHECKPOINT_6,
-    CHECKPOINT_7,
-    CHECKPOINT_8,
-    CHECKPOINT_9,
-    CHECKPOINT_10
+    E_NONE,
+    E_PENDING,
+    E_GOTOSTART,
+    E_ARROW_N,
+    E_ARROW_NNE,
+    E_ARROW_NE,
+    E_ARROW_ENE,
+    E_ARROW_E,
+    E_ARROW_ESE,
+    E_ARROW_SE,
+    E_ARROW_SSE,
+    E_ARROW_S,
+    E_ARROW_SSW,
+    E_ARROW_SW,
+    E_ARROW_WSW,
+    E_ARROW_W,
+    E_ARROW_WNW,
+    E_ARROW_NW,
+    E_ARROW_NNW,
+    E_CHECKPOINT_1,
+    E_CHECKPOINT_2,
+    E_CHECKPOINT_3,
+    E_CHECKPOINT_4,
+    E_CHECKPOINT_5,
+    E_CHECKPOINT_6,
+    E_CHECKPOINT_7,
+    E_CHECKPOINT_8,
+    E_CHECKPOINT_9,
+    E_CHECKPOINT_10
   };
 
 // Function Prototypes

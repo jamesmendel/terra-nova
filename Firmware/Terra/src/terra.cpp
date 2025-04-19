@@ -43,10 +43,10 @@ int vibrationTrigger = 20;   // When to trigger vibration to indicate the checkp
 unsigned long lastVibrationTime = 0;   // Tracks the last time vibration was triggered
 int proximityVibrationDelayMs = 500;   // To determine the time between vibrations when close to the current stop.
 
-ImageType currentDisplayedImage = NONE;
+ImageType currentDisplayedImage = E_NONE;
 
 // Initialize your navigation state
-NavigationState navigationState = NOT_STARTED;  // Initial navigation state
+NavigationState navigationState = E_NOT_STARTED;  // Initial navigation state
 unsigned long lastCheckpointTime = 0;           // Timestamp of when the last checkpoint was reached
 
 // Global Variables for GPS Data and State
@@ -171,12 +171,12 @@ void determineTrailStatusAndNavigate() {
   // Calculate the relative direction for navigation
   int relativeDirection = calculateRelativeDirection(currentAngle, targetAngle);
 
-  if (navigationState == NOT_STARTED) {
+  if (navigationState == E_NOT_STARTED) {
     if (!dataReceived) {
-      displayImage(I_PENDING);  // Show I_PENDING only when waiting for the first GPS data
+      displayImage(E_PENDING);  // Show E_PENDING only when waiting for the first GPS data
     } else {
       Serial.println("Please proceed to the start of the trail.");
-      displayImage(GOTOSTART);  // Now we're sure we've received data, show GOTOSTART
+      displayImage(E_GOTOSTART);  // Now we're sure we've received data, show GOTOSTART
     }
 
     // Transition to navigating state once within close range to the start and data has been received
@@ -184,13 +184,13 @@ void determineTrailStatusAndNavigate() {
       trailStarted = true;
       currentStop = 1;
       Serial.println("Trail started. Heading to Stop 1.");
-      navigationState = NAVIGATING;
+      navigationState = E_NAVIGATING;
     }
     return;  // Continue to skip rest of the function logic when NOT_STARTED
   }
 
   // Only update navigation arrow if we are in the navigating phase
-  if (navigationState == NAVIGATING) {
+  if (navigationState == E_NAVIGATING) {
     ImageType arrowImage = selectArrowImage(relativeDirection);
     displayImage(arrowImage);
   }
@@ -201,44 +201,44 @@ void determineTrailStatusAndNavigate() {
       trailStarted = true;
       currentStop = 1;  // Moving towards the first checkpoint
       Serial.println("Trail started. Heading to Stop 1.");
-      navigationState = NAVIGATING;
+      navigationState = E_NAVIGATING;
     } else {
       Serial.println("Please proceed to the start of the trail.");
       if (dataReceived) {
-        displayImage(GOTOSTART);  // Indicating to go to the starting point
+        displayImage(E_GOTOSTART);  // Indicating to go to the starting point
       }
     }
   }
   // Navigating the trail
   else {
     if (distance <= checkpointTrigger && currentStop <= numberOfStops) {
-      if (navigationState != AT_CHECKPOINT) {
+      if (navigationState != E_AT_CHECKPOINT) {
         // Just arrived at this checkpoint
         Serial.print("Arrived at Stop ");
         Serial.println(currentStop);
-        ImageType checkpointImage = static_cast<ImageType>(CHECKPOINT_1 + currentStop - 1);
+        ImageType checkpointImage = static_cast<ImageType>(E_CHECKPOINT_1 + currentStop - 1);
         displayImage(checkpointImage);    // Show the checkpoint image
-        navigationState = AT_CHECKPOINT;  // Update state to at checkpoint
+        navigationState = E_AT_CHECKPOINT;  // Update state to at checkpoint
         lastCheckpointTime = millis();    // Capture the time we arrived at the checkpoint
 
         // Check if this is the final stop
         if (currentStop == numberOfStops) {
           Serial.println("Final stop reached. Trail is complete.");
           // Display I_PENDING image to indicate completion
-          displayImage(I_PENDING);
+          displayImage(E_PENDING);
           // Optionally, you might want to change the navigation state or take other actions here
-          navigationState = TRAIL_ENDED;  // Resetting the state to NOT_STARTED or another appropriate state
+          navigationState = E_TRAIL_ENDED;  // Resetting the state to NOT_STARTED or another appropriate state
         }
 
         proximityVibrationTriggered = false;  // Allow vibration to trigger again for the next stop
         currentStop++;                        // Prepare for the next stop or complete the trail
       }
-    } else if (navigationState == AT_CHECKPOINT) {
+    } else if (navigationState == E_AT_CHECKPOINT) {
       if (millis() - lastCheckpointTime > 5000) {  // 5 seconds have passed since arriving at the checkpoint
-        navigationState = NAVIGATING;              // Transition back to navigating after the delay
+        navigationState = E_NAVIGATING;              // Transition back to navigating after the delay
         proximityVibrationTriggered = false;       // Reset vibration trigger flag
       }
-    } else if (navigationState == NAVIGATING && currentStop <= numberOfStops) {
+    } else if (navigationState == E_NAVIGATING && currentStop <= numberOfStops) {
       // Continue with the condition to update navigation info only if there's a significant change in distance
       if (abs(lastDistance - distance) > 0.5) {
         Serial.print("Distance to next stop: ");
@@ -266,7 +266,7 @@ void determineTrailStatusAndNavigate() {
 
 void triggerProximityVibration() {
   // Check if we should still be vibrating (if within a certain distance and navigating)
-  if (distance <= proximityVibrationTriggered && navigationState == NAVIGATING) {
+  if (distance <= proximityVibrationTriggered && navigationState == E_NAVIGATING) {
     // set the effect to play
     drv.setWaveform(0, effectNumber);  // play effect
     drv.setWaveform(1, 0);             // end waveform
@@ -288,115 +288,115 @@ void displayImage(ImageType image) {
     }
     tft.fillScreen(TFT_BLACK);  // This line is common to all cases
     switch (image) {
-      case I_PENDING:
+      case E_PENDING:
         drawBitmap(pending);
         Serial.println("Drawn pending.h");
         break;
-      case GOTOSTART:
+      case E_GOTOSTART:
         drawBitmap(gotostart);
         Serial.println("Drawn gotostart.h");
         break;
-      case ARROW_N:
+      case E_ARROW_N:
         drawBitmap(arrow_N);
         Serial.println("Drawn arrow_N.h");
         break;
-      case ARROW_NNE:
+      case E_ARROW_NNE:
         drawBitmap(arrow_NNE);
         Serial.println("Drawn arrow_NNE.h");
         break;
-      case ARROW_NE:
+      case E_ARROW_NE:
         drawBitmap(arrow_NE);
         Serial.println("Drawn arrow_NE.h");
         break;
-      case ARROW_ENE:
+      case E_ARROW_ENE:
         drawBitmap(arrow_ENE);
         Serial.println("Drawn arrow_ENE.h");
         break;
-      case ARROW_E:
+      case E_ARROW_E:
         drawBitmap(arrow_E);
         Serial.println("Drawn arrow_E.h");
         break;
-      case ARROW_ESE:
+      case E_ARROW_ESE:
         drawBitmap(arrow_ESE);
         Serial.println("Drawn arrow_ESE.h");
         break;
-      case ARROW_SE:
+      case E_ARROW_SE:
         drawBitmap(arrow_SE);
         Serial.println("Drawn arrow_SE.h");
         break;
-      case ARROW_SSE:
+      case E_ARROW_SSE:
         drawBitmap(arrow_SSE);
         Serial.println("Drawn arrow_SSE.h");
         break;
-      case ARROW_S:
+      case E_ARROW_S:
         drawBitmap(arrow_S);
         Serial.println("Drawn arrow_S.h");
         break;
-      case ARROW_SSW:
+      case E_ARROW_SSW:
         drawBitmap(arrow_SSW);
         Serial.println("Drawn arrow_SSW.h");
         break;
-      case ARROW_SW:
+      case E_ARROW_SW:
         drawBitmap(arrow_SW);
         Serial.println("Drawn arrow_SW.h");
         break;
-      case ARROW_WSW:
+      case E_ARROW_WSW:
         drawBitmap(arrow_WSW);
         Serial.println("Drawn arrow_WSW.h");
         break;
-      case ARROW_W:
+      case E_ARROW_W:
         drawBitmap(arrow_W);
         Serial.println("Drawn arrow_W.h");
         break;
-      case ARROW_WNW:
+      case E_ARROW_WNW:
         drawBitmap(arrow_WNW);
         Serial.println("Drawn arrow_WNW.h");
         break;
-      case ARROW_NW:
+      case E_ARROW_NW:
         drawBitmap(arrow_NW);
         Serial.println("Drawn arrow_NW.h");
         break;
-      case ARROW_NNW:
+      case E_ARROW_NNW:
         drawBitmap(arrow_NNW);
         Serial.println("Drawn arrow_NNW.h");
         break;
-      case CHECKPOINT_1:
+      case E_CHECKPOINT_1:
         drawBitmap(checkpoint_1);
         Serial.println("Drawn checkpoint_1.h");
         break;
-      case CHECKPOINT_2:
+      case E_CHECKPOINT_2:
         drawBitmap(checkpoint_2);
         Serial.println("Drawn checkpoint_2.h");
         break;
-      case CHECKPOINT_3:
+      case E_CHECKPOINT_3:
         drawBitmap(checkpoint_3);
         Serial.println("Drawn checkpoint_3.h");
         break;
-      case CHECKPOINT_4:
+      case E_CHECKPOINT_4:
         drawBitmap(checkpoint_4);
         Serial.println("Drawn checkpoint_4.h");
         break;
-      case CHECKPOINT_5:
+      case E_CHECKPOINT_5:
         drawBitmap(checkpoint_5);
         Serial.println("Drawn checkpoint_5.h");
         break;
-      case CHECKPOINT_6:
+      case E_CHECKPOINT_6:
         drawBitmap(checkpoint_6);
         Serial.println("Drawn checkpoint_6.h");
         break;
-      case CHECKPOINT_7:
+      case E_CHECKPOINT_7:
         drawBitmap(checkpoint_7);
         Serial.println("Drawn checkpoint_7.h");
         break;
-      case CHECKPOINT_8:
+      case E_CHECKPOINT_8:
         drawBitmap(checkpoint_8);
         Serial.println("Drawn checkpoint_8.h");
         break;
-      case CHECKPOINT_9:
+      case E_CHECKPOINT_9:
         drawBitmap(checkpoint_9);
         Serial.println("Drawn checkpoint_9.h");
         break;
-      case CHECKPOINT_10:
+      case E_CHECKPOINT_10:
         drawBitmap(checkpoint_10);
         Serial.println("Drawn checkpoint_10.h");
         break;
@@ -425,23 +425,23 @@ int calculateRelativeDirection(int currentAngle, int targetAngle) {
 
 // Select an arrow image based on relative direction
 ImageType selectArrowImage(int relativeDirection) {
-  if (relativeDirection >= 348.75 || relativeDirection < 11.25) return ARROW_N;
-  else if (relativeDirection >= 11.25 && relativeDirection < 33.75) return ARROW_NNE;
-  else if (relativeDirection >= 33.75 && relativeDirection < 56.25) return ARROW_NE;
-  else if (relativeDirection >= 56.25 && relativeDirection < 78.75) return ARROW_ENE;
-  else if (relativeDirection >= 78.75 && relativeDirection < 101.25) return ARROW_E;
-  else if (relativeDirection >= 101.25 && relativeDirection < 123.75) return ARROW_ESE;
-  else if (relativeDirection >= 123.75 && relativeDirection < 146.25) return ARROW_SE;
-  else if (relativeDirection >= 146.25 && relativeDirection < 168.75) return ARROW_SSE;
-  else if (relativeDirection >= 168.75 && relativeDirection < 191.25) return ARROW_S;
-  else if (relativeDirection >= 191.25 && relativeDirection < 213.75) return ARROW_SSW;
-  else if (relativeDirection >= 213.75 && relativeDirection < 236.25) return ARROW_SW;
-  else if (relativeDirection >= 236.25 && relativeDirection < 258.75) return ARROW_WSW;
-  else if (relativeDirection >= 258.75 && relativeDirection < 281.25) return ARROW_W;
-  else if (relativeDirection >= 281.25 && relativeDirection < 303.75) return ARROW_WNW;
-  else if (relativeDirection >= 303.75 && relativeDirection < 326.25) return ARROW_NW;
-  else if (relativeDirection >= 326.25 && relativeDirection < 348.75) return ARROW_NNW;
-  else return ARROW_N;  // Default case, although logically unnecessary due to the first condition
+  if (relativeDirection >= 348.75 || relativeDirection < 11.25) return E_ARROW_N;
+  else if (relativeDirection >= 11.25 && relativeDirection < 33.75) return E_ARROW_NNE;
+  else if (relativeDirection >= 33.75 && relativeDirection < 56.25) return E_ARROW_NE;
+  else if (relativeDirection >= 56.25 && relativeDirection < 78.75) return E_ARROW_ENE;
+  else if (relativeDirection >= 78.75 && relativeDirection < 101.25) return E_ARROW_E;
+  else if (relativeDirection >= 101.25 && relativeDirection < 123.75) return E_ARROW_ESE;
+  else if (relativeDirection >= 123.75 && relativeDirection < 146.25) return E_ARROW_SE;
+  else if (relativeDirection >= 146.25 && relativeDirection < 168.75) return E_ARROW_SSE;
+  else if (relativeDirection >= 168.75 && relativeDirection < 191.25) return E_ARROW_S;
+  else if (relativeDirection >= 191.25 && relativeDirection < 213.75) return E_ARROW_SSW;
+  else if (relativeDirection >= 213.75 && relativeDirection < 236.25) return E_ARROW_SW;
+  else if (relativeDirection >= 236.25 && relativeDirection < 258.75) return E_ARROW_WSW;
+  else if (relativeDirection >= 258.75 && relativeDirection < 281.25) return E_ARROW_W;
+  else if (relativeDirection >= 281.25 && relativeDirection < 303.75) return E_ARROW_WNW;
+  else if (relativeDirection >= 303.75 && relativeDirection < 326.25) return E_ARROW_NW;
+  else if (relativeDirection >= 326.25 && relativeDirection < 348.75) return E_ARROW_NNW;
+  else return E_ARROW_N;  // Default case, although logically unnecessary due to the first condition
 }
 
 // Non blocking delay to read sensors
