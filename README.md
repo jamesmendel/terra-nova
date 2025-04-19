@@ -1,4 +1,5 @@
 <h1 align="center">TERRA is a companion for mindful wandering</h1>
+<h2 align="center">⭐️ This is the working repository for the second generation of TERRA hardware and software. ⭐️</h2>
 
 <br> <!-- Additional spacing -->
 <br> <!-- Additional spacing -->
