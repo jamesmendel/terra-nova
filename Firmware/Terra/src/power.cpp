@@ -1,7 +1,6 @@
 // Power management
 
 #include <Arduino.h>
-#include "terra.h"
 #include "power.h"
 #include "haptics.h"
 
@@ -15,7 +14,6 @@ volatile bool buttonPressedFlag  = false;
 volatile bool buttonReleasedFlag = false;
 
 hw_timer_t *battCheckTimer = NULL;
-portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 static volatile bool batteryPendingCheck = false;
 
 
@@ -81,6 +79,8 @@ uint16_t batteryReadVolatge() {
 
 void batteryCheckVolatge() {
     if(batteryPendingCheck) {
+        batteryPendingCheck = false;
+        
         uint16_t millivolts = batteryReadVolatge();
 
         if(millivolts <= BATT_CONNECTED_MV) {
@@ -95,8 +95,6 @@ void batteryCheckVolatge() {
 
         DEBUG_POWER_PRINT("Battery voltage: %d\n", millivolts);
     }
-
-    batteryPendingCheck = false;
 }
 
 void powerCheckButton() {
