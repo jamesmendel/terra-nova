@@ -4,6 +4,7 @@
 #include "power.h"
 #include "haptics.h"
 #include "compass.h"
+#include "navigation.h"
 
 #include <TinyGPSPlus.h>
 #include <TFT_eSPI.h>
@@ -14,43 +15,18 @@
 #include "config.h"     // Assumes this contains GPS waypoints and number of stops
 #include "imagelist.h"  // Assumes this includes declarations for images
 
-// Global debug mode
-bool debugMode = true;
-
-// Global compass
-#define BNO055_ADDRESS 0x28
-Adafruit_BNO055 cmp = Adafruit_BNO055(55, BNO055_ADDRESS, &Wire); // BNO055 compass object
-
 // TFT Display Settings
 // Note: TFT_eSPI configuration is managed in platformio.ini build_flags
 TFT_eSPI tft = TFT_eSPI();
 
-// The TinyGPSPlus object
-TinyGPSPlus gps;
-
-// Vibration motor
-bool proximityVibrationTriggered = false;
-
-// Thresholds for triggers in meters
-int checkpointTrigger = 10;  // Distance from the checkpoint that is considered an arrival
-int vibrationTrigger = 20;   // When to trigger vibration to indicate the checkpoint is getting close
-
-unsigned long lastVibrationTime = 0;   // Tracks the last time vibration was triggered
-int proximityVibrationDelayMs = 500;   // To determine the time between vibrations when close to the current stop.
-
 ImageType currentDisplayedImage = E_NONE;
 
 // Initialize your navigation state
-NavigationState navigationState = E_NOT_STARTED;  // Initial navigation state
-unsigned long lastCheckpointTime = 0;           // Timestamp of when the last checkpoint was reached
 
 // Global Variables for GPS Data and State
-int currentStop = 0;
-double currentLat, currentLon;
-bool trailStarted = false;
-bool dataReceived = false;
+
 bool screenOn = false;
-double distance;  // Distance to the next checkpoint
+
 
 
 // Setup Function
@@ -60,37 +36,18 @@ void setup() {
   initPower();
   initHaptics();
 
-
-  // GPS UART
-  pinMode(PIN_GPS_FIX, INPUT);
-  pinMode(PIN_GPS_RST, OUTPUT);
-  pinMode(PIN_GPS_STBY, OUTPUT);
-  digitalWrite(PIN_GPS_RST, !LOW);
-  digitalWrite(PIN_GPS_STBY, LOW);
-  
-  if (!debugMode) {
-    Serial1.begin(9600, SERIAL_8N1, PIN_RX1, PIN_TX1);
-  }
-
-
   // Initialize Screen
   tft.init();
   tft.setRotation(1);
   pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
   digitalWrite(PIN_DISPLAY_PWM_BL, LOW);
 
+  // Initialize GPS
+  initNav();
 
   // Initialize compass
   initCompass();
   initCompassNoMotionDetection();
-
-  if (!cmp.begin(OPERATION_MODE_NDOF)) {
-    Serial.print("Could not find BNO055");
-    while (1) delay(10);
-  }
-  cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.1 of BNO055 datasheet)
-  cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.1 of BNO055 datasheet)
-
 
   Wire.begin();
 
@@ -99,193 +56,11 @@ void setup() {
 
 // Main Loop
 void loop() {
-  if (nonBlockingDelay(1000)) {
-    handleGPSData();
-    determineTrailStatusAndNavigate();
-  }
-  if (!debugMode) {
-    smartDelay(1000);  // for reading the GPS module
-  }
-  // Continuously trigger vibration when within a certain distance of the next stop
-  if (proximityVibrationTriggered && millis() - lastVibrationTime >= proximityVibrationDelayMs) {
-    triggerProximityVibration();
-    lastVibrationTime = millis();  // Update the last vibration time
-  }
-
+  navUpdate();
+  
   batteryCheckVolatge();
   powerCheckButton();
   compassServiceInterrupts();
-}
-
-// This custom version of delay() ensures that the gps object is being "fed".
-static void smartDelay(unsigned long ms) {
-  unsigned long start = millis();
-  do {
-    while (Serial1.available())
-      gps.encode(Serial1.read());
-  } while (millis() - start < ms);
-}
-
-// Handle GPS Data
-void handleGPSData() {
-  if (debugMode) {  // If we're in debug mode, read the serial input
-    if (Serial.available()) {
-      if (readSerialGPS()) {
-        dataReceived = true;  // Once the first data has arrived, we can get into our start routine
-      }
-    }
-  } else {  // If we're not in serial input mode, start handling real GPS data
-    while (Serial1.available()) {
-      if (readGPS()) {
-        dataReceived = true;
-      }
-    }
-  }
-}
-
-// Read the GPS signal for current lat/lon - this is a serial input for now but can be replaced with code to read the GPS module
-bool readSerialGPS() {
-  String inputString = Serial.readStringUntil('\n');
-  int commaIndex = inputString.indexOf(',');
-
-  // Check if the comma exists and it's not at the end of the string
-  if (commaIndex != -1 && commaIndex < inputString.length() - 1) {
-    currentLat = inputString.substring(0, commaIndex).toDouble();
-    currentLon = inputString.substring(commaIndex + 1).toDouble();
-    return true;  // Data was successfully parsed
-  } else {
-    Serial.println("Invalid format. Please enter in format: lat,lon");
-    return false;  // Data parsing failed
-  }
-}
-
-// Read the GPS module signal for current lat/lon
-bool readGPS() {
-  if (gps.location.isValid()) {
-    currentLat = gps.location.lat();
-    currentLon = gps.location.lng();
-    return true;
-  }
-  return false;
-}
-
-void determineTrailStatusAndNavigate() {
-  static double lastDistance = -1;
-
-  // Obtain the target coordinates based on the trail's current status
-  double targetLat = !trailStarted ? startLat : stopLats[currentStop - 1];
-  double targetLon = !trailStarted ? startLon : stopLons[currentStop - 1];
-
-  // Calculate the current distance and direction to the target
-  double distance = getDistanceTo(targetLat, targetLon);
-  String cardinal = getCardinalTo(targetLat, targetLon);
-  int targetAngle = getCourseTo(targetLat, targetLon);  // Assume implementation exists
-  int currentAngle = readCompass();
-
-  // Calculate the relative direction for navigation
-  int relativeDirection = calculateRelativeDirection(currentAngle, targetAngle);
-
-  if (navigationState == E_NOT_STARTED) {
-    if (!dataReceived) {
-      displayImage(E_PENDING);  // Show E_PENDING only when waiting for the first GPS data
-    } else {
-      Serial.println("Please proceed to the start of the trail.");
-      displayImage(E_GOTOSTART);  // Now we're sure we've received data, show GOTOSTART
-    }
-
-    // Transition to navigating state once within close range to the start and data has been received
-    if (dataReceived && distance <= checkpointTrigger) {
-      trailStarted = true;
-      currentStop = 1;
-      Serial.println("Trail started. Heading to Stop 1.");
-      navigationState = E_NAVIGATING;
-    }
-    return;  // Continue to skip rest of the function logic when NOT_STARTED
-  }
-
-  // Only update navigation arrow if we are in the navigating phase
-  if (navigationState == E_NAVIGATING) {
-    ImageType arrowImage = selectArrowImage(relativeDirection);
-    displayImage(arrowImage);
-  }
-
-  // Start of the trail
-  if (!trailStarted) {
-    if (distance <= checkpointTrigger) {  // "Closeness" threshold
-      trailStarted = true;
-      currentStop = 1;  // Moving towards the first checkpoint
-      Serial.println("Trail started. Heading to Stop 1.");
-      navigationState = E_NAVIGATING;
-    } else {
-      Serial.println("Please proceed to the start of the trail.");
-      if (dataReceived) {
-        displayImage(E_GOTOSTART);  // Indicating to go to the starting point
-      }
-    }
-  }
-  // Navigating the trail
-  else {
-    if (distance <= checkpointTrigger && currentStop <= numberOfStops) {
-      if (navigationState != E_AT_CHECKPOINT) {
-        // Just arrived at this checkpoint
-        Serial.print("Arrived at Stop ");
-        Serial.println(currentStop);
-        ImageType checkpointImage = static_cast<ImageType>(E_CHECKPOINT_1 + currentStop - 1);
-        displayImage(checkpointImage);    // Show the checkpoint image
-        navigationState = E_AT_CHECKPOINT;  // Update state to at checkpoint
-        lastCheckpointTime = millis();    // Capture the time we arrived at the checkpoint
-
-        // Check if this is the final stop
-        if (currentStop == numberOfStops) {
-          Serial.println("Final stop reached. Trail is complete.");
-          // Display I_PENDING image to indicate completion
-          displayImage(E_PENDING);
-          // Optionally, you might want to change the navigation state or take other actions here
-          navigationState = E_TRAIL_ENDED;  // Resetting the state to NOT_STARTED or another appropriate state
-        }
-
-        proximityVibrationTriggered = false;  // Allow vibration to trigger again for the next stop
-        currentStop++;                        // Prepare for the next stop or complete the trail
-      }
-    } else if (navigationState == E_AT_CHECKPOINT) {
-      if (millis() - lastCheckpointTime > 5000) {  // 5 seconds have passed since arriving at the checkpoint
-        navigationState = E_NAVIGATING;              // Transition back to navigating after the delay
-        proximityVibrationTriggered = false;       // Reset vibration trigger flag
-      }
-    } else if (navigationState == E_NAVIGATING && currentStop <= numberOfStops) {
-      // Continue with the condition to update navigation info only if there's a significant change in distance
-      if (abs(lastDistance - distance) > 0.5) {
-        Serial.print("Distance to next stop: ");
-        Serial.print(distance, 1);  // One decimal place for distance
-        Serial.print(" meters. Direction to next stop: ");
-        Serial.print(cardinal);
-        Serial.print(" (Target angle: ");
-        Serial.print(targetAngle);
-        Serial.println(" degrees)");
-        lastDistance = distance;  // Update lastDistance for next comparison
-
-        // Here, potentially display the arrow again if needed, based on your logic for selecting and displaying arrows
-        ImageType arrowImage = selectArrowImage(relativeDirection);
-        displayImage(arrowImage);
-
-        // Set the flag to start continuous vibration when within a certain distance from the next stop
-        if (distance <= vibrationTrigger && !proximityVibrationTriggered) {
-          proximityVibrationTriggered = true;
-          lastVibrationTime = millis();  // Ensure we start timing from now
-        }
-      }
-    }
-  }
-}
-
-void triggerProximityVibration() {
-  // Check if we should still be vibrating (if within a certain distance and navigating)
-  if (distance <= proximityVibrationTriggered && navigationState == E_NAVIGATING) {
-      playEffect(HAP_EFFECT_PROX);
-  } else {
-    // Stop vibrating if no longer within 20 meters or not in navigating state
-    proximityVibrationTriggered = false;
-  }
 }
 
 // Display image function - fades images out then in again
@@ -461,32 +236,6 @@ bool nonBlockingDelay(unsigned long ms) {
     return true;
   }
   return false;
-}
-
-// Simple function to get distance to lat/lon, is used to determine whether GPS module is in range of a stop
-double getDistanceTo(double lat, double lon) {
-  return TinyGPSPlus::distanceBetween(currentLat, currentLon, lat, lon);
-}
-
-String getCardinalTo(double lat, double lon) {
-  double courseTo = TinyGPSPlus::courseTo(currentLat, currentLon, lat, lon);
-  String cardinal = TinyGPSPlus::cardinal(courseTo);
-  return cardinal;
-}
-
-int getCourseTo(double lat, double lon) {
-  return TinyGPSPlus::courseTo(currentLat, currentLon, lat, lon);
-}
-
-// Read the compass sensor and return the compassDirection in cardinal points (degrees)
-int readCompass() {
-  sensors_event_t orientationData;
-  int heading;
-
-  cmp.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
-  heading = (int)orientationData.orientation.x;  // x=heading, y=roll, z=pitch
-
-  return heading; // TODO: Verify the accuracy of this output. Is degress the correct unit to return?
 }
 
 void fadeOut() {
