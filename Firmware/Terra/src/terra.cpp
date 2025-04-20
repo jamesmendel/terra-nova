@@ -3,12 +3,11 @@
 #include "terra.h"
 #include "power.h"
 #include "haptics.h"
+#include "compass.h"
 
 #include <TinyGPSPlus.h>
 #include <TFT_eSPI.h>
 #include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BNO055.h>
 #include <map>
 
 // Include Configurations and Images
@@ -82,6 +81,9 @@ void setup() {
 
 
   // Initialize compass
+  initCompass();
+  initCompassNoMotionDetection();
+
   if (!cmp.begin(OPERATION_MODE_NDOF)) {
     Serial.print("Could not find BNO055");
     while (1) delay(10);
@@ -109,6 +111,10 @@ void loop() {
     triggerProximityVibration();
     lastVibrationTime = millis();  // Update the last vibration time
   }
+
+  batteryCheckVolatge();
+  powerCheckButton();
+  compassServiceInterrupts();
 }
 
 // This custom version of delay() ensures that the gps object is being "fed".

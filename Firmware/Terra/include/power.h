@@ -25,12 +25,11 @@
 #endif // DEBUG_POWER
 
 
-void IRAM_ATTR powerButtonISR();
-void IRAM_ATTR battCheckISR();
-
 void initPower();
+void powerCheckButton();
 void powerDownNow();
-uint16_t readBatteryVolatge();
-void checkBatteryVolatge();
+
+uint16_t batteryReadVolatge();
+void batteryCheckVolatge();
 
 #endif // POWER_H
