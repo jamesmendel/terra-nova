@@ -1,3 +1,11 @@
+/**
+ * @file terra.cpp
+ * @brief Entrypoint for Terra
+ * @date 2025-04-20
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 // Include Libraries
 #include <Arduino.h>
 #include "terra.h"
