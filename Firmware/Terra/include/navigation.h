@@ -33,15 +33,16 @@ static double currentLon = 0;
 static bool navDataReceived = false;
 
 
-
 void initNav();
 void navUpdate();
 void navFeedGPSData();
+void navUpdateTrailStatusAndNavigate();
 bool navReadGPS();
 void navUpdateHaptics();
 double getDistanceTo(double lat, double lon);
 String getCardinalTo(double lat, double lon);
 int getCourseTo(double lat, double lon);
+int calculateRelativeDirection(int currentAngle, int targetAngle);
 
 #ifdef DEBUG_NAVIGATION
 bool navReadSerialGPS();

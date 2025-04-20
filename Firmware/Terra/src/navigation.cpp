@@ -14,6 +14,7 @@
 #include "config.h"
 #include "compass.h"
 #include "haptics.h"
+#include "display.h"
 
 // Private members
 void triggerProximityVibration();
@@ -133,10 +134,10 @@ void navUpdateTrailStatusAndNavigate() {
 
   if (navigationState == E_NOT_STARTED) {
     if (!navDataReceived) {
-      displayImage(E_PENDING);  // Show E_PENDING only when waiting for the first GPS data
+      displayShowImage(E_PENDING);  // Show E_PENDING only when waiting for the first GPS data
     } else {
       Serial.println("Please proceed to the start of the trail.");
-      displayImage(E_GOTOSTART);  // Now we're sure we've received data, show GOTOSTART
+      displayShowImage(E_GOTOSTART);  // Now we're sure we've received data, show GOTOSTART
     }
 
     // Transition to navigating state once within close range to the start and data has been received
@@ -152,7 +153,7 @@ void navUpdateTrailStatusAndNavigate() {
   // Only update navigation arrow if we are in the navigating phase
   if (navigationState == E_NAVIGATING) {
     ImageType arrowImage = selectArrowImage(relativeDirection);
-    displayImage(arrowImage);
+    displayShowImage(arrowImage);
   }
 
   // Start of the trail
@@ -165,7 +166,7 @@ void navUpdateTrailStatusAndNavigate() {
     } else {
       Serial.println("Please proceed to the start of the trail.");
       if (navDataReceived) {
-        displayImage(E_GOTOSTART);  // Indicating to go to the starting point
+        displayShowImage(E_GOTOSTART);  // Indicating to go to the starting point
       }
     }
   }
@@ -177,7 +178,7 @@ void navUpdateTrailStatusAndNavigate() {
         Serial.print("Arrived at Stop ");
         Serial.println(currentStop);
         ImageType checkpointImage = static_cast<ImageType>(E_CHECKPOINT_1 + currentStop - 1);
-        displayImage(checkpointImage);    // Show the checkpoint image
+        displayShowImage(checkpointImage);    // Show the checkpoint image
         navigationState = E_AT_CHECKPOINT;  // Update state to at checkpoint
         lastCheckpointTime = millis();    // Capture the time we arrived at the checkpoint
 
@@ -185,7 +186,7 @@ void navUpdateTrailStatusAndNavigate() {
         if (currentStop == numberOfStops) {
           Serial.println("Final stop reached. Trail is complete.");
           // Display I_PENDING image to indicate completion
-          displayImage(E_PENDING);
+          displayShowImage(E_PENDING);
           // Optionally, you might want to change the navigation state or take other actions here
           navigationState = E_TRAIL_ENDED;  // Resetting the state to NOT_STARTED or another appropriate state
         }
@@ -212,7 +213,7 @@ void navUpdateTrailStatusAndNavigate() {
 
         // Here, potentially display the arrow again if needed, based on your logic for selecting and displaying arrows
         ImageType arrowImage = selectArrowImage(relativeDirection);
-        displayImage(arrowImage);
+        displayShowImage(arrowImage);
 
         // Set the flag to start continuous vibration when within a certain distance from the next stop
         if (distance <= NAV_HAPTICS_THRESH_M && !proximityVibrationTriggered) {
@@ -242,6 +243,13 @@ void triggerProximityVibration() {
   }
 }
 
+int calculateRelativeDirection(int currentAngle, int targetAngle) {
+  int difference = targetAngle - currentAngle;
+  if (difference < 0) {
+    difference += 360;  // Adjust for negative differences
+  }
+  return difference % 360;  // Ensure the result is within 0-359 degreess
+}
 
 /**
  * @brief Calculate the distance between current location and target
