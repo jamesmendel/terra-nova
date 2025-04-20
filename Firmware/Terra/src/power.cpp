@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "terra.h"
 #include "power.h"
+#include "haptics.h"
 
 volatile unsigned long buttonPressStart = 0;
 volatile bool buttonPressed = false;
@@ -11,7 +12,7 @@ hw_timer_t *battCheckTimer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 
 // Respond to power button
-void ARDUINO_ISR_ATTR powerButtonISR() {
+void IRAM_ATTR powerButtonISR() {
     bool currentState = digitalRead(PIN_PWR_SW);
 
     if(currentState) {
@@ -22,10 +23,15 @@ void ARDUINO_ISR_ATTR powerButtonISR() {
     }
     else {
         // Released
-        unsigned long buttonPressDuration = millis() - buttonPressStart;
-        DEBUG_POWER_PRINT("Button released after %d ms", buttonPressDuration);
+        unsigned long buttonPressDuration = millis() - buttonPressStart;    // duration in ms
         
-        if(buttonPressDuration > POWER_OFF_THRESHOLD_MS) {
+        #ifdef DEBUG_POWER
+        if(buttonPressDuration > 50) {  // debounce button press for logging
+            DEBUG_POWER_PRINT("Button released after %d ms", buttonPressDuration);
+        }
+        #endif  // DEBUG_POWER
+        
+        if(buttonPressDuration >= POWER_OFF_THRESHOLD_MS) {
             powerDownNow();
         }
 
@@ -34,7 +40,7 @@ void ARDUINO_ISR_ATTR powerButtonISR() {
 }
 
 // Check battery
-void ARDUINO_ISR_ATTR battCheckISR() {
+void IRAM_ATTR battCheckISR() {
     // atomic lock in case main needs any variables from this file
     portENTER_CRITICAL_ISR(&timerMux);
     
@@ -64,11 +70,16 @@ void initPower() {
     timerAlarmWrite(battCheckTimer, BATT_CHECK_INTERVAL_US, true);
     timerAlarmEnable(battCheckTimer);
 
+
 }
 
-inline void powerDownNow() {
-    pinMode(PIN_PWROFF, OUTPUT);
+void powerDownNow() {
     Serial.println("Powering down now!");
+
+    playEffect(HAP_EFFECT_PWRDOWN);
+    while(isEffectPlaying()) usleep(1000);
+
+    pinMode(PIN_PWROFF, OUTPUT);
 
     while(1) {
         digitalWrite(PIN_PWROFF, HIGH);
@@ -89,7 +100,12 @@ uint16_t readBatteryVolatge() {
 void checkBatteryVolatge() {
     uint16_t millivolts = readBatteryVolatge();
 
-    if (millivolts <= BATT_MIN_VOLTS_MV || millivolts >= BATT_MAX_VOLTS_MV) {
+    if(millivolts <= BATT_CONNECTED_MV) {
+        // Battery is disconnected, running on USB only
+        return;
+    }
+
+    if(millivolts <= BATT_MIN_VOLTS_MV || millivolts >= BATT_MAX_VOLTS_MV) {
         printf("Battery in unsafe condition: %d mV\n", millivolts);
         powerDownNow();
     } 

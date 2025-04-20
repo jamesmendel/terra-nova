@@ -2,13 +2,13 @@
 #include <Arduino.h>
 #include "terra.h"
 #include "power.h"
+#include "haptics.h"
 
 #include <TinyGPSPlus.h>
 #include <TFT_eSPI.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
-#include <Adafruit_DRV2605.h>
 #include <map>
 
 // Include Configurations and Images
@@ -30,8 +30,6 @@ TFT_eSPI tft = TFT_eSPI();
 TinyGPSPlus gps;
 
 // Vibration motor
-Adafruit_DRV2605 drv;
-int effectNumber = 58;
 bool proximityVibrationTriggered = false;
 
 // Thresholds for triggers in meters
@@ -61,10 +59,20 @@ void setup() {
   Serial.begin(115200);
 
   initPower();
+  initHaptics();
 
+
+  // GPS UART
+  pinMode(PIN_GPS_FIX, INPUT);
+  pinMode(PIN_GPS_RST, OUTPUT);
+  pinMode(PIN_GPS_STBY, OUTPUT);
+  digitalWrite(PIN_GPS_RST, !LOW);
+  digitalWrite(PIN_GPS_STBY, LOW);
+  
   if (!debugMode) {
     Serial1.begin(9600, SERIAL_8N1, PIN_RX1, PIN_TX1);
   }
+
 
   // Initialize Screen
   tft.init();
@@ -73,26 +81,18 @@ void setup() {
   digitalWrite(PIN_DISPLAY_PWM_BL, LOW);
 
 
-  // Initialize vibration motor
-  if (!drv.begin()) {
-    Serial.println("Could not find DRV2605");
-    while (1) delay(10);
-  }
-  drv.selectLibrary(1);
-  // I2C trigger by sending 'go' command
-  // default, internal trigger when sending GO command
-  drv.setMode(DRV2605_MODE_INTTRIG);
-
   // Initialize compass
   if (!cmp.begin(OPERATION_MODE_NDOF)) {
-    // There was a problem detecting the BNO055 ...
     Serial.print("Could not find BNO055");
     while (1) delay(10);
   }
   cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.1 of BNO055 datasheet)
   cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.1 of BNO055 datasheet)
 
+
   Wire.begin();
+
+  playEffect(HAP_EFFECT_PWRON); // power on sequence finsihed!
 }
 
 // Main Loop
@@ -275,13 +275,7 @@ void determineTrailStatusAndNavigate() {
 void triggerProximityVibration() {
   // Check if we should still be vibrating (if within a certain distance and navigating)
   if (distance <= proximityVibrationTriggered && navigationState == E_NAVIGATING) {
-    // set the effect to play
-    drv.setWaveform(0, effectNumber);  // play effect
-    drv.setWaveform(1, 0);             // end waveform
-    // play the effect!
-    drv.go();
-    // Serial.println("Vibration triggered");
-    // Note: We do not set vibrationTriggered to false here as we want continuous vibration
+      playEffect(HAP_EFFECT_PROX);
   } else {
     // Stop vibrating if no longer within 20 meters or not in navigating state
     proximityVibrationTriggered = false;
