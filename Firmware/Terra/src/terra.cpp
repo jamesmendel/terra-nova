@@ -17,12 +17,9 @@
 // Global debug mode
 bool debugMode = true;
 
-// Compass object
-#define CMPS12_ADDRESS 0x60
-#define ANGLE_8 1
-unsigned char high_byte, low_byte, angle8;
-char pitch, roll;
-unsigned int angle16;
+// Global compass
+#define BNO055_ADDRESS 0x28
+Adafruit_BNO055 cmp = Adafruit_BNO055(55, BNO055_ADDRESS, &Wire); // BNO055 compass object
 
 // TFT Display Settings
 // Note: TFT_eSPI configuration is managed in platformio.ini build_flags
@@ -66,23 +63,31 @@ void setup() {
     Serial1.begin(9600, SERIAL_8N1, PIN_RX1, PIN_TX1);
   }
 
-  // Screen
+  // Initialize Screen
   tft.init();
   tft.setRotation(1);
   pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
   digitalWrite(PIN_DISPLAY_PWM_BL, LOW);
 
 
-  // Vibration motor
+  // Initialize vibration motor
   if (!drv.begin()) {
     Serial.println("Could not find DRV2605");
     while (1) delay(10);
   }
-
   drv.selectLibrary(1);
   // I2C trigger by sending 'go' command
   // default, internal trigger when sending GO command
   drv.setMode(DRV2605_MODE_INTTRIG);
+
+  // Initialize compass
+  if (!cmp.begin(OPERATION_MODE_NDOF)) {
+    // There was a problem detecting the BNO055 ...
+    Serial.print("Could not find BNO055");
+    while (1) delay(10);
+  }
+  cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.1 of BNO055 datasheet)
+  cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.1 of BNO055 datasheet)
 
   Wire.begin();
 }
@@ -470,32 +475,15 @@ int getCourseTo(double lat, double lon) {
   return TinyGPSPlus::courseTo(currentLat, currentLon, lat, lon);
 }
 
-// Read the compass sensor and return the compassDirection in cardinal points
-int readCompass() {                        // is string if we're asking for cardinal.
-  Wire.beginTransmission(CMPS12_ADDRESS);  // Starts communication with CMPS12
-  Wire.write(ANGLE_8);                     // Sends the register we wish to start reading from
-  Wire.endTransmission();
+// Read the compass sensor and return the compassDirection in cardinal points (degrees)
+int readCompass() {
+  sensors_event_t orientationData;
+  int heading;
 
-  // Request 5 bytes from the CMPS12
-  // this will give us the 8 bit bearing,
-  // both bytes of the 16 bit bearing, pitch and roll
-  Wire.requestFrom(CMPS12_ADDRESS, 5);
+  cmp.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
+  heading = (int)orientationData.orientation.x;  // x=heading, y=roll, z=pitch
 
-  while (Wire.available() < 5)
-    ;  // Wait for all bytes to come back
-
-  angle8 = Wire.read();  // Read back the 5 bytes
-  high_byte = Wire.read();
-  low_byte = Wire.read();
-  pitch = Wire.read();
-  roll = Wire.read();
-
-  angle16 = high_byte;  // Calculate 16 bit angle
-  angle16 <<= 8;
-  angle16 += low_byte;
-
-  int currentAngle = angle16 / 10;
-  return currentAngle;
+  return heading; // TODO: Verify the accuracy of this output. Is degress the correct unit to return?
 }
 
 void fadeOut() {
