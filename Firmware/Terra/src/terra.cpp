@@ -1,6 +1,7 @@
 // Include Libraries
 #include <Arduino.h>
 #include "terra.h"
+#include "power.h"
 
 #include <TinyGPSPlus.h>
 #include <TFT_eSPI.h>
@@ -58,6 +59,8 @@ double distance;  // Distance to the next checkpoint
 // Setup Function
 void setup() {
   Serial.begin(115200);
+
+  initPower();
 
   if (!debugMode) {
     Serial1.begin(9600, SERIAL_8N1, PIN_RX1, PIN_TX1);
