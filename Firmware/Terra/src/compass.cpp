@@ -15,6 +15,13 @@ void initCompass() {
     digitalWrite(PIN_CMP_RST, !LOW);
 
     attachInterrupt(PIN_CMP_INT, compassIntISR, RISING);
+
+    if (!cmp.begin(OPERATION_MODE_NDOF)) {
+        Serial.print("Could not find BNO055");
+        while (1) delay(10);
+    }
+    cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.1 of BNO055 datasheet)
+    cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.1 of BNO055 datasheet)
 }
 
 void initCompassNoMotionDetection() {
@@ -66,4 +73,20 @@ void compassServiceInterrupts() {
         }
     }
     compassPendingInterrupt = false;
+}
+
+
+/**
+ * @brief reads rompass absolute orientation
+ * 
+ * @return int heading in degress
+ */
+int compassReadHeading() {
+  sensors_event_t orientationData;
+  int heading;
+
+  cmp.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
+  heading = (int)orientationData.orientation.x;  // x=heading, y=roll, z=pitch
+
+  return heading; // TODO: Verify the accuracy of this output. Is degress the correct unit to return?
 }

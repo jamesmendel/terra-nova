@@ -20,8 +20,13 @@
 #define CMP_MASK_MAG_DRDY       (0x01 << 1)
 #define CMP_MASK_ACC_BSX_DRDY   (0x01 << 0)
 
+// Global compass
+static Adafruit_BNO055 cmp = Adafruit_BNO055(55, BNO055_ADDRESS_A, &Wire);
+
 void initCompass();
 void initCompassNoMotionDetection();
 void compassServiceInterrupts();
+
+int compassReadHeading();
 
 #endif // COMPASS_H
