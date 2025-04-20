@@ -2,6 +2,9 @@
 #ifndef TERRA_H
 #define TERRA_H
 
+#define BITMAP_WIDTH  240
+#define BITMAP_HEIGHT 240
+
 // Nagigation States
 enum NavigationState {
     E_NOT_STARTED,

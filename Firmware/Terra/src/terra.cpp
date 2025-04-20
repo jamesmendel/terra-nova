@@ -5,6 +5,8 @@
 #include <TinyGPSPlus.h>
 #include <TFT_eSPI.h>
 #include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
 #include <Adafruit_DRV2605.h>
 #include <map>
 
@@ -15,17 +17,15 @@
 // Global debug mode
 bool debugMode = true;
 
-// Sensor and Display Setup
+// Compass object
 #define CMPS12_ADDRESS 0x60
 #define ANGLE_8 1
 unsigned char high_byte, low_byte, angle8;
 char pitch, roll;
 unsigned int angle16;
-#define BACKLIGHT_PIN 12
 
 // TFT Display Settings
-#define logoWidth 240
-#define logoHeight 240
+// Note: TFT_eSPI configuration is managed in platformio.ini build_flags
 TFT_eSPI tft = TFT_eSPI();
 
 // The TinyGPSPlus object
@@ -63,14 +63,14 @@ void setup() {
   Serial.begin(115200);
 
   if (!debugMode) {
-    Serial1.begin(9600);
+    Serial1.begin(9600, SERIAL_8N1, PIN_RX1, PIN_TX1);
   }
 
   // Screen
   tft.init();
   tft.setRotation(1);
-  pinMode(BACKLIGHT_PIN, OUTPUT);
-  digitalWrite(BACKLIGHT_PIN, LOW);
+  pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
+  digitalWrite(PIN_DISPLAY_PWM_BL, LOW);
 
 
   // Vibration motor
@@ -410,7 +410,7 @@ void displayImage(ImageType image) {
 }
 
 void drawBitmap(const unsigned char* bitmap) {
-  tft.drawXBitmap(0, 0, bitmap, logoWidth, logoHeight, TFT_BLACK, TFT_WHITE);
+  tft.drawXBitmap(0, 0, bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, TFT_BLACK, TFT_WHITE);
 }
 
 // Example function to calculate relative direction based on angles
@@ -500,7 +500,7 @@ int readCompass() {                        // is string if we're asking for card
 
 void fadeOut() {
   for (int i = 255; i >= 0; i -= 5) {
-    analogWrite(BACKLIGHT_PIN, i);
+    analogWrite(PIN_DISPLAY_PWM_BL, i);
     delay(10);
   }
   screenOn = false;
@@ -508,7 +508,7 @@ void fadeOut() {
 
 void fadeIn() {
   for (int i = 0; i <= 255; i += 5) {
-    analogWrite(BACKLIGHT_PIN, i);
+    analogWrite(PIN_DISPLAY_PWM_BL, i);
     delay(10);
   }
   screenOn = true;

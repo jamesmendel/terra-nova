@@ -16,15 +16,15 @@ static const uint8_t LED_BUILTIN = 48;
 // ================================
 // UART:    GPS
 // ================================
-static const uint8_t TX = 17;
-static const uint8_t RX = 18;
+static const uint8_t PIN_TX1 = 17;
+static const uint8_t PIN_RX1 = 18;
 
 
 // ================================
 // I2C:     IMU, Compass, Haptics
 // ================================
-static const uint8_t SDA = 7;
-static const uint8_t SCL = 9;
+static const uint8_t SDA = 7;   // SDA used by Wire.cpp
+static const uint8_t SCL = 9;   // SCL used by Wire.cpp
 
 
 // ================================
@@ -45,7 +45,8 @@ static const uint8_t PIN_BAT_VOLTAGE    = 5;
 //  Display
 static const uint8_t PIN_DISPLAY_RST    = 8;    // active low display reset
 static const uint8_t PIN_DISPLAY_PWM_BL = 9;    // display pwm backlight
-static const uint8_t PIN_DISP_DC        = 33;   // display DC
+#define PIN_DISP_DC                       33   // display DC, using define to ensure TFT_eSPI driver is happy with its register-level GPIO access
+// static const uint8_t PIN_DISP_DC        = 33;   // display DC
 
 //  Power Management
 static const uint8_t PIN_PWR_SW         = 34;   // power switch input
