@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2025
  * 
  */
-// Include Libraries
+
 #include <Arduino.h>
 #include "terra.h"
 #include "power.h"
@@ -15,26 +15,26 @@
 #include "navigation.h"
 #include "display.h"
 
-#include <map>
 
-// Setup Function
 void setup() {
   Serial.begin(115200);
+  Wire.begin();
 
+  // Power management
   initPower();
+
+  // Haptic driver
   initHaptics();
 
-  // Initialize Screen
+  // Screen
   displayInit();
 
-  // Initialize GPS
+  // GPS
   initNav();
 
-  // Initialize compass
+  // Compass
   initCompass();
-  initCompassNoMotionDetection();
-
-  Wire.begin();
+  initCompassNoMotionDetection(TERRA_IDLE_SHUTDOWN_SEC);
 
   playEffect(HAP_EFFECT_PWRON); // power on sequence finsihed!
 }
@@ -42,6 +42,7 @@ void setup() {
 // Main Loop
 void loop() {
   navUpdate();
+  displayUpdate();
   
   batteryCheckVolatge();
   powerCheckButton();
