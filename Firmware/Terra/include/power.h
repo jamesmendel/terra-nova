@@ -11,12 +11,6 @@
 #define BATT_CHECK_INTERVAL_US  1000000 // 1 second
 
 
-#define BATT_MIN_VOLTS_MV       3400
-#define BATT_MAX_VOLTS_MV       4500
-#define BATT_VOLTAGE_SAMPLES    10
-#define BATT_SCALE_FACTOR       2
-#define BATT_CHECK_INTERVAL_US  1000000   // 1 second
-
 // #define DEBUG_POWER
 #ifdef DEBUG_POWER
 #define DEBUG_POWER_PRINT(...) Serial.printf(__VA_ARGS__)

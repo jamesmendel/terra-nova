@@ -24,7 +24,7 @@
 static Adafruit_BNO055 cmp = Adafruit_BNO055(55, BNO055_ADDRESS_A, &Wire);
 
 void initCompass();
-void initCompassNoMotionDetection();
+void initCompassNoMotionDetection(uint16_t timeout);
 void compassServiceInterrupts();
 
 int compassReadHeading();

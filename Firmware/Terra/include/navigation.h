@@ -14,6 +14,7 @@
 
 // #define DEBUG_NAVIGATION    // Global flag to enable GPS debugging by feeding dummy data through serial.
 #define NAV_UPDATE_INTERVAL_US  1000000 // 1 second
+#define NAV_GPS_MAX_READ_MS     500     // 0.5 second
 #define NAV_CHECKPOINT_THRESH_M 10  // Distance from the checkpoint that is considered an arrival.
 #define NAV_HAPTICS_THRESH_M    20  // When to trigger vibration to indicate the checkpoint is getting close.
 #define NAV_HAPTICS_DELAY_MS    500 // To determine the time between proximity vibrations when close to the current stop.
@@ -26,18 +27,20 @@ enum NavigationState {
 };
 static NavigationState navigationState = E_NOT_STARTED;
 
-
+static HardwareSerial& gpsStream = Serial1;
 static TinyGPSPlus gps;
 static double currentLat = 0;
 static double currentLon = 0;
 static bool navDataReceived = false;
+static bool gpsHWFix = false;
 
 
 void initNav();
 void navUpdate();
+bool navLocationKknown();
 void navFeedGPSData();
 void navUpdateTrailStatusAndNavigate();
-bool navReadGPS();
+void navUpdateLocationGlobals();
 void navUpdateHaptics();
 double getDistanceTo(double lat, double lon);
 String getCardinalTo(double lat, double lon);
