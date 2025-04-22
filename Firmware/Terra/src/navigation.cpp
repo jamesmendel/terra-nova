@@ -240,7 +240,9 @@ void navUpdateTrailStatusAndNavigate()
                 // Just arrived at this checkpoint
                 Serial.print("Arrived at Stop ");
                 Serial.println(currentStop);
-                ImageType checkpointImage = static_cast<ImageType>(I_CHECKPOINT_1 + currentStop - 1);
+                ImageType checkpointImage = (ImageType)(I_CHECKPOINT_1 + currentStop - 1);
+                if(checkpointImage > I_CHECKPOINT_10)
+                    checkpointImage = I_CHECKPOINT_10;
                 displaySetImage(checkpointImage); // Show the checkpoint image
                 navigationState = NAV_AT_CHECKPOINT; // Update state to at checkpoint
                 lastCheckpointTime = millis();     // Capture the time we arrived at the checkpoint
@@ -272,18 +274,14 @@ void navUpdateTrailStatusAndNavigate()
             // Continue with the condition to update navigation info only if there's a significant change in distance
             if (abs(lastDistance - distance) > 0.5)
             {
-                Serial.print("Distance to next stop: ");
-                Serial.print(distance, 1); // One decimal place for distance
-                Serial.print(" meters. Direction to next stop: ");
-                Serial.print(cardinal);
-                Serial.print(" (Target angle: ");
-                Serial.print(targetAngle);
-                Serial.println(" degrees)");
                 lastDistance = distance; // Update lastDistance for next comparison
-
+                
                 // Here, potentially display the arrow again if needed, based on your logic for selecting and displaying arrows
                 ImageType arrowImage = selectArrowImage(relativeDirection);
                 displaySetImage(arrowImage);
+
+                Serial.printf("Distance to next stop: %.1f meters.\n", distance);
+                Serial.printf("Direction to next stop: %s (Target angle: %d degrees)\n", cardinal, targetAngle);
 
                 // Set the flag to start continuous vibration when within a certain distance from the next stop
                 if (distance <= NAV_HAPTICS_THRESH_M && !navProximityHapticsFlag)
