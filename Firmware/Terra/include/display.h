@@ -23,49 +23,49 @@
 // Image Types
 enum ImageType
 {
-    E_NONE,
-    E_PENDING,
-    E_GOTOSTART,
-    E_ARROW_N,
-    E_ARROW_NNE,
-    E_ARROW_NE,
-    E_ARROW_ENE,
-    E_ARROW_E,
-    E_ARROW_ESE,
-    E_ARROW_SE,
-    E_ARROW_SSE,
-    E_ARROW_S,
-    E_ARROW_SSW,
-    E_ARROW_SW,
-    E_ARROW_WSW,
-    E_ARROW_W,
-    E_ARROW_WNW,
-    E_ARROW_NW,
-    E_ARROW_NNW,
-    E_CHECKPOINT_1,
-    E_CHECKPOINT_2,
-    E_CHECKPOINT_3,
-    E_CHECKPOINT_4,
-    E_CHECKPOINT_5,
-    E_CHECKPOINT_6,
-    E_CHECKPOINT_7,
-    E_CHECKPOINT_8,
-    E_CHECKPOINT_9,
-    E_CHECKPOINT_10
+    I_NONE,
+    I_PENDING,
+    I_GOTOSTART,
+    I_ARROW_N,
+    I_ARROW_NNE,
+    I_ARROW_NE,
+    I_ARROW_ENE,
+    I_ARROW_E,
+    I_ARROW_ESE,
+    I_ARROW_SE,
+    I_ARROW_SSE,
+    I_ARROW_S,
+    I_ARROW_SSW,
+    I_ARROW_SW,
+    I_ARROW_WSW,
+    I_ARROW_W,
+    I_ARROW_WNW,
+    I_ARROW_NW,
+    I_ARROW_NNW,
+    I_CHECKPOINT_1,
+    I_CHECKPOINT_2,
+    I_CHECKPOINT_3,
+    I_CHECKPOINT_4,
+    I_CHECKPOINT_5,
+    I_CHECKPOINT_6,
+    I_CHECKPOINT_7,
+    I_CHECKPOINT_8,
+    I_CHECKPOINT_9,
+    I_CHECKPOINT_10
 };
 
 enum DisplayState
 {
-    E_DISPLAY_OFF = 0x00,
-    E_DISPLAY_FADEOUT,
-    E_DISPLAY_UPDATING,
-    E_DISPLAY_FADEIN,
-    E_DISPLAY_STATIC,
+    DISPLAY_OFF = 0x00,
+    DISPLAY_FADEOUT,
+    DISPLAY_UPDATING,
+    DISPLAY_FADEIN,
+    DISPLAY_STATIC,
 };
 
 static TFT_eSPI tft = TFT_eSPI();
-static DisplayState displayNextState = E_DISPLAY_OFF;
-static ImageType displayImage = E_NONE;
+static DisplayState displayCurrentState = DISPLAY_OFF;
+static ImageType displayImage = I_NONE;
 static bool displayUpdating = false;
 static int16_t displayBrightness = 0;
 

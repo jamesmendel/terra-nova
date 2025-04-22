@@ -25,7 +25,7 @@ void _drawBitmap(const unsigned char* bitmap);
 void displayInit()
 {
     pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
-    analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);
+    analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);  // 0 at fisrt init
 
     tft.init();
     tft.setRotation(1);
@@ -40,39 +40,39 @@ void displayInit()
 ImageType selectArrowImage(int relativeDirection)
 {
     if (relativeDirection >= 348.75 || relativeDirection < 11.25)
-        return E_ARROW_N;
+        return I_ARROW_N;
     else if (relativeDirection >= 11.25 && relativeDirection < 33.75)
-        return E_ARROW_NNE;
+        return I_ARROW_NNE;
     else if (relativeDirection >= 33.75 && relativeDirection < 56.25)
-        return E_ARROW_NE;
+        return I_ARROW_NE;
     else if (relativeDirection >= 56.25 && relativeDirection < 78.75)
-        return E_ARROW_ENE;
+        return I_ARROW_ENE;
     else if (relativeDirection >= 78.75 && relativeDirection < 101.25)
-        return E_ARROW_E;
+        return I_ARROW_E;
     else if (relativeDirection >= 101.25 && relativeDirection < 123.75)
-        return E_ARROW_ESE;
+        return I_ARROW_ESE;
     else if (relativeDirection >= 123.75 && relativeDirection < 146.25)
-        return E_ARROW_SE;
+        return I_ARROW_SE;
     else if (relativeDirection >= 146.25 && relativeDirection < 168.75)
-        return E_ARROW_SSE;
+        return I_ARROW_SSE;
     else if (relativeDirection >= 168.75 && relativeDirection < 191.25)
-        return E_ARROW_S;
+        return I_ARROW_S;
     else if (relativeDirection >= 191.25 && relativeDirection < 213.75)
-        return E_ARROW_SSW;
+        return I_ARROW_SSW;
     else if (relativeDirection >= 213.75 && relativeDirection < 236.25)
-        return E_ARROW_SW;
+        return I_ARROW_SW;
     else if (relativeDirection >= 236.25 && relativeDirection < 258.75)
-        return E_ARROW_WSW;
+        return I_ARROW_WSW;
     else if (relativeDirection >= 258.75 && relativeDirection < 281.25)
-        return E_ARROW_W;
+        return I_ARROW_W;
     else if (relativeDirection >= 281.25 && relativeDirection < 303.75)
-        return E_ARROW_WNW;
+        return I_ARROW_WNW;
     else if (relativeDirection >= 303.75 && relativeDirection < 326.25)
-        return E_ARROW_NW;
+        return I_ARROW_NW;
     else if (relativeDirection >= 326.25 && relativeDirection < 348.75)
-        return E_ARROW_NNW;
+        return I_ARROW_NNW;
     else
-        return E_ARROW_N;
+        return I_ARROW_N;
 }
 
 /**
@@ -86,13 +86,18 @@ void displaySetImage(ImageType image)
     {
         displayImage = image;
 
-        if(displayNextState == E_DISPLAY_OFF) 
-            displayNextState = E_DISPLAY_UPDATING;
+        if(displayCurrentState == DISPLAY_OFF) 
+            // display is not showing anything, transition to updating bitmap without fade
+            displayCurrentState = DISPLAY_UPDATING;
         else
-            displayNextState = E_DISPLAY_FADEOUT;
+            // display has an image showing, fade out first.
+            displayCurrentState = DISPLAY_FADEOUT;
         return;
     }
-    displayNextState = E_DISPLAY_STATIC;
+
+    // no change was made, display is not changing.
+    displayCurrentState = DISPLAY_STATIC;
+    return;
 }
 
 /**
@@ -109,7 +114,7 @@ void _displayFadeOut()
         if (displayBrightness <= DISPLAY_BRIGHTNESS_OFF)
         {
             displayBrightness = DISPLAY_BRIGHTNESS_OFF;
-            displayNextState = E_DISPLAY_UPDATING;
+            displayCurrentState = DISPLAY_UPDATING;
         }
         analogWrite(PIN_DISPLAY_PWM_BL, (uint8_t)displayBrightness);
     }
@@ -129,7 +134,7 @@ void _displayFadeIn()
         if (displayBrightness >= DISPLAY_BRIGHTNESS_ON)
         {
             displayBrightness = DISPLAY_BRIGHTNESS_ON;
-            displayNextState = E_DISPLAY_STATIC;
+            displayCurrentState = DISPLAY_STATIC;
         }
         analogWrite(PIN_DISPLAY_PWM_BL, (uint8_t)displayBrightness);
     }
@@ -141,22 +146,22 @@ void _displayFadeIn()
  */
 void displayUpdate()
 {
-    switch (displayNextState)
+    switch (displayCurrentState)
     {
-    case (E_DISPLAY_OFF):
+    case (DISPLAY_OFF):
         tft.fillScreen(TFT_BLACK);
         displayBrightness = 0;
-        displayNextState = E_DISPLAY_STATIC;
-    case (E_DISPLAY_FADEOUT):
+        displayCurrentState = DISPLAY_STATIC;
+    case (DISPLAY_FADEOUT):
         _displayFadeOut();
         break;
-    case (E_DISPLAY_UPDATING):
+    case (DISPLAY_UPDATING):
         _displayDrawImage();
         break;
-    case (E_DISPLAY_FADEIN):
+    case (DISPLAY_FADEIN):
         _displayFadeIn();
         break;
-    case (E_DISPLAY_STATIC):
+    case (DISPLAY_STATIC):
     default:
         break;
     };
@@ -168,120 +173,120 @@ void displayUpdate()
  */
 void _displayDrawImage()
 {
-    displayNextState = E_DISPLAY_FADEIN;
+    displayCurrentState = DISPLAY_FADEIN;
 
     tft.fillScreen(TFT_BLACK);  // clear first
     switch (displayImage)
     {
-    case E_PENDING:
+    case I_PENDING:
         _drawBitmap(pending);
         Serial.println("Drawn pending.h");
         break;
-    case E_GOTOSTART:
+    case I_GOTOSTART:
         _drawBitmap(gotostart);
         Serial.println("Drawn gotostart.h");
         break;
-    case E_ARROW_N:
+    case I_ARROW_N:
         _drawBitmap(arrow_N);
         Serial.println("Drawn arrow_N.h");
         break;
-    case E_ARROW_NNE:
+    case I_ARROW_NNE:
         _drawBitmap(arrow_NNE);
         Serial.println("Drawn arrow_NNE.h");
         break;
-    case E_ARROW_NE:
+    case I_ARROW_NE:
         _drawBitmap(arrow_NE);
         Serial.println("Drawn arrow_NE.h");
         break;
-    case E_ARROW_ENE:
+    case I_ARROW_ENE:
         _drawBitmap(arrow_ENE);
         Serial.println("Drawn arrow_ENE.h");
         break;
-    case E_ARROW_E:
+    case I_ARROW_E:
         _drawBitmap(arrow_E);
         Serial.println("Drawn arrow_E.h");
         break;
-    case E_ARROW_ESE:
+    case I_ARROW_ESE:
         _drawBitmap(arrow_ESE);
         Serial.println("Drawn arrow_ESE.h");
         break;
-    case E_ARROW_SE:
+    case I_ARROW_SE:
         _drawBitmap(arrow_SE);
         Serial.println("Drawn arrow_SE.h");
         break;
-    case E_ARROW_SSE:
+    case I_ARROW_SSE:
         _drawBitmap(arrow_SSE);
         Serial.println("Drawn arrow_SSE.h");
         break;
-    case E_ARROW_S:
+    case I_ARROW_S:
         _drawBitmap(arrow_S);
         Serial.println("Drawn arrow_S.h");
         break;
-    case E_ARROW_SSW:
+    case I_ARROW_SSW:
         _drawBitmap(arrow_SSW);
         Serial.println("Drawn arrow_SSW.h");
         break;
-    case E_ARROW_SW:
+    case I_ARROW_SW:
         _drawBitmap(arrow_SW);
         Serial.println("Drawn arrow_SW.h");
         break;
-    case E_ARROW_WSW:
+    case I_ARROW_WSW:
         _drawBitmap(arrow_WSW);
         Serial.println("Drawn arrow_WSW.h");
         break;
-    case E_ARROW_W:
+    case I_ARROW_W:
         _drawBitmap(arrow_W);
         Serial.println("Drawn arrow_W.h");
         break;
-    case E_ARROW_WNW:
+    case I_ARROW_WNW:
         _drawBitmap(arrow_WNW);
         Serial.println("Drawn arrow_WNW.h");
         break;
-    case E_ARROW_NW:
+    case I_ARROW_NW:
         _drawBitmap(arrow_NW);
         Serial.println("Drawn arrow_NW.h");
         break;
-    case E_ARROW_NNW:
+    case I_ARROW_NNW:
         _drawBitmap(arrow_NNW);
         Serial.println("Drawn arrow_NNW.h");
         break;
-    case E_CHECKPOINT_1:
+    case I_CHECKPOINT_1:
         _drawBitmap(checkpoint_1);
         Serial.println("Drawn checkpoint_1.h");
         break;
-    case E_CHECKPOINT_2:
+    case I_CHECKPOINT_2:
         _drawBitmap(checkpoint_2);
         Serial.println("Drawn checkpoint_2.h");
         break;
-    case E_CHECKPOINT_3:
+    case I_CHECKPOINT_3:
         _drawBitmap(checkpoint_3);
         Serial.println("Drawn checkpoint_3.h");
         break;
-    case E_CHECKPOINT_4:
+    case I_CHECKPOINT_4:
         _drawBitmap(checkpoint_4);
         Serial.println("Drawn checkpoint_4.h");
         break;
-    case E_CHECKPOINT_5:
+    case I_CHECKPOINT_5:
         _drawBitmap(checkpoint_5);
         Serial.println("Drawn checkpoint_5.h");
         break;
-    case E_CHECKPOINT_6:
+    case I_CHECKPOINT_6:
         _drawBitmap(checkpoint_6);
         Serial.println("Drawn checkpoint_6.h");
         break;
-    case E_CHECKPOINT_7:
+    case I_CHECKPOINT_7:
         _drawBitmap(checkpoint_7);
         Serial.println("Drawn checkpoint_7.h");
         break;
-    case E_CHECKPOINT_8:
+    case I_CHECKPOINT_8:
         _drawBitmap(checkpoint_8);
         Serial.println("Drawn checkpoint_8.h");
         break;
-    case E_CHECKPOINT_9:
+    case I_CHECKPOINT_9:
         _drawBitmap(checkpoint_9);
         Serial.println("Drawn checkpoint_9.h");
         break;
-    case E_CHECKPOINT_10:
+    case I_CHECKPOINT_10:
         _drawBitmap(checkpoint_10);
         Serial.println("Drawn checkpoint_10.h");
         break;

@@ -20,12 +20,12 @@
 #define NAV_HAPTICS_DELAY_MS    500 // To determine the time between proximity vibrations when close to the current stop.
 
 enum NavigationState {
-    E_NOT_STARTED,
-    E_NAVIGATING,
-    E_AT_CHECKPOINT,
-    E_TRAIL_ENDED
+    NAV_NOT_STARTED,
+    NAV_NAVIGATING,
+    NAV_AT_CHECKPOINT,
+    NAV_TRAIL_ENDED
 };
-static NavigationState navigationState = E_NOT_STARTED;
+static NavigationState navigationState = NAV_NOT_STARTED;
 
 static HardwareSerial& gpsStream = Serial1;
 static TinyGPSPlus gps;

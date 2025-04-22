@@ -55,7 +55,7 @@ void initNav()
     gpsStream.begin(9600, SERIAL_8N1, PIN_RX1, PIN_TX1);
 #endif // DEBUG_NAVIGATION
 
-    navigationState = E_NOT_STARTED;
+    navigationState = NAV_NOT_STARTED;
 
     // Navigation update timer
     navUpdateTimer = timerBegin(0, 80, true);
@@ -175,22 +175,22 @@ void navUpdateTrailStatusAndNavigate()
     // Calculate the current distance and direction to the target
     double distance = getDistanceTo(targetLat, targetLon);
     String cardinal = getCardinalTo(targetLat, targetLon);
-    int targetAngle = getCourseTo(targetLat, targetLon); // Assume implementation exists
+    int targetAngle = getCourseTo(targetLat, targetLon);
     int currentAngle = compassReadHeading();
 
     // Calculate the relative direction for navigation
     int relativeDirection = calculateRelativeDirection(currentAngle, targetAngle);
 
-    if (navigationState == E_NOT_STARTED)
+    if (navigationState == NAV_NOT_STARTED)
     {
         if (!navDataReceived)
         {
-            displaySetImage(E_PENDING); // Show E_PENDING only when waiting for the first GPS data
+            displaySetImage(I_PENDING); // Show E_PENDING only when waiting for the first GPS data
         }
         else
         {
             Serial.println("Please proceed to the start of the trail.");
-            displaySetImage(E_GOTOSTART); // Now we're sure we've received data, show GOTOSTART
+            displaySetImage(I_GOTOSTART); // Now we're sure we've received data, show GOTOSTART
         }
 
         // Transition to navigating state once within close range to the start and data has been received
@@ -199,13 +199,13 @@ void navUpdateTrailStatusAndNavigate()
             trailStarted = true;
             currentStop = 1;
             Serial.println("Trail started. Heading to Stop 1.");
-            navigationState = E_NAVIGATING;
+            navigationState = NAV_NAVIGATING;
         }
         return; // Continue to skip rest of the function logic when NOT_STARTED
     }
 
     // Only update navigation arrow if we are in the navigating phase
-    if (navigationState == E_NAVIGATING)
+    if (navigationState == NAV_NAVIGATING)
     {
         ImageType arrowImage = selectArrowImage(relativeDirection);
         displaySetImage(arrowImage);
@@ -219,14 +219,14 @@ void navUpdateTrailStatusAndNavigate()
             trailStarted = true;
             currentStop = 1; // Moving towards the first checkpoint
             Serial.println("Trail started. Heading to Stop 1.");
-            navigationState = E_NAVIGATING;
+            navigationState = NAV_NAVIGATING;
         }
         else
         {
             Serial.println("Please proceed to the start of the trail.");
             if (navDataReceived)
             {
-                displaySetImage(E_GOTOSTART); // Indicating to go to the starting point
+                displaySetImage(I_GOTOSTART); // Indicating to go to the starting point
             }
         }
     }
@@ -235,14 +235,14 @@ void navUpdateTrailStatusAndNavigate()
     {
         if (distance <= NAV_CHECKPOINT_THRESH_M && currentStop <= numberOfStops)
         {
-            if (navigationState != E_AT_CHECKPOINT)
+            if (navigationState != NAV_AT_CHECKPOINT)
             {
                 // Just arrived at this checkpoint
                 Serial.print("Arrived at Stop ");
                 Serial.println(currentStop);
-                ImageType checkpointImage = static_cast<ImageType>(E_CHECKPOINT_1 + currentStop - 1);
+                ImageType checkpointImage = static_cast<ImageType>(I_CHECKPOINT_1 + currentStop - 1);
                 displaySetImage(checkpointImage); // Show the checkpoint image
-                navigationState = E_AT_CHECKPOINT; // Update state to at checkpoint
+                navigationState = NAV_AT_CHECKPOINT; // Update state to at checkpoint
                 lastCheckpointTime = millis();     // Capture the time we arrived at the checkpoint
 
                 // Check if this is the final stop
@@ -250,24 +250,24 @@ void navUpdateTrailStatusAndNavigate()
                 {
                     Serial.println("Final stop reached. Trail is complete.");
                     // Display I_PENDING image to indicate completion
-                    displaySetImage(E_PENDING);
+                    displaySetImage(I_PENDING);
                     // Optionally, you might want to change the navigation state or take other actions here
-                    navigationState = E_TRAIL_ENDED; // Resetting the state to NOT_STARTED or another appropriate state
+                    navigationState = NAV_TRAIL_ENDED; // Resetting the state to NOT_STARTED or another appropriate state
                 }
 
                 navProximityHapticsFlag = false; // Allow vibration to trigger again for the next stop
                 currentStop++;                   // Prepare for the next stop or complete the trail
             }
         }
-        else if (navigationState == E_AT_CHECKPOINT)
+        else if (navigationState == NAV_AT_CHECKPOINT)
         {
             if (millis() - lastCheckpointTime > 5000)
             {                                    // 5 seconds have passed since arriving at the checkpoint
-                navigationState = E_NAVIGATING;  // Transition back to navigating after the delay
+                navigationState = NAV_NAVIGATING;  // Transition back to navigating after the delay
                 navProximityHapticsFlag = false; // Reset vibration trigger flag
             }
         }
-        else if (navigationState == E_NAVIGATING && currentStop <= numberOfStops)
+        else if (navigationState == NAV_NAVIGATING && currentStop <= numberOfStops)
         {
             // Continue with the condition to update navigation info only if there's a significant change in distance
             if (abs(lastDistance - distance) > 0.5)
@@ -306,7 +306,7 @@ void navUpdateHaptics()
     if (navProximityHapticsFlag && ((millis() - lastVibrationTime) >= NAV_HAPTICS_DELAY_MS))
     {
         // Check if we should still be vibrating (if within a certain distance and navigating)
-        if (distance <= navProximityHapticsFlag && navigationState == E_NAVIGATING)
+        if (distance <= navProximityHapticsFlag && navigationState == NAV_NAVIGATING)
         {
             playEffect(HAP_EFFECT_PROX);
             lastVibrationTime = millis();

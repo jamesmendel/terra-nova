@@ -43,7 +43,7 @@ void setup() {
 void loop() {
   navUpdate();
   displayUpdate();
-  
+
   batteryCheckVolatge();
   powerCheckButton();
   compassServiceInterrupts();
