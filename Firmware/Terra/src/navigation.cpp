@@ -79,7 +79,7 @@ void navUpdate()
         navUpdateTrailStatusAndNavigate();
 
     }
-    navUpdateHaptics();
+    navServiceHaptics();
 }
 
 /**
@@ -161,136 +161,152 @@ void navFeedGPSData()
 }
 
 /**
- * @brief Main navigation logic
- * @todo REFACTOR ME!!
+ * @brief Main navigation logic & state handler
+ *
  */
 void navUpdateTrailStatusAndNavigate()
 {
-    static double lastDistance = -1;
-
-    // Obtain the target coordinates based on the trail's current status
-    double targetLat = !trailStarted ? startLat : stopLats[currentStop - 1];
-    double targetLon = !trailStarted ? startLon : stopLons[currentStop - 1];
-
-    // Calculate the current distance and direction to the target
-    double distance = getDistanceTo(targetLat, targetLon);
-    String cardinal = getCardinalTo(targetLat, targetLon);
-    int targetAngle = getCourseTo(targetLat, targetLon);
-    int currentAngle = compassReadHeading();
-
-    // Calculate the relative direction for navigation
-    int relativeDirection = calculateRelativeDirection(currentAngle, targetAngle);
+    static double lastDistance = -1; // Retain value across function calls
 
     if (navigationState == NAV_NOT_STARTED)
     {
-        if (!navDataReceived)
-        {
-            displaySetImage(I_PENDING); // Show E_PENDING only when waiting for the first GPS data
-        }
-        else
-        {
-            Serial.println("Please proceed to the start of the trail.");
-            displaySetImage(I_GOTOSTART); // Now we're sure we've received data, show GOTOSTART
-        }
-
-        // Transition to navigating state once within close range to the start and data has been received
-        if (navDataReceived && distance <= NAV_CHECKPOINT_THRESH_M)
-        {
-            trailStarted = true;
-            currentStop = 1;
-            Serial.println("Trail started. Heading to Stop 1.");
-            navigationState = NAV_NAVIGATING;
-        }
-        return; // Continue to skip rest of the function logic when NOT_STARTED
+        _handleNotStartedState();
+        return;
     }
 
-    // Only update navigation arrow if we are in the navigating phase
+    double targetLat = !trailStarted ? startLat : stopLats[currentStop - 1];
+    double targetLon = !trailStarted ? startLon : stopLons[currentStop - 1];
+    
+    double distance = getDistanceTo(targetLat, targetLon);
+    int targetAngle = getCourseTo(targetLat, targetLon);
+    int currentAngle = compassReadHeading();
+    int relativeDirection = calculateRelativeDirection(currentAngle, targetAngle);
+
     if (navigationState == NAV_NAVIGATING)
+    {
+        // Update distance and haptics only if there is a significant change
+        if (abs(lastDistance - distance) > 0.5)
+        {
+            lastDistance = distance;
+            
+            _handleNavigatingState(distance, relativeDirection);
+            _updateDistanceAndHaptics(distance);
+
+            Serial.printf("Distance to next stop: %.1f meters.\n", distance);
+            Serial.printf("Direction to next stop: %d degrees.\n", relativeDirection);
+        }
+
+    }
+    else if (navigationState == NAV_AT_CHECKPOINT)
+    {
+        _handleAtCheckpointState();
+    }
+
+}
+
+/**
+ * @brief NAV_STATE: Not started. Checks for user to get to the begining of trail,
+ * and starts the navigation.
+ * 
+ */
+void _handleNotStartedState()
+{
+    if (!navDataReceived)
+    {
+        displaySetImage(I_PENDING);
+    }
+    else
+    {
+        Serial.println("Please proceed to the start of the trail.");
+        displaySetImage(I_GOTOSTART);
+    }
+
+    if (navDataReceived && getDistanceTo(startLat, startLon) <= NAV_CHECKPOINT_THRESH_M)
+    {
+        trailStarted = true;
+        currentStop = 1;
+        Serial.println("Trail started. Heading to Stop 1.");
+        navigationState = NAV_NAVIGATING;
+    }
+}
+
+/**
+ * @brief NAV_STATE: Navigating. Checks distance between user and next stop and
+ * transitions to checkpoint handler, if near enough. Otherwise, updates display
+ * based on heading.
+ * 
+ * @param distance current distance between user and current stop
+ * @param relativeDirection target heading towards current stop
+ */
+void _handleNavigatingState(double distance, int relativeDirection)
+{
+    if (distance <= NAV_CHECKPOINT_THRESH_M && currentStop <= numberOfStops)
+    {
+        _arriveAtCheckpoint();
+    }
+    else
     {
         ImageType arrowImage = selectArrowImage(relativeDirection);
         displaySetImage(arrowImage);
     }
+}
 
-    // Start of the trail
-    if (!trailStarted)
+/**
+ * @brief NAV_STATE: At checkpoint. Performs checkpoint logic for 
+ * the set period of time then returns to navigating state.s
+ * 
+ */
+void _handleAtCheckpointState()
+{
+    if (millis() - lastCheckpointTime > 5000)
     {
-        if (distance <= NAV_CHECKPOINT_THRESH_M)
-        { // "Closeness" threshold
-            trailStarted = true;
-            currentStop = 1; // Moving towards the first checkpoint
-            Serial.println("Trail started. Heading to Stop 1.");
-            navigationState = NAV_NAVIGATING;
-        }
-        else
-        {
-            Serial.println("Please proceed to the start of the trail.");
-            if (navDataReceived)
-            {
-                displaySetImage(I_GOTOSTART); // Indicating to go to the starting point
-            }
-        }
+        navigationState = NAV_NAVIGATING;
+        navProximityHapticsFlag = false;
     }
-    // Navigating the trail
-    else
+}
+
+/**
+ * @brief NAV_STATE: Arrive at checkpoint. Updates display and state machine. 
+ * 
+ */
+void _arriveAtCheckpoint()
+{
+    currentStop++;
+    navProximityHapticsFlag = false;
+    
+    if (currentStop >= numberOfStops)
     {
-        if (distance <= NAV_CHECKPOINT_THRESH_M && currentStop <= numberOfStops)
-        {
-            if (navigationState != NAV_AT_CHECKPOINT)
-            {
-                // Just arrived at this checkpoint
-                Serial.print("Arrived at Stop ");
-                Serial.println(currentStop);
-                ImageType checkpointImage = (ImageType)(I_CHECKPOINT_1 + currentStop - 1);
-                if(checkpointImage > I_CHECKPOINT_10)
-                    checkpointImage = I_CHECKPOINT_10;
-                displaySetImage(checkpointImage); // Show the checkpoint image
-                navigationState = NAV_AT_CHECKPOINT; // Update state to at checkpoint
-                lastCheckpointTime = millis();     // Capture the time we arrived at the checkpoint
+        Serial.println("Final stop reached. Trail is complete.");
+        displaySetImage(I_PENDING);
+        navigationState = NAV_TRAIL_ENDED;
+        return;
+    }
+    
+    ImageType checkpointImage = (ImageType)(I_CHECKPOINT_1 + currentStop - 1);
+    if (checkpointImage > I_CHECKPOINT_10)
+        checkpointImage = I_CHECKPOINT_10;
+    displaySetImage(checkpointImage);
+    
+    navigationState = NAV_AT_CHECKPOINT;
+    lastCheckpointTime = millis();
 
-                // Check if this is the final stop
-                if (currentStop == numberOfStops)
-                {
-                    Serial.println("Final stop reached. Trail is complete.");
-                    // Display I_PENDING image to indicate completion
-                    displaySetImage(I_PENDING);
-                    // Optionally, you might want to change the navigation state or take other actions here
-                    navigationState = NAV_TRAIL_ENDED; // Resetting the state to NOT_STARTED or another appropriate state
-                }
+    Serial.printf("Arrived at Stop %d\n", currentStop);
+}
 
-                navProximityHapticsFlag = false; // Allow vibration to trigger again for the next stop
-                currentStop++;                   // Prepare for the next stop or complete the trail
-            }
-        }
-        else if (navigationState == NAV_AT_CHECKPOINT)
-        {
-            if (millis() - lastCheckpointTime > 5000)
-            {                                    // 5 seconds have passed since arriving at the checkpoint
-                navigationState = NAV_NAVIGATING;  // Transition back to navigating after the delay
-                navProximityHapticsFlag = false; // Reset vibration trigger flag
-            }
-        }
-        else if (navigationState == NAV_NAVIGATING && currentStop <= numberOfStops)
-        {
-            // Continue with the condition to update navigation info only if there's a significant change in distance
-            if (abs(lastDistance - distance) > 0.5)
-            {
-                lastDistance = distance; // Update lastDistance for next comparison
-                
-                // Here, potentially display the arrow again if needed, based on your logic for selecting and displaying arrows
-                ImageType arrowImage = selectArrowImage(relativeDirection);
-                displaySetImage(arrowImage);
-
-                Serial.printf("Distance to next stop: %.1f meters.\n", distance);
-                Serial.printf("Direction to next stop: %s (Target angle: %d degrees)\n", cardinal, targetAngle);
-
-                // Set the flag to start continuous vibration when within a certain distance from the next stop
-                if (distance <= NAV_HAPTICS_THRESH_M && !navProximityHapticsFlag)
-                {
-                    navProximityHapticsFlag = true;
-                    lastVibrationTime = millis(); // Ensure we start timing from now
-                }
-            }
-        }
+/**
+ * @brief Update distance if it has changed significantly, and 
+ * trigger haptic feedback flag if within a certain distance. 
+ * 
+ * @param distance between user and current stop.
+ * @param lastDistance to check if an update to distance is required.
+ * @return double distance to the next stop.
+ */
+void _updateDistanceAndHaptics(double distance)
+{
+    if (distance <= NAV_HAPTICS_THRESH_M && !navProximityHapticsFlag)
+    {
+        navProximityHapticsFlag = true;
+        lastVibrationTime = millis();
     }
 }
 
@@ -298,7 +314,7 @@ void navUpdateTrailStatusAndNavigate()
  * @brief Manage playback of proximity-based haptics
  *
  */
-void navUpdateHaptics()
+void navServiceHaptics()
 {
     // Continuously trigger vibration when within a certain distance of the next stop
     if (navProximityHapticsFlag && ((millis() - lastVibrationTime) >= NAV_HAPTICS_DELAY_MS))

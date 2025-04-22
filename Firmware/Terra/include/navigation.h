@@ -41,11 +41,17 @@ bool navLocationKknown();
 void navFeedGPSData();
 void navUpdateTrailStatusAndNavigate();
 void navUpdateLocationGlobals();
-void navUpdateHaptics();
+void navServiceHaptics();
 double getDistanceTo(double lat, double lon);
 String getCardinalTo(double lat, double lon);
 int getCourseTo(double lat, double lon);
 int calculateRelativeDirection(int currentAngle, int targetAngle);
+
+void _handleNotStartedState();
+void _handleNavigatingState(double distance, int relativeDirection);
+void _handleAtCheckpointState();
+void _arriveAtCheckpoint();
+void _updateDistanceAndHaptics(double distance);
 
 #ifdef DEBUG_NAVIGATION
 bool navReadSerialGPS();
