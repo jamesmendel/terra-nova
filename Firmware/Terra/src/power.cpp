@@ -35,7 +35,7 @@ void IRAM_ATTR battCheckISR() {
 void initPower() {
     // Power switch
     pinMode(PIN_PWR_SW, INPUT);
-    attachInterrupt(digitalPinToInterrupt(PIN_PWR_SW), powerButtonISR, CHANGE);
+    // attachInterrupt(digitalPinToInterrupt(PIN_PWR_SW), powerButtonISR, CHANGE);
     
     // Power off signal
     pinMode(PIN_PWROFF, INPUT); // configure as an input so the pin is high impedance (allow SW4 to function)
@@ -54,10 +54,10 @@ void initPower() {
 }
 
 void powerDownNow() {
-    Serial.println("Powering down now!");
+    printf("Powering down now!\n");
 
-    playEffect(HAP_EFFECT_PWRDOWN);
-    while(isEffectPlaying()) usleep(1000);
+    // playEffect(HAP_EFFECT_PWRDOWN);
+    // while(isEffectPlaying()) usleep(1000);
 
     pinMode(PIN_PWROFF, OUTPUT);
 
@@ -98,24 +98,42 @@ void batteryCheckVolatge() {
 }
 
 void powerCheckButton() {
-    if (buttonPressedFlag) {
-        buttonPressedFlag = false;
+    static volatile bool buttonPressed = false;
+    buttonPressed = digitalRead(PIN_PWR_SW);
+
+    if (!buttonPressed) {
+        if(buttonPressedFlag == true) {
+            // Button was previously pressed and now released
+            buttonPressedFlag = false;
+            unsigned long buttonPressDuration = millis() - buttonPressStart;
+            DEBUG_POWER_PRINT("Button released after %lu ms\n", buttonPressDuration);
+            if (buttonPressDuration >= POWER_OFF_THRESHOLD_MS) {
+                powerDownNow();
+            }
+            return;
+        }        
+    }
+    
+    if (buttonPressed && !buttonPressedFlag) {
+        buttonPressedFlag = true;
         buttonPressStart = millis();
         DEBUG_POWER_PRINT("Button pressed at %lu ms\n", buttonPressStart);
+        return;
     }
 
-    if (buttonReleasedFlag) {
-        buttonReleasedFlag = false;
-        unsigned long buttonPressDuration = millis() - buttonPressStart;
+    // if (buttonReleasedFlag) {
+    // // if (digitalRead(PIN_PWR_SW)) {
+    //     buttonReleasedFlag = false;
+    //     unsigned long buttonPressDuration = millis() - buttonPressStart;
 
-        #ifdef DEBUG_POWER
-        if (buttonPressDuration > 50) {
-            DEBUG_POWER_PRINT("Button released after %lu ms\n", buttonPressDuration);
-        }
-        #endif // DEBUG_POWER
+    //     #ifdef DEBUG_POWER
+    //     // if (buttonPressDuration > 50) {
+    //         DEBUG_POWER_PRINT("Button released after %lu ms\n", buttonPressDuration);
+    //     // }
+    //     #endif // DEBUG_POWER
 
-        if (buttonPressDuration >= POWER_OFF_THRESHOLD_MS) {
-            powerDownNow();
-        }
-    }
+    //     if (buttonPressDuration >= POWER_OFF_THRESHOLD_MS) {
+    //         powerDownNow();
+    //     }
+    // }
 }

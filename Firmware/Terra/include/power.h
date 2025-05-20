@@ -3,7 +3,7 @@
 
 #define POWER_OFF_THRESHOLD_MS  2000    // button hold time to trigger power-off sequence
 
-#define BATT_CONNECTED_MV       1000    // no battery threshold
+#define BATT_CONNECTED_MV       1500    // no battery threshold
 #define BATT_MIN_VOLTS_MV       3400    // battery low turn off threshold
 #define BATT_MAX_VOLTS_MV       4500    // battery high turn off threshold
 #define BATT_VOLTAGE_SAMPLES    10      // number of battery votlage samples
@@ -11,9 +11,9 @@
 #define BATT_CHECK_INTERVAL_US  1000000 // 1 second
 
 
-// #define DEBUG_POWER
+#define DEBUG_POWER
 #ifdef DEBUG_POWER
-#define DEBUG_POWER_PRINT(...) Serial.printf(__VA_ARGS__)
+#define DEBUG_POWER_PRINT(...) printf(__VA_ARGS__)
 #else
 #define DEBUG_POWER_PRINT(...) do {} while (0)
 #endif // DEBUG_POWER
