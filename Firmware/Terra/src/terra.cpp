@@ -17,8 +17,18 @@
 
 
 void setup() {
+  esp_log_level_set("*", ESP_LOG_VERBOSE);  // or ESP_LOGV for verbose
+  
+  pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
+  analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);  // 0 at fisrt init
+
   Serial.begin(115200);
-  Wire.begin();
+  printf("========= TERRA =========\n");
+  printf("sha:  %s\nat:   %s %s\n", GIT_COMMIT_ID, BUILD_DATE, BUILD_TIME);
+  printf("=========================\n");
+  
+  printf("SDA: %d, SCL: %d\n", SDA, SCL);
+  printf("I2C: %d\n", Wire.begin(SDA, SCL));
 
   // Power management
   initPower();
