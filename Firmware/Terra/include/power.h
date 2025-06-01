@@ -5,8 +5,8 @@
 
 #define BATT_CONNECTED_MV       1500    // no battery threshold
 #define BATT_MIN_VOLTS_MV       3400    // battery low turn off threshold
-#define BATT_MAX_VOLTS_MV       4500    // battery high turn off threshold
-#define BATT_VOLTAGE_SAMPLES    10      // number of battery votlage samples
+#define BATT_MAX_VOLTS_MV       4300    // battery high turn off threshold
+#define BATT_VOLTAGE_SAMPLES    5       // number of battery votlage samples
 #define BATT_SCALE_FACTOR       2       // inverse of voltage divider ratio
 #define BATT_CHECK_INTERVAL_US  1000000 // 1 second
 
@@ -25,5 +25,7 @@ void powerDownNow();
 
 uint16_t batteryReadVolatge();
 void batteryCheckVolatge();
+
+static volatile uint16_t batteryLastMillivolts = 0;
 
 #endif // POWER_H

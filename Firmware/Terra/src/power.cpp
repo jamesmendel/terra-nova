@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "power.h"
 #include "haptics.h"
+#include "display.h"
 
 // Private members
 void IRAM_ATTR powerButtonISR();
@@ -56,11 +57,17 @@ void initPower() {
 void powerDownNow() {
     printf("Powering down now!\n");
 
-    // playEffect(HAP_EFFECT_PWRDOWN);
-    // while(isEffectPlaying()) usleep(1000);
-
+    playEffect(HAP_EFFECT_PWRDOWN);
+    while(isEffectPlaying()) usleep(1000);
+    
+    displaySetImage(I_NONE);
+    while(displayGetBrightness() >= DISPLAY_BRIGHTNESS_OFF) {
+        displayUpdate();
+        if(displayGetBrightness() <= DISPLAY_BRIGHTNESS_OFF)
+            break;
+    }
+    
     pinMode(PIN_PWROFF, OUTPUT);
-
     while(1) {
         digitalWrite(PIN_PWROFF, HIGH);
     }
@@ -71,6 +78,7 @@ uint16_t batteryReadVolatge() {
 
     for(uint8_t i = 0; i < BATT_VOLTAGE_SAMPLES; i++) {
         millivolts += analogReadMilliVolts(PIN_BAT_VOLTAGE) * BATT_SCALE_FACTOR;
+        delay(5);
     }
     millivolts /= BATT_VOLTAGE_SAMPLES;
 
@@ -81,19 +89,24 @@ void batteryCheckVolatge() {
     if(batteryPendingCheck) {
         batteryPendingCheck = false;
         
-        uint16_t millivolts = batteryReadVolatge();
+        batteryLastMillivolts = batteryReadVolatge();
 
-        if(millivolts <= BATT_CONNECTED_MV) {
+        if(batteryLastMillivolts <= BATT_CONNECTED_MV) {
             // Battery is disconnected, running on USB only
             return;
         }
 
-        if(millivolts <= BATT_MIN_VOLTS_MV || millivolts >= BATT_MAX_VOLTS_MV) {
-            printf("Battery in unsafe condition: %d mV\n", millivolts);
+        if(batteryLastMillivolts <= BATT_MIN_VOLTS_MV || batteryLastMillivolts >= BATT_MAX_VOLTS_MV) {
+            printf("Battery in unsafe condition: %d mV\n", batteryLastMillivolts);
             powerDownNow();
         } 
 
-        DEBUG_POWER_PRINT("Battery voltage: %d\n", millivolts);
+        DEBUG_POWER_PRINT("Battery voltage: %d\n", batteryLastMillivolts);
+
+        char dbg3[16];
+        snprintf(dbg3, 16, "BAT: %04d", batteryLastMillivolts);
+        tftDrawDebugOverlay(dbg3, 3, 1);
+
     }
 }
 
