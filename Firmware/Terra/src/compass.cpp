@@ -2,18 +2,22 @@
 #include <cmath>
 #include "compass.h"
 #include "power.h"
+#include "esp_log.h"
 
 inline uint8_t _encodeNoMotionDuration(uint16_t target);
 void IRAM_ATTR _compassIntISR();
 
+static const char* LOGTAG = "Compass";
 static volatile bool compassPendingInterrupt = false;
-
+volatile bool cmpReady = false;
 
 /**
  * @brief Configure compass pins and construct the device
  * 
  */
 void initCompass() {
+    ESP_LOGI(LOGTAG, "Start BNO55 Init...");
+
     pinMode(PIN_CMP_RST, OUTPUT);
     pinMode(PIN_CMP_INT, INPUT);
     digitalWrite(PIN_CMP_RST, !LOW);
@@ -21,12 +25,13 @@ void initCompass() {
     attachInterrupt(PIN_CMP_INT, _compassIntISR, RISING);
 
     if (!cmp.begin(OPERATION_MODE_NDOF)) {
-        printf("Could not find BNO055\n");
+        ESP_LOGE(LOGTAG, "Could not find BNO055");
         return;
     }
     cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.4 of BNO055 datasheet)
     cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.4 of BNO055 datasheet)
-    printf("BNO55 Initialized!\n");
+    ESP_LOGI(LOGTAG, "BNO55 Initialized!");
+    cmpReady = true;
 }
 
 /**

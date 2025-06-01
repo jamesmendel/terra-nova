@@ -16,6 +16,8 @@
 #include "haptics.h"
 #include "display.h"
 #include "driver/timer.h"
+#include "esp_log.h"
+static const char* LOGTAG = "Navigation";
 
 // Private members
 void triggerProximityVibration();
@@ -78,6 +80,12 @@ void navUpdate()
     if (navPendingUpdate)
     {
         navPendingUpdate = false;
+        if(!cmpReady) {
+            displaySetImage(I_PENDING);
+            ESP_LOGW(LOGTAG, "Compass is not ready to navigate.");
+            return;
+        }
+
         printf("GPS Fix: %s\n", navLocationKknown() ? "Fixed" : "Unknown");
 
         navFeedGPSData();

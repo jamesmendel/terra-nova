@@ -15,20 +15,23 @@
 #include "navigation.h"
 #include "display.h"
 
+// Private task definitions
+void _InitPeripheralTask(void *pvParam);
+
 
 void setup() {
-  esp_log_level_set("*", ESP_LOG_VERBOSE);  // or ESP_LOGV for verbose
+  esp_log_level_set("*", ESP_LOG_DEBUG);  // or ESP_LOGV for verbose
   
   pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
   analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);  // 0 at fisrt init
 
   Serial.begin(115200);
   printf("========= TERRA =========\n");
+  printf("log filter: %d color: %s\n", CORE_DEBUG_LEVEL, LOG_COLOR_BLACK);
   printf("sha:  %s\nat:   %s %s\n", GIT_COMMIT_ID, BUILD_DATE, BUILD_TIME);
   printf("=========================\n");
   
-  printf("SDA: %d, SCL: %d\n", SDA, SCL);
-  printf("I2C: %d\n", Wire.begin(SDA, SCL));
+  Wire.begin(SDA, SCL);
 
   // Power management
   initPower();
@@ -41,10 +44,11 @@ void setup() {
 
   // GPS
   initNav();
-
+  
   // Compass
-  initCompass();
-  initCompassNoMotionDetection(TERRA_IDLE_SHUTDOWN_SEC);
+  // initCompass();
+  xTaskCreatePinnedToCore(_InitPeripheralTask, "CompassInit", 4096, (void*)initCompass, 1, NULL, 0);
+  // initCompassNoMotionDetection(TERRA_IDLE_SHUTDOWN_SEC);
 
   playEffect(HAP_EFFECT_PWRON); // power on sequence finsihed!
 }
@@ -57,4 +61,10 @@ void loop() {
   batteryCheckVolatge();
   powerCheckButton();
   compassServiceInterrupts();
+}
+
+void _InitPeripheralTask(void *pvParam) {
+  void (*initFn)() = (void (*)())pvParam;
+  initFn();
+  vTaskDelete(NULL);
 }

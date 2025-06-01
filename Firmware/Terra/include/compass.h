@@ -24,6 +24,7 @@
 
 // Global compass
 static Adafruit_BNO055 cmp = Adafruit_BNO055(55, BNO055_ADDRESS_A, &Wire);
+extern volatile bool cmpReady;
 
 void initCompass();
 void initCompassNoMotionDetection(uint16_t timeout);
