@@ -26,9 +26,16 @@ void displayInit()
 {
     pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
     analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);  // 0 at fisrt init
-
+    
     tft.init();
     tft.setRotation(1);
+    
+    tft.fillScreen(TFT_BLACK);
+    //analogWrite(PIN_DISPLAY_PWM_BL, 100);
+ 
+    tft.setTextColor(TFT_GREEN);
+    tft.setTextSize(2);
+    tft.drawString("Hello, TERRA!", 10, 100);
 }
 
 /**
@@ -96,7 +103,7 @@ void displaySetImage(ImageType image)
     }
 
     // no change was made, display is not changing.
-    displayCurrentState = DISPLAY_STATIC;
+    // displayCurrentState = DISPLAY_STATIC;
     return;
 }
 
@@ -126,7 +133,7 @@ void _displayFadeOut()
  */
 void _displayFadeIn()
 {
-    static int lastStep = 0;
+    static unsigned long lastStep = 0;
     if (millis() - lastStep >= DISPLAY_FADE_DELAY_MS)
     {
         lastStep = millis();
@@ -173,8 +180,12 @@ void displayUpdate()
  */
 void _displayDrawImage()
 {
+    if (displayImage == I_NONE) {
+        displayCurrentState = DISPLAY_FADEOUT;
+        return;
+    }
+    
     displayCurrentState = DISPLAY_FADEIN;
-
     tft.fillScreen(TFT_BLACK);  // clear first
     switch (displayImage)
     {
@@ -299,4 +310,14 @@ void _displayDrawImage()
 void _drawBitmap(const unsigned char *bitmap)
 {
     tft.drawXBitmap(0, 0, bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, TFT_BLACK, TFT_WHITE);
+}
+
+int16_t displayGetBrightness() {
+    return displayBrightness;
+}
+
+void tftDrawDebugOverlay(const char* str, float line, uint8_t size) {
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
+    tft.setTextSize(size);
+    tft.drawString(str, 10, 100 + (uint8_t)(line*16));
 }

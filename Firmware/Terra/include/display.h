@@ -74,4 +74,8 @@ void displayUpdate();
 void displaySetImage(ImageType image);
 ImageType selectArrowImage(int relativeDirection);
 
+int16_t displayGetBrightness();
+
+void tftDrawDebugOverlay(const char* str, float line, uint8_t size = 2);
+
 #endif // DISPLAY_H
