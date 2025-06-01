@@ -23,29 +23,35 @@ static const uint8_t PIN_RX1 = 18;
 // ================================
 // I2C:     IMU, Compass, Haptics
 // ================================
-static const uint8_t SDA = 7;   // SDA used by Wire.cpp
+static const uint8_t SDA = 8;   // SDA used by Wire.cpp
 static const uint8_t SCL = 9;   // SCL used by Wire.cpp
 
 
 // ================================
 // SPI:     Display
 // ================================
-static const uint8_t SS    = 10;
-static const uint8_t MOSI  = 11;
-static const uint8_t MISO  = 13;
-static const uint8_t SCK   = 12;
+#define SS 10
+#define MOSI 11
+#define MISO 13
+#define SCK  12
+// static const uint8_t SS    = 10;
+// static const uint8_t MOSI  = 11;
+// static const uint8_t MISO  = 13;
+// static const uint8_t SCK   = 12;
 
 
 // ================================
 // GPIO:    Peripherals, etc.
 // ================================
 //  Battery
-static const uint8_t PIN_BAT_VOLTAGE    = 5;
+static const uint8_t PIN_BAT_VOLTAGE    = 1;
 
 //  Display
-static const uint8_t PIN_DISPLAY_RST    = 8;    // active low display reset
-static const uint8_t PIN_DISPLAY_PWM_BL = 9;    // display pwm backlight
+#define PIN_DISPLAY_RST                   4    // active low display reset
+#define PIN_DISPLAY_PWM_BL                5    // display pwm backlight
 #define PIN_DISP_DC                       33   // display DC, using define to ensure TFT_eSPI driver is happy with its register-level GPIO access
+// static const uint8_t PIN_DISPLAY_RST    = 4;    // active low display reset
+// static const uint8_t PIN_DISPLAY_PWM_BL = 5;    // display pwm backlight
 // static const uint8_t PIN_DISP_DC        = 33;   // display DC
 
 //  Power Management
@@ -58,8 +64,8 @@ static const uint8_t PIN_CMP_RST        = 38;   // active low compass reset
 
 //  GPS
 static const uint8_t PIN_GPS_RST        = 39;   // active low GPS reset
-static const uint8_t PIN_GPS_STBY       = 39;   // GPS standby mode
-static const uint8_t PIN_GPS_FIX        = 40;   // GPS fix indicator
+static const uint8_t PIN_GPS_STBY       = 40;   // GPS standby mode
+static const uint8_t PIN_GPS_FIX        = 41;   // GPS fix indicator
 
 //  Haptics
 static const uint8_t PIN_HAP_IN_TRIG    = 42;   // haptics in or trigger
