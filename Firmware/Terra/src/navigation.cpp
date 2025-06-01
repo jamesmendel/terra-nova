@@ -15,6 +15,7 @@
 #include "compass.h"
 #include "haptics.h"
 #include "display.h"
+#include "driver/timer.h"
 
 // Private members
 void triggerProximityVibration();
@@ -44,21 +45,25 @@ void initNav()
     pinMode(PIN_GPS_STBY, OUTPUT);
     pinMode(LED_BUILTIN,  OUTPUT);  // Using LED_BUILTIN as FIX indicator
 
-    attachInterrupt(PIN_GPS_FIX, &navGPSFixISR, CHANGE);
+    attachInterrupt(PIN_GPS_FIX, navGPSFixISR, CHANGE);
     gpsHWFix = digitalRead(PIN_GPS_FIX);
 
-    digitalWrite(PIN_GPS_RST, !LOW);
-    digitalWrite(PIN_GPS_STBY, LOW);
+    // digitalWrite(PIN_GPS_RST, !LOW);
+    digitalWrite(PIN_GPS_RST, LOW); // Disable integrated GPS
+    // digitalWrite(PIN_GPS_STBY, LOW);
+    digitalWrite(PIN_GPS_STBY, HIGH); // Disabled integrated GPS
     digitalWrite(LED_BUILTIN,  LOW);
 
 #ifndef DEBUG_NAVIGATION
     gpsStream.begin(9600, SERIAL_8N1, PIN_RX1, PIN_TX1);
+    // gpsStream.println(GPS_PMTK_API_SET_NMEA_OUTPUT_RMCGGA);
+    // gpsStream.println(GPS_PMTK_API_SET_GNSS_SEARCH_MODE);
 #endif // DEBUG_NAVIGATION
 
     navigationState = NAV_NOT_STARTED;
 
     // Navigation update timer
-    navUpdateTimer = timerBegin(0, 80, true);
+    navUpdateTimer = timerBegin(1, 80, true);
     timerAttachInterrupt(navUpdateTimer, &navUpdateISR, true);
     timerAlarmWrite(navUpdateTimer, NAV_UPDATE_INTERVAL_US, true);
     timerAlarmEnable(navUpdateTimer);
@@ -73,7 +78,7 @@ void navUpdate()
     if (navPendingUpdate)
     {
         navPendingUpdate = false;
-        Serial.printf("GPS Fix: %s\n", navLocationKknown() ? "Fixed" : "Unknown");
+        printf("GPS Fix: %s\n", navLocationKknown() ? "Fixed" : "Unknown");
 
         navFeedGPSData();
         navUpdateTrailStatusAndNavigate();
@@ -104,16 +109,21 @@ void IRAM_ATTR navGPSFixISR()
 /**
  * @brief Tells us if there is a lock on our current location
  *
- * @return true location is known
+ * @return true location is known and fresh
  * @return false location is unknown
  */
 bool navLocationKknown()
 {
-    if (gpsHWFix)
-    {
-        return gps.location.isValid();
+    if(gps.location.isValid()) {
+        return (gps.location.age() < 15 * 1000); // 15 second fix expiration
     }
     return false;
+    // Removed while integrated GPS is not working.
+    // if (gpsHWFix)
+    // {
+    //     return gps.location.isValid();
+    // }
+    // return false;
 }
 
 /**
@@ -142,13 +152,37 @@ void navFeedGPSData()
     unsigned long readStart = millis();
     while (gpsStream.available() > 0)
     {
-        // TODO: Check how long this really runs for... Ideally we are not blocking for 500ms...
-        //       May need to increase GPS baudrate on hardware
-        gps.encode(gpsStream.read());
-        if (millis() - readStart < NAV_GPS_MAX_READ_MS)
-            break;
+        char gpsDat = (char)gpsStream.read();
+        gps.encode(gpsDat);
+
+        #ifdef DEBUG_GPS_TO_SERIAL
+        printf("%c", gpsDat);
+        #endif // DEBUG_GPS_TO_SERIAL
     }
     navUpdateLocationGlobals();
+
+    //TODO: REMOVE DEBUG PRINT
+    #ifdef DEBUG_GPS
+    char dbg[16];
+    snprintf(dbg, 16, "SAT: %d  FIX? %d", gps.satellites.value(), navLocationKknown());
+    tftDrawDebugOverlay(dbg, 0);
+    char dbg3[16], dbg4[16];
+    if(navLocationKknown()) {
+        snprintf(dbg3, 16, "LAT: %03.03f", gps.location.lat());
+        snprintf(dbg4, 16, "LNG: %03.03f", gps.location.lng());
+    } else {
+        memset(dbg3, ' ', 15);
+        dbg3[15]='\0';
+        memset(dbg4, ' ', 15);
+        dbg4[15]='\0';
+    }
+    tftDrawDebugOverlay(dbg3, 1, 1);
+    tftDrawDebugOverlay(dbg4, 1.5, 1);
+    char dbg2[16];
+    snprintf(dbg2, 16, "HEAD: %03d", compassReadHeading());
+    tftDrawDebugOverlay(dbg2, 2);
+    #endif
+
 #else
     if (Serial.available() > 0)
     {
@@ -192,8 +226,8 @@ void navUpdateTrailStatusAndNavigate()
             _handleNavigatingState(distance, relativeDirection);
             _updateDistanceAndHaptics(distance);
 
-            Serial.printf("Distance to next stop: %.1f meters.\n", distance);
-            Serial.printf("Direction to next stop: %d degrees.\n", relativeDirection);
+            printf("Distance to next stop: %.1f meters.\n", distance);
+            printf("Direction to next stop: %d degrees.\n", relativeDirection);
         }
 
     }
@@ -213,11 +247,12 @@ void _handleNotStartedState()
 {
     if (!navDataReceived)
     {
+        printf("Waiting for GPS lock to begin navigation.\n");
         displaySetImage(I_PENDING);
     }
     else
     {
-        Serial.println("Please proceed to the start of the trail.");
+        printf("Please proceed to the start of the trail.\n");
         displaySetImage(I_GOTOSTART);
     }
 
@@ -225,7 +260,7 @@ void _handleNotStartedState()
     {
         trailStarted = true;
         currentStop = 1;
-        Serial.println("Trail started. Heading to Stop 1.");
+        printf("Trail started. Heading to Stop 1.\n");
         navigationState = NAV_NAVIGATING;
     }
 }
@@ -276,7 +311,7 @@ void _arriveAtCheckpoint()
     
     if (currentStop >= numberOfStops)
     {
-        Serial.println("Final stop reached. Trail is complete.");
+        printf("Final stop reached. Trail is complete.\n");
         displaySetImage(I_PENDING);
         navigationState = NAV_TRAIL_ENDED;
         return;
@@ -409,7 +444,7 @@ bool navReadSerialGPS()
     }
     else
     {
-        Serial.println("Invalid format. Please enter in format: lat,lon");
+        printf("Invalid format. Please enter in format: lat,lon\n");
         return false; // Data parsing failed
     }
 }
