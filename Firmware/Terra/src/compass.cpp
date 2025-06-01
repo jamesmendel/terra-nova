@@ -21,11 +21,12 @@ void initCompass() {
     attachInterrupt(PIN_CMP_INT, _compassIntISR, RISING);
 
     if (!cmp.begin(OPERATION_MODE_NDOF)) {
-        Serial.print("Could not find BNO055");
-        while (1) delay(10);
+        printf("Could not find BNO055\n");
+        return;
     }
-    cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.1 of BNO055 datasheet)
-    cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.1 of BNO055 datasheet)
+    cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.4 of BNO055 datasheet)
+    cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.4 of BNO055 datasheet)
+    printf("BNO55 Initialized!\n");
 }
 
 /**
@@ -102,7 +103,7 @@ int compassReadHeading() {
 
   cmp.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
   heading = (int)orientationData.orientation.x;  // x=heading, y=roll, z=pitch
-
+    heading = (heading + COMPASS_ROTATION_OFFSET) % 360;
   return heading; // TODO: Verify the accuracy of this output. Is degress the correct unit to return?
 }
 

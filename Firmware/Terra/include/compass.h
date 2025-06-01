@@ -4,6 +4,8 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 
+#define COMPASS_ROTATION_OFFSET 90  // degrees
+
 #define CMP_REG_INT_STA     0x37    // section 4.3.56
 #define CMP_REG_INT_MSK     0x0F    // section 4.4.8
 #define CMP_REG_INT_EN      0x10    // section 4.4.9
