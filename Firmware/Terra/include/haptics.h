@@ -5,7 +5,7 @@
 
 #define HAP_EFFECT_STOP     0   // end playback sequence
 #define HAP_EFFECT_PROX     58  // effect to notify user of proximity to checkpoint
-#define HAP_EFFECT_PWRON    86  // notify user of power on
+#define HAP_EFFECT_PWRON    91  // notify user of power on
 #define HAP_EFFECT_PWRDOWN  96  // notify user of power down
 
 #define HAP_MAX_EFFECT_NUM      123

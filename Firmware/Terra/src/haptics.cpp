@@ -13,11 +13,12 @@ void initHaptics() {
     digitalWrite(PIN_HAP_IN_TRIG, LOW);
 
     if (!drv.begin()) {
-        Serial.println("Could not find DRV2605");
-        while (1) delay(10);
+        printf("Could not find DRV2605.\n");
+        return;
     }
     drv.selectLibrary(1);
     drv.setMode(DRV2605_MODE_EXTTRIGEDGE);
+    printf("Initialized DRV2605!\n");
 }
 
 /**
