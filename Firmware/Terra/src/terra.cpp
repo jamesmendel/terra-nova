@@ -52,13 +52,15 @@ void setup() {
   // initCompassNoMotionDetection(TERRA_IDLE_SHUTDOWN_SEC);
 
   playEffect(HAP_EFFECT_PWRON); // power on sequence finsihed!
+
+  // Start the navigation task
+  xTaskCreatePinnedToCore(_InitMainTask, "NavigationTask", 4096, (void*)navUpdateTask, 1, NULL, 1);
 }
 
 // Main Loop
 void loop() {
-  navUpdate();
   displayUpdate();
-
+  navServiceHaptics();
   powerCheckButton();
   compassServiceInterrupts();
 }

@@ -96,7 +96,7 @@ void batteryCheckVolatgeTask() {
             powerDownNow();
         } 
 
-        ESP_LOGI(LOGTAG, "Battery voltage: %d\n", batteryLastMillivolts);
+        ESP_LOGI(LOGTAG, "Battery voltage: %d", batteryLastMillivolts);
 
         char dbg3[16];
         snprintf(dbg3, 16, "BAT: %04d", batteryLastMillivolts);

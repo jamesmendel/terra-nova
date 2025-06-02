@@ -24,10 +24,6 @@ void triggerProximityVibration();
 void IRAM_ATTR navUpdateISR();
 void IRAM_ATTR navGPSFixISR();
 
-// Update timer
-hw_timer_t *navUpdateTimer = NULL;
-static volatile bool navPendingUpdate = false; //  Nav update timer expired
-
 bool trailStarted = false;            //  Have we reached the start of the trail?
 bool navProximityHapticsFlag = false; // Haptic proximity flag
 int currentStop = 0;                  // Current index into list of stops
@@ -63,45 +59,28 @@ void initNav()
 #endif // DEBUG_NAVIGATION
 
     navigationState = NAV_NOT_STARTED;
-
-    // Navigation update timer
-    navUpdateTimer = timerBegin(1, 80, true);
-    timerAttachInterrupt(navUpdateTimer, &navUpdateISR, true);
-    timerAlarmWrite(navUpdateTimer, NAV_UPDATE_INTERVAL_US, true);
-    timerAlarmEnable(navUpdateTimer);
 }
 
 /**
  * @brief Refreshses location and udpates navigation
  *
  */
-void navUpdate()
+void navUpdateTask()
 {
-    if (navPendingUpdate)
+    while(1)
     {
-        navPendingUpdate = false;
         if(!cmpReady) {
             displaySetImage(I_PENDING);
             ESP_LOGW(LOGTAG, "Compass is not ready to navigate.");
-            return;
+            goto taskEnd;
         }
-
-        printf("GPS Fix: %s\n", navLocationKknown() ? "Fixed" : "Unknown");
-
+             
         navFeedGPSData();
         navUpdateTrailStatusAndNavigate();
 
+        taskEnd:
+        vTaskDelay(NAV_UPDATE_INTERVAL_MS / portTICK_PERIOD_MS);
     }
-    navServiceHaptics();
-}
-
-/**
- * @brief Interrupt service for navigation update timer
- *
- */
-void IRAM_ATTR navUpdateISR()
-{
-    navPendingUpdate = true;
 }
 
 /**
@@ -122,10 +101,16 @@ void IRAM_ATTR navGPSFixISR()
  */
 bool navLocationKknown()
 {
+    static bool prevState = true;
+    bool state = false;
     if(gps.location.isValid()) {
-        return (gps.location.age() < 15 * 1000); // 15 second fix expiration
+        state = (gps.location.age() < 15 * 1000); // 15 second fix expiration
     }
-    return false;
+    if (prevState != state) {
+        prevState = state;
+        ESP_LOGI(LOGTAG, "GPS Fix: %s", state ? "Fixed" : "Unknown");
+    }
+    return state; 
     // Removed while integrated GPS is not working.
     // if (gpsHWFix)
     // {
@@ -255,12 +240,12 @@ void _handleNotStartedState()
 {
     if (!navDataReceived)
     {
-        printf("Waiting for GPS lock to begin navigation.\n");
+        ESP_LOGI(LOGTAG, "Waiting for GPS lock to begin navigation.");
         displaySetImage(I_PENDING);
     }
     else
     {
-        printf("Please proceed to the start of the trail.\n");
+        ESP_LOGI(LOGTAG, "Please proceed to the start of the trail.");
         displaySetImage(I_GOTOSTART);
     }
 
@@ -268,7 +253,7 @@ void _handleNotStartedState()
     {
         trailStarted = true;
         currentStop = 1;
-        printf("Trail started. Heading to Stop 1.\n");
+        ESP_LOGI(LOGTAG, "Trail started. Heading to Stop 1.");
         navigationState = NAV_NAVIGATING;
     }
 }

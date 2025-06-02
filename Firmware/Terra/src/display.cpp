@@ -326,7 +326,6 @@ void _displayDrawImage()
 
 void _drawBitmap(const unsigned char *bitmap)
 {
-    ESP_LOGD(LOGTAG, "HERE");
     DisplayLock lock(_displayMutex);
     tft.drawXBitmap(0, 0, bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, TFT_BLACK, TFT_WHITE);
 }

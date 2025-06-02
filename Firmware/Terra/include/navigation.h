@@ -30,7 +30,7 @@
 
 
 // #define DEBUG_NAVIGATION    // Global flag to enable GPS debugging by feeding dummy data through serial.
-#define NAV_UPDATE_INTERVAL_US      500000      // 0.5 second
+#define NAV_UPDATE_INTERVAL_MS      500         // 0.5 second
 // #define NAV_UPDATE_INTERVAL_US       1000000 // 1 second
 #define NAV_GPS_MAX_READ_MS         500         // 0.5 second
 #define NAV_GPS_LOCATION_STALE_MS   10 * 1000   // timeout gps data validity.
@@ -59,7 +59,7 @@ static bool gpsHWFix = false;
 
 
 void initNav();
-void navUpdate();
+void navUpdateTask();
 bool navLocationKknown();
 void navFeedGPSData();
 void navUpdateTrailStatusAndNavigate();
