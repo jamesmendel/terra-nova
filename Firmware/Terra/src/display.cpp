@@ -13,10 +13,22 @@
 #include "display.h"
 #include "imagelist.h"
 
+#include "esp_log.h"
+static const char* LOGTAG = "Display";
+
 void _displayDrawImage();
 void _displayFadeOut();
 void _displayFadeIn();
 void _drawBitmap(const unsigned char* bitmap);
+static SemaphoreHandle_t _displayMutex;
+class DisplayLock {
+public:
+    DisplayLock(SemaphoreHandle_t mtx) : _mtx(mtx) { xSemaphoreTake(_mtx, portMAX_DELAY); }
+    ~DisplayLock() { xSemaphoreGive(_mtx); }
+private:
+    SemaphoreHandle_t _mtx;
+};
+
 
 /**
  * @brief Initializes tft and backlight
@@ -24,6 +36,8 @@ void _drawBitmap(const unsigned char* bitmap);
  */
 void displayInit()
 {
+    _displayMutex = xSemaphoreCreateMutex();
+    DisplayLock lock(_displayMutex);
     pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
     analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);  // 0 at fisrt init
     
@@ -32,10 +46,11 @@ void displayInit()
     
     tft.fillScreen(TFT_BLACK);
     //analogWrite(PIN_DISPLAY_PWM_BL, 100);
- 
+    
     tft.setTextColor(TFT_GREEN);
     tft.setTextSize(2);
     tft.drawString("Hello, TERRA!", 10, 100);
+    ESP_LOGI(LOGTAG, "Finished display init!");
 }
 
 /**
@@ -186,129 +201,133 @@ void _displayDrawImage()
     }
     
     displayCurrentState = DISPLAY_FADEIN;
-    tft.fillScreen(TFT_BLACK);  // clear first
+    {
+        DisplayLock lock(_displayMutex);
+        tft.fillScreen(TFT_BLACK);  // clear first
+    }
     switch (displayImage)
     {
     case I_PENDING:
         _drawBitmap(pending);
-        Serial.println("Drawn pending.h");
+        ESP_LOGI(LOGTAG, "Draw pending.h");
         break;
     case I_GOTOSTART:
         _drawBitmap(gotostart);
-        Serial.println("Drawn gotostart.h");
+        ESP_LOGI(LOGTAG, "Draw gotostart.h");
         break;
     case I_ARROW_N:
         _drawBitmap(arrow_N);
-        Serial.println("Drawn arrow_N.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_N.h");
         break;
     case I_ARROW_NNE:
         _drawBitmap(arrow_NNE);
-        Serial.println("Drawn arrow_NNE.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_NNE.h");
         break;
     case I_ARROW_NE:
         _drawBitmap(arrow_NE);
-        Serial.println("Drawn arrow_NE.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_NE.h");
         break;
     case I_ARROW_ENE:
         _drawBitmap(arrow_ENE);
-        Serial.println("Drawn arrow_ENE.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_ENE.h");
         break;
     case I_ARROW_E:
         _drawBitmap(arrow_E);
-        Serial.println("Drawn arrow_E.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_E.h");
         break;
     case I_ARROW_ESE:
         _drawBitmap(arrow_ESE);
-        Serial.println("Drawn arrow_ESE.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_ESE.h");
         break;
     case I_ARROW_SE:
         _drawBitmap(arrow_SE);
-        Serial.println("Drawn arrow_SE.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_SE.h");
         break;
     case I_ARROW_SSE:
         _drawBitmap(arrow_SSE);
-        Serial.println("Drawn arrow_SSE.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_SSE.h");
         break;
     case I_ARROW_S:
         _drawBitmap(arrow_S);
-        Serial.println("Drawn arrow_S.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_S.h");
         break;
     case I_ARROW_SSW:
         _drawBitmap(arrow_SSW);
-        Serial.println("Drawn arrow_SSW.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_SSW.h");
         break;
     case I_ARROW_SW:
         _drawBitmap(arrow_SW);
-        Serial.println("Drawn arrow_SW.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_SW.h");
         break;
     case I_ARROW_WSW:
         _drawBitmap(arrow_WSW);
-        Serial.println("Drawn arrow_WSW.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_WSW.h");
         break;
     case I_ARROW_W:
         _drawBitmap(arrow_W);
-        Serial.println("Drawn arrow_W.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_W.h");
         break;
     case I_ARROW_WNW:
         _drawBitmap(arrow_WNW);
-        Serial.println("Drawn arrow_WNW.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_WNW.h");
         break;
     case I_ARROW_NW:
         _drawBitmap(arrow_NW);
-        Serial.println("Drawn arrow_NW.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_NW.h");
         break;
     case I_ARROW_NNW:
         _drawBitmap(arrow_NNW);
-        Serial.println("Drawn arrow_NNW.h");
+        ESP_LOGI(LOGTAG, "Draw arrow_NNW.h");
         break;
     case I_CHECKPOINT_1:
         _drawBitmap(checkpoint_1);
-        Serial.println("Drawn checkpoint_1.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_1.h");
         break;
     case I_CHECKPOINT_2:
         _drawBitmap(checkpoint_2);
-        Serial.println("Drawn checkpoint_2.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_2.h");
         break;
     case I_CHECKPOINT_3:
         _drawBitmap(checkpoint_3);
-        Serial.println("Drawn checkpoint_3.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_3.h");
         break;
     case I_CHECKPOINT_4:
         _drawBitmap(checkpoint_4);
-        Serial.println("Drawn checkpoint_4.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_4.h");
         break;
     case I_CHECKPOINT_5:
         _drawBitmap(checkpoint_5);
-        Serial.println("Drawn checkpoint_5.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_5.h");
         break;
     case I_CHECKPOINT_6:
         _drawBitmap(checkpoint_6);
-        Serial.println("Drawn checkpoint_6.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_6.h");
         break;
     case I_CHECKPOINT_7:
         _drawBitmap(checkpoint_7);
-        Serial.println("Drawn checkpoint_7.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_7.h");
         break;
     case I_CHECKPOINT_8:
         _drawBitmap(checkpoint_8);
-        Serial.println("Drawn checkpoint_8.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_8.h");
         break;
     case I_CHECKPOINT_9:
         _drawBitmap(checkpoint_9);
-        Serial.println("Drawn checkpoint_9.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_9.h");
         break;
     case I_CHECKPOINT_10:
         _drawBitmap(checkpoint_10);
-        Serial.println("Drawn checkpoint_10.h");
+        ESP_LOGI(LOGTAG, "Draw checkpoint_10.h");
         break;
     default:
-        tft.fillScreen(TFT_BLACK);
-        Serial.println("No image to display");
+        ESP_LOGW(LOGTAG, "Image type unknown!");
     };
 }
 
 void _drawBitmap(const unsigned char *bitmap)
 {
+    ESP_LOGD(LOGTAG, "HERE");
+    DisplayLock lock(_displayMutex);
     tft.drawXBitmap(0, 0, bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, TFT_BLACK, TFT_WHITE);
 }
 
@@ -317,6 +336,7 @@ int16_t displayGetBrightness() {
 }
 
 void tftDrawDebugOverlay(const char* str, float line, uint8_t size) {
+    DisplayLock lock(_displayMutex);
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.setTextSize(size);
     tft.drawString(str, 10, 100 + (uint8_t)(line*16));
