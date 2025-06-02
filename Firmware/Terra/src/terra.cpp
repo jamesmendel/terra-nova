@@ -16,7 +16,7 @@
 #include "display.h"
 
 // Private task definitions
-void _InitPeripheralTask(void *pvParam);
+void _InitMainTask(void *pvParam);
 
 
 void setup() {
@@ -35,6 +35,7 @@ void setup() {
 
   // Power management
   initPower();
+  xTaskCreatePinnedToCore(_InitMainTask, "CheckBatteryTask", 4096, (void*)batteryCheckVolatgeTask, 1, NULL, 1);
 
   // Haptic driver
   initHaptics();
@@ -47,7 +48,7 @@ void setup() {
   
   // Compass
   // initCompass();
-  xTaskCreatePinnedToCore(_InitPeripheralTask, "CompassInit", 4096, (void*)initCompass, 1, NULL, 0);
+  xTaskCreatePinnedToCore(_InitMainTask, "CompassInit", 4096, (void*)initCompass, 1, NULL, 0);
   // initCompassNoMotionDetection(TERRA_IDLE_SHUTDOWN_SEC);
 
   playEffect(HAP_EFFECT_PWRON); // power on sequence finsihed!
@@ -58,12 +59,11 @@ void loop() {
   navUpdate();
   displayUpdate();
 
-  batteryCheckVolatge();
   powerCheckButton();
   compassServiceInterrupts();
 }
 
-void _InitPeripheralTask(void *pvParam) {
+void _InitMainTask(void *pvParam) {
   void (*initFn)() = (void (*)())pvParam;
   initFn();
   vTaskDelete(NULL);

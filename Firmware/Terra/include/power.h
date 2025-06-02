@@ -8,7 +8,7 @@
 #define BATT_MAX_VOLTS_MV       4300    // battery high turn off threshold
 #define BATT_VOLTAGE_SAMPLES    5       // number of battery votlage samples
 #define BATT_SCALE_FACTOR       2       // inverse of voltage divider ratio
-#define BATT_CHECK_INTERVAL_US  1000000 // 1 second
+#define BATT_CHECK_INTERVAL_MS  1000    // 1 second
 
 
 #define DEBUG_POWER
@@ -24,7 +24,7 @@ void powerCheckButton();
 void powerDownNow();
 
 uint16_t batteryReadVolatge();
-void batteryCheckVolatge();
+void batteryCheckVolatgeTask();
 
 static volatile uint16_t batteryLastMillivolts = 0;
 

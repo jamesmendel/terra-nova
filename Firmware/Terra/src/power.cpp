@@ -5,6 +5,9 @@
 #include "haptics.h"
 #include "display.h"
 
+#include "esp_log.h"
+static const char* LOGTAG = "Power";
+
 // Private members
 void IRAM_ATTR powerButtonISR();
 void IRAM_ATTR battCheckISR();
@@ -46,12 +49,6 @@ void initPower() {
     adcAttachPin(PIN_BAT_VOLTAGE);
     analogReadResolution(12u);
     analogSetPinAttenuation(PIN_BAT_VOLTAGE, ADC_11db);
-
-    // Battery monitor timer
-    battCheckTimer = timerBegin(0, 80, true);
-    timerAttachInterrupt(battCheckTimer, &battCheckISR, true);
-    timerAlarmWrite(battCheckTimer, BATT_CHECK_INTERVAL_US, true);
-    timerAlarmEnable(battCheckTimer); 
 }
 
 void powerDownNow() {
@@ -85,10 +82,8 @@ uint16_t batteryReadVolatge() {
     return (uint16_t)millivolts;
 }
 
-void batteryCheckVolatge() {
-    if(batteryPendingCheck) {
-        batteryPendingCheck = false;
-        
+void batteryCheckVolatgeTask() {
+    while(1) {      
         batteryLastMillivolts = batteryReadVolatge();
 
         if(batteryLastMillivolts <= BATT_CONNECTED_MV) {
@@ -97,16 +92,17 @@ void batteryCheckVolatge() {
         }
 
         if(batteryLastMillivolts <= BATT_MIN_VOLTS_MV || batteryLastMillivolts >= BATT_MAX_VOLTS_MV) {
-            printf("Battery in unsafe condition: %d mV\n", batteryLastMillivolts);
+            ESP_LOGW(LOGTAG, "Battery in unsafe condition: %d mV", batteryLastMillivolts);
             powerDownNow();
         } 
 
-        DEBUG_POWER_PRINT("Battery voltage: %d\n", batteryLastMillivolts);
+        ESP_LOGI(LOGTAG, "Battery voltage: %d\n", batteryLastMillivolts);
 
         char dbg3[16];
         snprintf(dbg3, 16, "BAT: %04d", batteryLastMillivolts);
         tftDrawDebugOverlay(dbg3, 3, 1);
 
+        vTaskDelay(BATT_CHECK_INTERVAL_MS / portTICK_PERIOD_MS);
     }
 }
 
