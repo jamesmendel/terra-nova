@@ -1,18 +1,25 @@
 #include <Arduino.h>
 #include <cmath>
+#include "terra.h"
 #include "compass.h"
 #include "power.h"
 #include "esp_log.h"
 
 inline uint8_t _encodeNoMotionDuration(uint16_t target);
 void IRAM_ATTR _compassIntISR();
+void _compassUpdateHeading();
+SemaphoreHandle_t _compassMutex;
 
 static const char* LOGTAG = "Compass";
 static volatile bool compassPendingInterrupt = false;
 volatile bool cmpReady = false;
 
+int lastHeading = 0;
+
 /**
- * @brief Configure compass pins and construct the device
+ * @brief Configure compass pins and construct the device.
+ *  Note: this function can block for up to 1 sec while
+ *  compass boots.
  * 
  */
 void initCompass() {
@@ -75,6 +82,14 @@ void initCompassNoMotionDetection(uint16_t timeout) {
     }
 }
 
+void compassUpdateTask() {
+    while(1) {
+        _compassUpdateHeading();
+
+        terraSleep(COMPASS_UPDATE_MS);
+    }
+}
+
 /**
  * @brief Service pending compass interrupts.
  * 
@@ -96,20 +111,30 @@ void compassServiceInterrupts() {
     compassPendingInterrupt = false;
 }
 
-
 /**
- * @brief reads rompass absolute orientation
+ * @brief Gets last stored compass heading
  * 
  * @return int heading in degress
  */
-int compassReadHeading() {
-  sensors_event_t orientationData;
-  int heading;
+int compassGetHeading() {
+    xSemaphoreTake(_compassMutex, portMAX_DELAY);
+    return lastHeading;
+    xSemaphoreGive(_compassMutex);
+}
 
-  cmp.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
-  heading = (int)orientationData.orientation.x;  // x=heading, y=roll, z=pitch
-    heading = (heading + COMPASS_ROTATION_OFFSET) % 360;
-  return heading; // TODO: Verify the accuracy of this output. Is degress the correct unit to return?
+/**
+ * @brief reads absolute orientation from compass
+ * 
+ * @return int heading in degress
+ */
+void _compassUpdateHeading() {
+    sensors_event_t orientationData;
+    
+    xSemaphoreTake(_compassMutex, portMAX_DELAY);
+    cmp.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
+    lastHeading = (int)orientationData.orientation.x;  // x=heading, y=roll, z=pitch
+    lastHeading = (lastHeading + COMPASS_ROTATION_OFFSET) % 360;
+    xSemaphoreGive(_compassMutex);
 }
 
 /**

@@ -4,6 +4,8 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 
+#define COMPASS_UPDATE_MS 500  // ms
+
 #define COMPASS_ROTATION_OFFSET 90  // degrees
 
 #define CMP_REG_INT_STA     0x37    // section 4.3.56
@@ -29,7 +31,8 @@ extern volatile bool cmpReady;
 void initCompass();
 void initCompassNoMotionDetection(uint16_t timeout);
 void compassServiceInterrupts();
+void compassUpdateTask();
 
-int compassReadHeading();
+int compassGetHeading();
 
 #endif // COMPASS_H

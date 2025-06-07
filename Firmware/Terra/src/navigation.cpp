@@ -172,7 +172,7 @@ void navFeedGPSData()
     tftDrawDebugOverlay(dbg3, 1, 1);
     tftDrawDebugOverlay(dbg4, 1.5, 1);
     char dbg2[16];
-    snprintf(dbg2, 16, "HEAD: %03d", compassReadHeading());
+    snprintf(dbg2, 16, "HEAD: %03d", compassGetHeading());
     tftDrawDebugOverlay(dbg2, 2);
     #endif
 
@@ -205,14 +205,20 @@ void navUpdateTrailStatusAndNavigate()
     double targetLon = !trailStarted ? startLon : stopLons[currentStop - 1];
     
     double distance = getDistanceTo(targetLat, targetLon);
+    #ifndef NAV_COMPASS_DEMO
     int targetAngle = getCourseTo(targetLat, targetLon);
-    int currentAngle = compassReadHeading();
+    #else
+    int targetAngle = 0; // point to N
+    #endif
+    int currentAngle = compassGetHeading();
     int relativeDirection = calculateRelativeDirection(currentAngle, targetAngle);
 
     if (navigationState == NAV_NAVIGATING)
     {
         // Update distance and haptics only if there is a significant change
+        #ifndef NAV_COMPASS_DEMO
         if (abs(lastDistance - distance) > 0.5)
+        #endif
         {
             lastDistance = distance;
             
@@ -238,6 +244,20 @@ void navUpdateTrailStatusAndNavigate()
  */
 void _handleNotStartedState()
 {
+    #ifdef NAV_COMPASS_DEMO
+    static volatile long dbgNavStartedAt = millis();
+    volatile long now = millis();
+    if (now - dbgNavStartedAt > 20*1000) {
+        navigationState= NAV_NAVIGATING;
+        ESP_LOGD(LOGTAG, "Demo: compass navigation heading start even though distance threshold may not be met!");
+        return;
+    } else if (now - dbgNavStartedAt > 10*1000) {
+        ESP_LOGD(LOGTAG, "Demo: Proceed to start of trail.");
+        displaySetImage(I_GOTOSTART);
+        return;
+    }
+    #endif
+
     if (!navDataReceived)
     {
         ESP_LOGI(LOGTAG, "Waiting for GPS lock to begin navigation.");

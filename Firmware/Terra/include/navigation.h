@@ -21,6 +21,7 @@
 // #define DEBUG_GPS_TO_SERIAL // prints unparsed GPS NMEA messages.
 #undef DEBUG_GPS_TO_SERIAL
 /* ------------------------------------------------------------------ */
+#define NAV_COMPASS_DEMO 1
 
 #ifdef DEBUG_GPS
 #define DEBUG_GPS_PRINT(...) printf(__VA_ARGS__)

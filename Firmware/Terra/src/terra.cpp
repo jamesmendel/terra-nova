@@ -17,6 +17,7 @@
 
 // Private task definitions
 void _InitMainTask(void *pvParam);
+void _heartbeatTask();
 
 
 void setup() {
@@ -27,8 +28,8 @@ void setup() {
 
   Serial.begin(115200);
   printf("========= TERRA =========\n");
-  printf("log filter: %d color: %s\n", CORE_DEBUG_LEVEL, LOG_COLOR_BLACK);
   printf("sha:  %s\nat:   %s %s\n", GIT_COMMIT_ID, BUILD_DATE, BUILD_TIME);
+  printf("log filter: %d\n", CORE_DEBUG_LEVEL);
   printf("=========================\n");
   
   Wire.begin(SDA, SCL);
@@ -54,7 +55,11 @@ void setup() {
   playEffect(HAP_EFFECT_PWRON); // power on sequence finsihed!
 
   // Start the navigation task
+  xTaskCreatePinnedToCore(_InitMainTask, "CompassTask", 4096, (void*)compassUpdateTask, 1, NULL, 1);
+  
   xTaskCreatePinnedToCore(_InitMainTask, "NavigationTask", 4096, (void*)navUpdateTask, 1, NULL, 1);
+  
+  xTaskCreatePinnedToCore(_InitMainTask, "Heartbeat", 4096, (void*)_heartbeatTask, 1, NULL, 1);
 }
 
 // Main Loop
@@ -69,4 +74,14 @@ void _InitMainTask(void *pvParam) {
   void (*initFn)() = (void (*)())pvParam;
   initFn();
   vTaskDelete(NULL);
+}
+
+void _heartbeatTask() {
+  bool beat = true;
+  while(1) {
+    digitalWrite(LED_BUILTIN, beat);
+    beat = !beat;
+    // GPIO.out1.val ^= (1 << (LED_BUILTIN - 32));
+    terraSleep(1000);
+  }
 }

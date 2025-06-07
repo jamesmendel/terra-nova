@@ -17,6 +17,9 @@
 #define TERRA_IDLE_SHUTDOWN_SEC 0   // auto-shutdown disabled
 #endif    // TERRA_DISABLE_IDLE_SHUTDOWN
 
+// non blocking sleep in ms
+#define terraSleep(ms)  vTaskDelay(ms / portTICK_PERIOD_MS)
+
 // Function Prototypes
 void setup();
 void loop();
