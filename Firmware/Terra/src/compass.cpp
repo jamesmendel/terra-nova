@@ -24,7 +24,8 @@ int lastHeading = 0;
  */
 void initCompass() {
     ESP_LOGI(LOGTAG, "Start BNO55 Init...");
-
+    _compassMutex = xSemaphoreCreateMutex();
+    
     pinMode(PIN_CMP_RST, OUTPUT);
     pinMode(PIN_CMP_INT, INPUT);
     digitalWrite(PIN_CMP_RST, !LOW);
@@ -58,7 +59,7 @@ void initCompassNoMotionDetection(uint16_t timeout) {
         Wire.beginTransmission(BNO055_ADDRESS_A);
         Wire.write(buf, 2);
         Wire.endTransmission();
-
+        
         // Configure no-motion timer and mode
         buf[0] = CMP_REG_ACC_NM_SET;
         buf[1] =  (_encodeNoMotionDuration(timeout) << 1) | 0b1; // 360 seconds, no-motion 
@@ -72,7 +73,7 @@ void initCompassNoMotionDetection(uint16_t timeout) {
         Wire.beginTransmission(BNO055_ADDRESS_A);
         Wire.write(buf, 2);
         Wire.endTransmission();
-
+        
         // Configure interrupt mask
         buf[0] = CMP_REG_INT_MSK;
         buf[1] =  0b1 << 7; // enable ACC_NM
@@ -83,6 +84,12 @@ void initCompassNoMotionDetection(uint16_t timeout) {
 }
 
 void compassUpdateTask() {
+    // Wait for compass to finish init
+    do {
+        terraSleep(20);
+    } while (!cmpReady);
+
+    // Main compass update loop
     while(1) {
         _compassUpdateHeading();
 
@@ -117,9 +124,12 @@ void compassServiceInterrupts() {
  * @return int heading in degress
  */
 int compassGetHeading() {
+    int heading = 0;
     xSemaphoreTake(_compassMutex, portMAX_DELAY);
-    return lastHeading;
+    heading = lastHeading;
     xSemaphoreGive(_compassMutex);
+    
+    return heading;
 }
 
 /**
@@ -135,6 +145,7 @@ void _compassUpdateHeading() {
     lastHeading = (int)orientationData.orientation.x;  // x=heading, y=roll, z=pitch
     lastHeading = (lastHeading + COMPASS_ROTATION_OFFSET) % 360;
     xSemaphoreGive(_compassMutex);
+    ESP_LOGD(LOGTAG, "new heading: %d", lastHeading);
 }
 
 /**

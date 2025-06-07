@@ -247,11 +247,11 @@ void _handleNotStartedState()
     #ifdef NAV_COMPASS_DEMO
     static volatile long dbgNavStartedAt = millis();
     volatile long now = millis();
-    if (now - dbgNavStartedAt > 20*1000) {
+    if (now - dbgNavStartedAt > 10*1000) {
         navigationState= NAV_NAVIGATING;
         ESP_LOGD(LOGTAG, "Demo: compass navigation heading start even though distance threshold may not be met!");
         return;
-    } else if (now - dbgNavStartedAt > 10*1000) {
+    } else if (now - dbgNavStartedAt > 5*1000) {
         ESP_LOGD(LOGTAG, "Demo: Proceed to start of trail.");
         displaySetImage(I_GOTOSTART);
         return;
