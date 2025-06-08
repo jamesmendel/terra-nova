@@ -1,8 +1,11 @@
 #include <Arduino.h>
 #include "haptics.h"
+#include "display.h"
+#include "terra.h"
 
 // Private prototypes
 void _triggerPlayback();
+static int currentEffect = 0;
 
 /**
  * @brief Initializes the haptic hardware and driver.
@@ -74,4 +77,45 @@ void _triggerPlayback() {
     digitalWrite(PIN_HAP_IN_TRIG, HIGH);
     usleep(2);
     digitalWrite(PIN_HAP_IN_TRIG, LOW);
+}
+
+void changeHaptics(bool up) {
+    if(up) {
+        currentEffect++;
+    } else {
+        currentEffect--;
+    }
+
+    if(currentEffect > HAP_MAX_EFFECT_NUM) {
+        currentEffect = 0;
+    }
+    else if(currentEffect < 0) {
+        currentEffect = HAP_MAX_EFFECT_NUM;
+    }
+
+    static char effStr[4];
+    snprintf(effStr, 4, "%03d", currentEffect);
+    tftDrawDebugOverlay(effStr, 0, 4);
+}
+
+void hapticsPlayTask() {
+    static char effState[5];
+    static long startTime = 0;
+    while(1) {
+        ESP_LOGI("Haptic", "Playing effect: %d...", currentEffect);
+        snprintf(effState, 5, "PLAY", currentEffect);
+        tftDrawDebugOverlay(effState, -1, 1);
+        
+        startTime = millis();
+        playEffect(currentEffect);
+        while(isEffectPlaying() && (millis() - startTime < 2000)) {terraSleep(5);}
+        playEffect(HAP_EFFECT_STOP);
+        
+        snprintf(effState, 5, "WAIT", currentEffect);
+        tftDrawDebugOverlay(effState, -1, 1);
+        
+        ESP_LOGD("Haptic", "Done!");
+        
+        terraSleep(1000);
+    }
 }

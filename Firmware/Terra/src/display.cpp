@@ -39,6 +39,7 @@ void displayInit()
     _displayMutex = xSemaphoreCreateMutex();
     DisplayLock lock(_displayMutex);
     pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
+    displayBrightness = 255;
     analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);  // 0 at fisrt init
     
     tft.init();
@@ -49,8 +50,10 @@ void displayInit()
     
     tft.setTextColor(TFT_GREEN);
     tft.setTextSize(2);
-    tft.drawString("Hello, TERRA!", 10, 100);
+    tft.drawString("TERRA Haptics", 50, 50);
     ESP_LOGI(LOGTAG, "Finished display init!");
+
+    displayCurrentState = DISPLAY_STATIC;
 }
 
 /**
@@ -203,7 +206,7 @@ void displayUpdate()
 void _displayDrawImage()
 {
     if (displayImage == I_NONE) {
-        displayCurrentState = DISPLAY_FADEOUT;
+        displayCurrentState = DISPLAY_STATIC;
         return;
     }
     
@@ -349,5 +352,5 @@ void tftDrawDebugOverlay(const char* str, float line, uint8_t size) {
     DisplayLock lock(_displayMutex);
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.setTextSize(size);
-    tft.drawString(str, 10, 100 + (uint8_t)(line*16));
+    tft.drawString(str, 10, 100 + (int)(line*16));
 }

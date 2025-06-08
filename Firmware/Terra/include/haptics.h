@@ -20,4 +20,7 @@ void playEffect(uint8_t effect);
 void playEffectSequence(uint8_t *effect, uint8_t len);
 bool isEffectPlaying();
 
+void hapticsPlayTask();
+void changeHaptics(bool up);
+
 #endif // HAPTICS_H

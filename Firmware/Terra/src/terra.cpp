@@ -11,8 +11,6 @@
 #include "terra.h"
 #include "power.h"
 #include "haptics.h"
-#include "compass.h"
-#include "navigation.h"
 #include "display.h"
 
 // Private task definitions
@@ -28,6 +26,7 @@ void setup() {
 
   Serial.begin(115200);
   printf("========= TERRA =========\n");
+  printf("from: %s\n", GIT_CURRENT_BRANCH);
   printf("sha:  %s\nat:   %s %s\n", GIT_COMMIT_ID, BUILD_DATE, BUILD_TIME);
   printf("log filter: %d\n", CORE_DEBUG_LEVEL);
   printf("=========================\n");
@@ -36,38 +35,25 @@ void setup() {
 
   // Power management
   initPower();
-  xTaskCreatePinnedToCore(_InitMainTask, "CheckBatteryTask", 4096, (void*)batteryCheckVolatgeTask, 1, NULL, 1);
-
+  
   // Haptic driver
   initHaptics();
-
+  
   // Screen
   displayInit();
-
-  // GPS
-  initNav();
   
-  // Compass
-  // initCompass();
-  xTaskCreatePinnedToCore(_InitMainTask, "CompassInit", 4096, (void*)initCompass, 1, NULL, 0);
-  // initCompassNoMotionDetection(TERRA_IDLE_SHUTDOWN_SEC);
-
-  playEffect(HAP_EFFECT_PWRON); // power on sequence finsihed!
-
-  // Start the navigation task
-  xTaskCreatePinnedToCore(_InitMainTask, "CompassTask", 4096, (void*)compassUpdateTask, 1, NULL, 1);
+  xTaskCreatePinnedToCore(_InitMainTask, "CheckBatteryTask", 4096, (void*)batteryCheckVolatgeTask, 1, NULL, 0);
+  xTaskCreatePinnedToCore(_InitMainTask, "Heartbeat", 4096, (void*)_heartbeatTask, 1, NULL, 0);
+  xTaskCreatePinnedToCore(_InitMainTask, "HapticsTask", 4096, (void*)hapticsPlayTask, 10, NULL, 1);
   
-  xTaskCreatePinnedToCore(_InitMainTask, "NavigationTask", 4096, (void*)navUpdateTask, 1, NULL, 1);
-  
-  xTaskCreatePinnedToCore(_InitMainTask, "Heartbeat", 4096, (void*)_heartbeatTask, 1, NULL, 1);
+  changeHaptics(true);
 }
 
 // Main Loop
 void loop() {
   displayUpdate();
-  navServiceHaptics();
-  powerCheckButton();
-  compassServiceInterrupts();
+  powerCheckButton1();
+  powerCheckButton2();
 }
 
 void _InitMainTask(void *pvParam) {
@@ -77,6 +63,7 @@ void _InitMainTask(void *pvParam) {
 }
 
 void _heartbeatTask() {
+  pinMode(LED_BUILTIN, OUTPUT);
   bool beat = true;
   while(1) {
     digitalWrite(LED_BUILTIN, beat);
