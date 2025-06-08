@@ -23,6 +23,8 @@ void setup() {
   
   pinMode(PIN_DISPLAY_PWM_BL, OUTPUT);
   analogWrite(PIN_DISPLAY_PWM_BL, displayBrightness);  // 0 at fisrt init
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
 
   Serial.begin(115200);
   printf("========= TERRA =========\n");
@@ -43,7 +45,7 @@ void setup() {
   displayInit();
   
   xTaskCreatePinnedToCore(_InitMainTask, "CheckBatteryTask", 4096, (void*)batteryCheckVolatgeTask, 1, NULL, 0);
-  xTaskCreatePinnedToCore(_InitMainTask, "Heartbeat", 4096, (void*)_heartbeatTask, 1, NULL, 0);
+  // xTaskCreatePinnedToCore(_InitMainTask, "Heartbeat", 4096, (void*)_heartbeatTask, 1, NULL, 0);
   xTaskCreatePinnedToCore(_InitMainTask, "HapticsTask", 4096, (void*)hapticsPlayTask, 10, NULL, 1);
   
   changeHaptics(true);

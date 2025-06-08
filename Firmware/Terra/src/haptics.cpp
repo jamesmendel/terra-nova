@@ -105,12 +105,14 @@ void hapticsPlayTask() {
         ESP_LOGI("Haptic", "Playing effect: %d...", currentEffect);
         snprintf(effState, 5, "PLAY", currentEffect);
         tftDrawDebugOverlay(effState, -1, 1);
+        digitalWrite(LED_BUILTIN, HIGH);
         
         startTime = millis();
         playEffect(currentEffect);
         while(isEffectPlaying() && (millis() - startTime < 2000)) {terraSleep(5);}
         playEffect(HAP_EFFECT_STOP);
         
+        digitalWrite(LED_BUILTIN, LOW);
         snprintf(effState, 5, "WAIT", currentEffect);
         tftDrawDebugOverlay(effState, -1, 1);
         
