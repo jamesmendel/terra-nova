@@ -108,18 +108,18 @@ void displaySetImage(ImageType image)
     {
         displayImage = image;
 
+        #ifdef DISPLAY_NO_TRANSITION
+            displayCurrentState = DISPLAY_UPDATING;
+        #else
         if(displayCurrentState == DISPLAY_OFF) 
             // display is not showing anything, transition to updating bitmap without fade
             displayCurrentState = DISPLAY_UPDATING;
-        else
+            else if(displayCurrentState != DISPLAY_FADEIN && displayCurrentState != DISPLAY_FADEOUT)
             // display has an image showing, fade out first.
             displayCurrentState = DISPLAY_FADEOUT;
-        return;
-    }
-
-    // no change was made, display is not changing.
-    // displayCurrentState = DISPLAY_STATIC;
-    return;
+            return;
+            #endif
+        }
 }
 
 /**
@@ -128,16 +128,20 @@ void displaySetImage(ImageType image)
  */
 void _displayFadeOut()
 {
-    static int lastStep = 0;
-    if (millis() - lastStep >= DISPLAY_FADE_DELAY_MS)
+    static unsigned long lastStep = 0;
+    int dt = millis() - lastStep;
+    if(dt > DISPLAY_FADE_UPDATE_MS*4) dt = DISPLAY_FADE_UPDATE_MS;
+    
+    if (dt >= DISPLAY_FADE_UPDATE_MS)
     {
         lastStep = millis();
-        displayBrightness -= 5;
+        displayBrightness -= (int)(5 * (float)dt/DISPLAY_FADE_UPDATE_MS);
         if (displayBrightness <= DISPLAY_BRIGHTNESS_OFF)
         {
             displayBrightness = DISPLAY_BRIGHTNESS_OFF;
             displayCurrentState = DISPLAY_UPDATING;
         }
+        ESP_LOGD(LOGTAG, "out: %d dt: %d", displayBrightness, dt);
         analogWrite(PIN_DISPLAY_PWM_BL, (uint8_t)displayBrightness);
     }
 }
@@ -149,15 +153,18 @@ void _displayFadeOut()
 void _displayFadeIn()
 {
     static unsigned long lastStep = 0;
-    if (millis() - lastStep >= DISPLAY_FADE_DELAY_MS)
+    int dt = millis() - lastStep;
+    if(dt > DISPLAY_FADE_UPDATE_MS*4) dt = DISPLAY_FADE_UPDATE_MS;
+    if (dt >= DISPLAY_FADE_UPDATE_MS)
     {
         lastStep = millis();
-        displayBrightness += 5;
+        displayBrightness += (int)(5 * (float)dt/DISPLAY_FADE_UPDATE_MS);
         if (displayBrightness >= DISPLAY_BRIGHTNESS_ON)
         {
             displayBrightness = DISPLAY_BRIGHTNESS_ON;
             displayCurrentState = DISPLAY_STATIC;
         }
+        ESP_LOGD(LOGTAG, "in : %d dt %d", displayBrightness, dt);
         analogWrite(PIN_DISPLAY_PWM_BL, (uint8_t)displayBrightness);
     }
 }
@@ -200,7 +207,11 @@ void _displayDrawImage()
         return;
     }
     
+    #ifdef DISPLAY_NO_TRANSITION
+    displayCurrentState = DISPLAY_STATIC;
+    #else
     displayCurrentState = DISPLAY_FADEIN;
+    #endif
     {
         DisplayLock lock(_displayMutex);
         tft.fillScreen(TFT_BLACK);  // clear first

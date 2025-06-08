@@ -11,10 +11,12 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+// #define DISPLAY_NO_TRANSITION 1
+
 #define BITMAP_WIDTH 240
 #define BITMAP_HEIGHT 240
 
-#define DISPLAY_FADE_DELAY_MS   10
+#define DISPLAY_FADE_UPDATE_MS   10
 #define DISPLAY_BRIGHTNESS_ON   (uint8_t)255
 #define DISPLAY_BRIGHTNESS_OFF  (uint8_t)0
 
@@ -64,10 +66,15 @@ enum DisplayState
 };
 
 static TFT_eSPI tft = TFT_eSPI();
-static DisplayState displayCurrentState = DISPLAY_OFF;
 static ImageType displayImage = I_NONE;
 static bool displayUpdating = false;
+#ifdef DISPLAY_NO_TRANSITION
+static DisplayState displayCurrentState = DISPLAY_STATIC;
+static int16_t displayBrightness = 255;
+#else
+static DisplayState displayCurrentState = DISPLAY_OFF;
 static int16_t displayBrightness = 0;
+#endif
 
 void displayInit();
 void displayUpdate();
