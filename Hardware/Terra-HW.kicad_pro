@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.0,
-          "height": 0.3,
-          "width": 1.45
+          "drill": 2.2,
+          "height": 4.4,
+          "width": 4.4
         },
         "silk_line_width": 0.16,
         "silk_text_italic": false,
@@ -95,14 +95,6 @@
         [
           "hole_clearance|152664349|77798322|394b8f32-66ed-4301-9224-2fef4c8b50a0|f43706aa-46f1-4bf7-8801-f915fff2d298",
           ""
-        ],
-        [
-          "silk_edge_clearance|145184349|72275545|8fb0432a-7aef-4f65-b37c-c889131089d0|b8b54898-ace8-4e69-abed-cef93dd1c8c3",
-          ""
-        ],
-        [
-          "silk_edge_clearance|154344349|72275545|ffbeb92e-8bd0-42cb-97dc-3024bef180c9|771e031a-2d63-40be-b60d-9373fcab9734",
-          ""
         ]
       ],
       "meta": {
@@ -153,6 +145,7 @@
         "solder_mask_bridge": "error",
         "starved_thermal": "error",
         "text_height": "warning",
+        "text_on_edge_cuts": "error",
         "text_thickness": "ignore",
         "through_hole_pad_without_hole": "error",
         "too_many_vias": "error",
