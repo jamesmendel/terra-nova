@@ -2913,6 +2913,19 @@
 		)
 		(uuid "b912600b-37d4-498d-8720-618b0a7ab1c6")
 	)
+	(text "TODO: Fix shutdown issue from stray voltage at this node."
+		(exclude_from_sim no)
+		(at 116.332 38.862 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+				(color 255 153 0 1)
+			)
+		)
+		(uuid "c1809c37-56c7-419b-a956-a352ddf259af")
+	)
 	(text "Battery"
 		(exclude_from_sim no)
 		(at 25.4 95.504 0)
