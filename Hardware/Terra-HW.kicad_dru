@@ -1,0 +1,5 @@
+(version 1)
+(rule VIHigh_DGND
+   # Set clearance for IBus tracks to digital
+   (constraint clearance (min 0.16mm))
+   (condition "A.NetClass == 'RF50' && B.NetName == 'GND'"))

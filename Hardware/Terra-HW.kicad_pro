@@ -537,12 +537,12 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)"
       },
       {
-        "clearance": 0.18034,
+        "clearance": 0.16,
         "name": "RF50",
         "pcb_color": "rgb(255, 153, 0)",
         "priority": 0,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.3048
+        "track_width": 0.3
       }
     ],
     "meta": {
