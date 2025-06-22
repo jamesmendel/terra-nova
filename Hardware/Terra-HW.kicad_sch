@@ -491,6 +491,16 @@
 		)
 		(uuid "0bb43c37-c3c6-448c-af95-7f47c2ee9cfc")
 	)
+	(wire
+		(pts
+			(xy 144.78 72.39) (xy 160.02 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0f7fbb76-c55a-4536-a1ee-467bd66148fc")
+	)
 	(polyline
 		(pts
 			(xy 111.76 97.79) (xy 144.78 97.79)
@@ -623,7 +633,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 71.12) (xy 160.02 71.12)
+			(xy 144.78 69.85) (xy 160.02 69.85)
 		)
 		(stroke
 			(width 0)
@@ -1323,7 +1333,25 @@
 			"0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vR"
 			"vf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9"
 			"/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/"
-			"29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/2w=="
+			"29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/29G9/9vRvf/b0b3/2wDsHQAA7R0AAO4dAADvHQAA8B0A"
+			"APEdAADyHQAA8x0AAPQdAAD1HQAA9h0AAPcdAAD4HQAA+R0AAPodAAD7HQAA/B0AAP0dAAD+HQAA"
+			"/x0AAAAeAAABHgAAAh4AAAMeAAAEHgAABR4AAAYeAAAHHgAACB4AAAkeAAAKHgAACx4AAAweAAAN"
+			"HgAADh4AAA8eAAAQHgAAER4AABIeAAATHgAAFB4AABUeAAAWHgAAFx4AABgeAAAZHgAAGh4AABse"
+			"AAAcHgAAHR4AAB4eAAAfHgAAIB4AACEeAAAiHgAAIx4AACQeAAAlHgAAJh4AACceAAAoHgAAKR4A"
+			"ACoeAAArHgAALB4AAC0eAAAuHgAALx4AADAeAAAxHgAAMh4AADMeAAA0HgAANR4AADYeAAA3HgAA"
+			"OB4AADkeAAA6HgAAOx4AADweAAA9HgAAPh4AAD8eAABAHgAAQR4AAEIeAABDHgAARB4AAEUeAABG"
+			"HgAARx4AAEgeAABJHgAASh4AAEseAABMHgAATR4AAE4eAABPHgAAUB4AAFEeAABSHgAAUx4AAFQe"
+			"AABVHgAAVh4AAFceAABYHgAAWR4AAFoeAABbHgAAXB4AAF0eAABeHgAAXx4AAGAeAABhHgAAYh4A"
+			"AGMeAABkHgAAZR4AAGYeAABnHgAAaB4AAGkeAABqHgAAax4AAGweAABtHgAAbh4AAG8eAABwHgAA"
+			"cR4AAHIeAABzHgAAdB4AAHUeAAB2HgAAdx4AAHgeAAB5HgAAeh4AAHseAAB8HgAAfR4AAH4eAAB/"
+			"HgAAgB4AAIEeAACCHgAAgx4AAIQeAACFHgAAhh4AAIceAACIHgAAiR4AAIoeAACLHgAAjB4AAI0e"
+			"AACOHgAAjx4AAJAeAACRHgAAkh4AAJMeAACUHgAAlR4AAJYeAACXHgAAmB4AAJkeAACaHgAAmx4A"
+			"AJweAACdHgAAnh4AAJ8eAACgHgAAoR4AAKIeAACjHgAApB4AAKUeAACmHgAApx4AAKgeAACpHgAA"
+			"qh4AAKseAACsHgAArR4AAK4eAACvHgAAsB4AALEeAACyHgAAsx4AALQeAAC1HgAAth4AALceAAC4"
+			"HgAAuR4AALoeAAC7HgAAvB4AAL0eAAC+HgAAvx4AAMAeAADBHgAAwh4AAMMeAADEHgAAxR4AAMYe"
+			"AADHHgAAyB4AAMkeAADKHgAAyx4AAMweAADNHgAAzh4AAM8eAADQHgAA0R4AANIeAADTHgAA1B4A"
+			"ANUeAADWHgAA1x4AANgeAADZHgAA2h4AANseAADcHgAA3R4AAN4eAADfHgAA4B4AAOEeAADiHgAA"
+			"4x4AAOQeAADlHgAA5h4AAOceAADoHgAA6R4AAOoeAADrHgAA7A=="
 		)
 	)
 	(symbol
@@ -1900,8 +1928,18 @@
 			)
 		)
 		(pin "VBAT_MON" output
-			(at 144.78 71.12 0)
+			(at 144.78 69.85 0)
 			(uuid "2badf8c5-ccf3-4990-896d-79f28ad1537d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BAT_~{CHG}" output
+			(at 144.78 72.39 0)
+			(uuid "72f423ef-5dc9-4d42-b99c-951b6d0aa787")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2164,7 +2202,7 @@
 			)
 		)
 		(pin "VBAT_MON" input
-			(at 160.02 71.12 180)
+			(at 160.02 69.85 180)
 			(uuid "4b766b32-1d9c-43d2-b077-0ff4a1a7b0ba")
 			(effects
 				(font
@@ -2336,6 +2374,16 @@
 		(pin "DISP_~{RST}" output
 			(at 160.02 132.08 180)
 			(uuid "fe26bdd2-955e-4561-8cee-ae8d0fddc249")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BAT_~{CHG}" input
+			(at 160.02 72.39 180)
+			(uuid "1260830f-c9ef-462a-875b-00dbd5de2633")
 			(effects
 				(font
 					(size 1.27 1.27)
