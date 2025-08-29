@@ -549,26 +549,7 @@
       "version": 4
     },
     "net_colors": null,
-    "netclass_assignments": {
-      "Net-(C16-Pad1)": [
-        "RF50"
-      ],
-      "Net-(J4-In)": [
-        "RF50"
-      ],
-      "Net-(U6-RF_IN)": [
-        "RF50"
-      ],
-      "Net-(U7-A_{IN})": [
-        "RF50"
-      ],
-      "Net-(U7-A_{OUT})": [
-        "RF50"
-      ],
-      "Net-(U8-RF_{OUT})": [
-        "RF50"
-      ]
-    },
+    "netclass_assignments": null,
     "netclass_patterns": [
       {
         "netclass": "DIFF90",
