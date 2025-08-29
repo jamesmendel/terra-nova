@@ -51,8 +51,8 @@
 	)
 	(attr smd)
 	(fp_line
-		(start -8 8)
-		(end -8 7.5)
+		(start -8.5 8.5)
+		(end -8.5 7.5)
 		(stroke
 			(width 0.15)
 			(type default)
@@ -61,8 +61,8 @@
 		(uuid "397da56b-9557-4893-b8b1-6d372b311067")
 	)
 	(fp_line
-		(start -8 8)
-		(end 8 8)
+		(start -8.5 8.5)
+		(end 8.5 8.5)
 		(stroke
 			(width 0.15)
 			(type default)
@@ -71,8 +71,8 @@
 		(uuid "8c052910-b714-47be-8472-d2715c9729a9")
 	)
 	(fp_line
-		(start -7 -8)
-		(end -7.5 -7.5)
+		(start -7.5 -8.5)
+		(end -8.25 -7.75)
 		(stroke
 			(width 0.15)
 			(type default)
@@ -81,8 +81,8 @@
 		(uuid "85a23c19-c243-4914-8ccb-5f4383530fb0")
 	)
 	(fp_line
-		(start 8 -8)
-		(end -7 -8)
+		(start 8.5 -8.5)
+		(end -7.5 -8.5)
 		(stroke
 			(width 0.15)
 			(type default)
@@ -91,8 +91,8 @@
 		(uuid "8d7d6da0-a904-44a0-9f23-b5ea66318a48")
 	)
 	(fp_line
-		(start 8 -7.5)
-		(end 8 -8)
+		(start 8.5 -7.5)
+		(end 8.5 -8.5)
 		(stroke
 			(width 0.15)
 			(type default)
@@ -101,8 +101,8 @@
 		(uuid "1e38d82b-32b7-40cd-8376-5e1b2adb2552")
 	)
 	(fp_line
-		(start 8 8)
-		(end 8 7.5)
+		(start 8.5 8.5)
+		(end 8.5 7.5)
 		(stroke
 			(width 0.15)
 			(type default)
@@ -111,8 +111,8 @@
 		(uuid "59b51515-21e3-45d3-9ca3-8d13a4a66e78")
 	)
 	(fp_circle
-		(center -8 -8)
-		(end -7.8984 -8)
+		(center -8.322797 -8.390267)
+		(end -8.221197 -8.390267)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -363,4 +363,15 @@
 		(uuid "61cce2f8-c5ac-4264-bf80-d661948ea730")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/Symbols/TESO-LIV3F/PA1616D.STEP"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 -0 -0)
+		)
+	)
 )
