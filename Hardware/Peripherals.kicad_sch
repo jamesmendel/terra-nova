@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-04-06")
+		(date "2025-08-29")
 		(rev "${REVISION}")
 		(company "${COMPANY}")
 		(comment 1 "${LICENSE}")
@@ -3071,12 +3071,20 @@
 		(uuid "3b6f80af-407b-413f-9cfc-3668d30a1c83")
 	)
 	(no_connect
+		(at 87.63 54.61)
+		(uuid "5344f6c9-c0ca-4d71-a96c-981682280ade")
+	)
+	(no_connect
 		(at 87.63 72.39)
 		(uuid "5aed0a0d-b2bd-4fab-a8cd-616e6529a48f")
 	)
 	(no_connect
 		(at 87.63 69.85)
 		(uuid "5b0a4c09-9162-4ca4-aefb-e70cb238dec3")
+	)
+	(no_connect
+		(at 87.63 59.69)
+		(uuid "6ffb91e0-5649-4e3a-b6cf-7b2f7b1572aa")
 	)
 	(no_connect
 		(at 87.63 77.47)
@@ -3093,6 +3101,10 @@
 	(no_connect
 		(at 87.63 80.01)
 		(uuid "98651018-25a7-4f34-bb7c-a46efd118649")
+	)
+	(no_connect
+		(at 87.63 52.07)
+		(uuid "b181c643-b604-4c5b-ac45-1696cbdc49bb")
 	)
 	(no_connect
 		(at 87.63 67.31)

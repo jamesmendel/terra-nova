@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-04-06")
+		(date "2025-08-29")
 		(rev "${REVISION}")
 		(company "${COMPANY}")
 		(comment 1 "${LICENSE}")
@@ -5932,17 +5932,6 @@
 		)
 		(uuid "739fdd7c-c72f-44f4-bcb2-9f97abd6a3e9")
 	)
-	(hierarchical_label "SYS_PWROFF"
-		(shape output)
-		(at 266.7 107.95 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "81282042-cfa2-4fb6-8313-bfb751b53f43")
-	)
 	(hierarchical_label "GPS_STBY"
 		(shape output)
 		(at 266.7 143.51 0)
@@ -8093,6 +8082,73 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 53.34 109.22 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "bd57051b-a98c-4bc2-a8ff-72ccaf08ad8b")
+		(property "Reference" "TP12"
+			(at 48.26 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "RXD1"
+			(at 48.26 107.9501 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "M20048-1:TestPoint_Pad_D1.5mm_WITH_LABEL"
+			(at 53.34 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 53.34 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 53.34 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "23905e88-157d-41f7-9742-7d45a91877c7")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "TP12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 137.16 39.37 0)
 		(mirror y)
@@ -8233,6 +8289,73 @@
 			(project "Terra-HW"
 				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
 					(reference "TP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 53.34 106.68 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "c388b961-7074-4d8a-9254-b0fb9aa034cd")
+		(property "Reference" "TP14"
+			(at 48.26 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TXD1"
+			(at 48.26 105.4101 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "M20048-1:TestPoint_Pad_D1.5mm_WITH_LABEL"
+			(at 53.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 53.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 53.34 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a39bb35a-8bdb-4b04-bc53-c90809ccd1b1")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "TP14")
 					(unit 1)
 				)
 			)

@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-04-06")
+		(date "2025-08-29")
 		(rev "${REVISION}")
 		(company "${COMPANY}")
 		(comment 1 "${LICENSE}")
@@ -6289,84 +6289,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 68.58 125.73 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "349f73ab-4759-49d6-b50e-92192d0bc14f")
-		(property "Reference" "R14"
-			(at 69.85 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 68.58 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 70.358 125.73 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
-			(at 68.58 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 68.58 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "RC0603FR-0710KL"
-			(at 68.58 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1e54ca56-be7c-4768-b094-668b3add7870")
-		)
-		(pin "2"
-			(uuid "68c0fe61-017e-4988-b2be-9eea2dbddffb")
-		)
-		(instances
-			(project "Terra-HW"
-				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/5f0d062d-9fa8-4c48-be05-0b92e4e6324b"
-					(reference "R14")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:VBUS")
 		(at 129.54 110.49 0)
 		(unit 1)
@@ -6952,6 +6874,83 @@
 			(project "Terra-HW"
 				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/5f0d062d-9fa8-4c48-be05-0b92e4e6324b"
 					(reference "D12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 68.58 125.73 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "42e96a8e-9714-42b2-b3ff-c315909d82ef")
+		(property "Reference" "R14"
+			(at 70.104 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "100k"
+			(at 68.58 125.73 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 70.358 125.73 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
+			(at 68.58 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 68.58 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-07100KL"
+			(at 68.58 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e51e5320-7858-4fc0-8a4d-ee6de820a0e8")
+		)
+		(pin "2"
+			(uuid "d80ef4f8-5970-4028-9968-4943c8a4cfe6")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/5f0d062d-9fa8-4c48-be05-0b92e4e6324b"
+					(reference "R14")
 					(unit 1)
 				)
 			)
@@ -9254,6 +9253,83 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 68.58 113.03 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c0655eac-bf2a-4c3a-b6ac-20316c591149")
+		(property "Reference" "R11"
+			(at 70.104 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "100k"
+			(at 68.58 113.03 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 70.358 113.03 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
+			(at 68.58 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 68.58 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-07100KL"
+			(at 68.58 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f0e3eee4-b64e-4392-9c2a-1c517f00edd4")
+		)
+		(pin "2"
+			(uuid "ac35bd93-2361-4424-98e1-e6e7218e84c3")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/5f0d062d-9fa8-4c48-be05-0b92e4e6324b"
+					(reference "R11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 49.53 115.57 0)
 		(unit 1)
@@ -9592,83 +9668,6 @@
 			(project "Terra-HW"
 				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/5f0d062d-9fa8-4c48-be05-0b92e4e6324b"
 					(reference "#FLG02")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 68.58 113.03 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "c9a0e5ca-4a4d-4d18-aa3c-4e9eee787d99")
-		(property "Reference" "R11"
-			(at 69.85 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 68.58 113.03 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 70.358 113.03 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
-			(at 68.58 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 68.58 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "RC0603FR-0710KL"
-			(at 68.58 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8be57c71-ea5a-48d2-86bb-6615d2ea30bf")
-		)
-		(pin "2"
-			(uuid "3ce614eb-bda3-4204-a30c-0199937212b9")
-		)
-		(instances
-			(project "Terra-HW"
-				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/5f0d062d-9fa8-4c48-be05-0b92e4e6324b"
-					(reference "R11")
 					(unit 1)
 				)
 			)
