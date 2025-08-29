@@ -5083,7 +5083,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LCC-18_9P7X10P1_STM"
+		(property "Footprint" "TESO-LIV3F:PA1616D"
 			(at 58.42 27.94 0)
 			(effects
 				(font
