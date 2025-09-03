@@ -2798,7 +2798,7 @@
 		(uuid 94bfa242-33ca-4594-a39e-df038f3f1fbf)
 	)
 	(rectangle
-		(start 246.38 106.68)
+		(start 246.38 109.22)
 		(end 281.94 165.1)
 		(stroke
 			(width 0)
@@ -2836,7 +2836,7 @@
 	)
 	(text "Off-Sheet Connections"
 		(exclude_from_sim no)
-		(at 264.16 110.49 0)
+		(at 264.16 113.03 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3192,16 +3192,6 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 143.51) (xy 265.43 143.51)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0f26dfc5-73b5-4980-8093-bc411e6a0842")
-	)
-	(wire
-		(pts
 			(xy 177.8 140.97) (xy 186.69 140.97)
 		)
 		(stroke
@@ -3212,7 +3202,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 135.89) (xy 265.43 135.89)
+			(xy 251.46 138.43) (xy 265.43 138.43)
 		)
 		(stroke
 			(width 0)
@@ -3452,7 +3442,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 138.43) (xy 265.43 138.43)
+			(xy 251.46 140.97) (xy 265.43 140.97)
 		)
 		(stroke
 			(width 0)
@@ -3502,7 +3492,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 129.54) (xy 265.43 129.54)
+			(xy 251.46 132.08) (xy 265.43 132.08)
 		)
 		(stroke
 			(width 0)
@@ -3602,7 +3592,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 132.08) (xy 265.43 132.08)
+			(xy 251.46 134.62) (xy 265.43 134.62)
 		)
 		(stroke
 			(width 0)
@@ -3672,7 +3662,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 124.46) (xy 265.43 124.46)
+			(xy 251.46 127) (xy 265.43 127)
 		)
 		(stroke
 			(width 0)
@@ -3852,7 +3842,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 116.84) (xy 265.43 116.84)
+			(xy 251.46 119.38) (xy 265.43 119.38)
 		)
 		(stroke
 			(width 0)
@@ -3982,7 +3972,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 140.97) (xy 265.43 140.97)
+			(xy 251.46 143.51) (xy 265.43 143.51)
 		)
 		(stroke
 			(width 0)
@@ -4152,7 +4142,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 119.38) (xy 265.43 119.38)
+			(xy 251.46 121.92) (xy 265.43 121.92)
 		)
 		(stroke
 			(width 0)
@@ -4211,7 +4201,7 @@
 		(uuid "0370917f-2dd2-41c3-bbdb-9c6cb54c7aa8")
 	)
 	(label "GPS_TX"
-		(at 251.46 135.89 0)
+		(at 251.46 138.43 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4251,7 +4241,7 @@
 		(uuid "1169d7f1-3309-41ea-9b55-e992a4f94c8b")
 	)
 	(label "CMP_~{RST}"
-		(at 251.46 132.08 0)
+		(at 251.46 134.62 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4341,7 +4331,7 @@
 		(uuid "2c4d0d75-a4f8-453f-955e-1a476ed7c79d")
 	)
 	(label "CMP_INT"
-		(at 251.46 129.54 0)
+		(at 251.46 132.08 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4381,7 +4371,7 @@
 		(uuid "5062921c-fab0-47b3-bfc5-cd16cbc20208")
 	)
 	(label "GPS_RX"
-		(at 251.46 138.43 0)
+		(at 251.46 140.97 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4401,7 +4391,7 @@
 		(uuid "53e9fff4-7332-4d96-b42b-42b8b53b4ce6")
 	)
 	(label "SCL"
-		(at 251.46 119.38 0)
+		(at 251.46 121.92 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4410,18 +4400,8 @@
 		)
 		(uuid "6109f42b-9e2b-412b-b269-9683ce0b0af5")
 	)
-	(label "GPS_HW_STBY"
-		(at 251.46 143.51 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "63c16136-ace3-4871-927c-e5c01f3d33e7")
-	)
 	(label "HAP_IN"
-		(at 251.46 124.46 0)
+		(at 251.46 127 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4531,7 +4511,7 @@
 		(uuid "b2807266-887b-4d00-9d54-8201ad60eab9")
 	)
 	(label "SDA"
-		(at 251.46 116.84 0)
+		(at 251.46 119.38 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4571,7 +4551,7 @@
 		(uuid "dd114954-0a96-4783-a058-453a75474aae")
 	)
 	(label "GPS_~{HW_RST}"
-		(at 251.46 140.97 0)
+		(at 251.46 143.51 0)
 		(effects
 			(font
 				(size 1 1)
@@ -4613,7 +4593,7 @@
 	)
 	(hierarchical_label "TX"
 		(shape output)
-		(at 265.43 135.89 0)
+		(at 265.43 138.43 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4624,7 +4604,7 @@
 	)
 	(hierarchical_label "HAP_IN"
 		(shape input)
-		(at 265.43 124.46 0)
+		(at 265.43 127 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4646,7 +4626,7 @@
 	)
 	(hierarchical_label "CMP_~{RST}"
 		(shape output)
-		(at 265.43 132.08 0)
+		(at 265.43 134.62 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4654,17 +4634,6 @@
 			(justify left)
 		)
 		(uuid "68971489-1fe8-4743-894e-c58e2d80e66b")
-	)
-	(hierarchical_label "GPS_STBY"
-		(shape input)
-		(at 265.43 143.51 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "7c469613-4cab-4338-8cc1-de57ff6b7df8")
 	)
 	(hierarchical_label "GPS_FIX"
 		(shape output)
@@ -4679,7 +4648,7 @@
 	)
 	(hierarchical_label "CMP_INT"
 		(shape output)
-		(at 265.43 129.54 0)
+		(at 265.43 132.08 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4690,7 +4659,7 @@
 	)
 	(hierarchical_label "RX"
 		(shape input)
-		(at 265.43 138.43 0)
+		(at 265.43 140.97 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4701,7 +4670,7 @@
 	)
 	(hierarchical_label "GPS_~{RST}"
 		(shape input)
-		(at 265.43 140.97 0)
+		(at 265.43 143.51 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4712,7 +4681,7 @@
 	)
 	(hierarchical_label "SDA"
 		(shape input)
-		(at 265.43 116.84 0)
+		(at 265.43 119.38 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4756,7 +4725,7 @@
 	)
 	(hierarchical_label "SCL"
 		(shape input)
-		(at 265.43 119.38 0)
+		(at 265.43 121.92 0)
 		(effects
 			(font
 				(size 1.27 1.27)

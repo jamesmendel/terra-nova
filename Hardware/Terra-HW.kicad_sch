@@ -513,16 +513,6 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 111.76) (xy 160.02 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1767c8fb-082b-4c99-abde-351b8b20d466")
-	)
-	(wire
-		(pts
 			(xy 144.78 102.87) (xy 160.02 102.87)
 		)
 		(stroke
@@ -571,6 +561,16 @@
 		)
 		(uuid "41f5c675-3b04-41a3-94cc-3ac67b2b035d")
 	)
+	(wire
+		(pts
+			(xy 144.78 110.49) (xy 160.02 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4521e6ee-d30c-41ce-a0f4-f39476b22cff")
+	)
 	(polyline
 		(pts
 			(xy 111.76 115.57) (xy 144.78 115.57)
@@ -610,16 +610,6 @@
 			(type default)
 		)
 		(uuid "5487d06d-2507-46f7-8461-a96e52f154d7")
-	)
-	(wire
-		(pts
-			(xy 144.78 109.22) (xy 160.02 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "651339da-b9ab-42ab-bbdc-e00cdfb21337")
 	)
 	(polyline
 		(pts
@@ -773,7 +763,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 114.3) (xy 160.02 114.3)
+			(xy 144.78 113.03) (xy 160.02 113.03)
 		)
 		(stroke
 			(width 0)
@@ -1387,7 +1377,25 @@
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJokwVuVBj44mMFB6xglwVuVBj4m"
+			"P8FBJfYkwVuVBj4mP8FBJfYkwVuVBj76WcFBGoQlwVuVBj6qNcFBFRgmwVuVBj6qNcFBFRgmwVuV"
+			"Bj4M4cBB9TsmwVuVBj5LmsBBntglwVuVBj5LmsBBntglwVuVBj6vjsBB+jMlwVuVBj7cv8BBZagk"
+			"wVuVBj7cv8BBZagkwVuVBj4A3sBB5+UkwVuVBj4KzsBB5vEkwVuVBj7wL8FB9CYlwVuVBj6qGsFB"
+			"IpokwVuVBj4mP8FBJfYkwVuVBj7cv8BBZagkwVuVBj4KzsBB5vEkwVuVBj50wcBBFAQlwVuVBj4h"
+			"NcFBcEwlwVuVBj7wL8FB9CYlwVuVBj4mP8FBJfYkwVuVBj7cv8BBZagkwVuVBj50wcBBFAQlwVuV"
+			"Bj4IuMBBtBwlwVuVBj55NsFBZG8lwVuVBj4hNcFBcEwlwVuVBj4mP8FBJfYkwVuVBj7cv8BBZagk"
+			"wVuVBj4IuMBBtBwlwVuVBj6GtMBBzSslwVuVBj7eNcFBQ4YlwVuVBj55NsFBZG8lwVuVBj4mP8FB"
+			"JfYkwVuVBj7cv8BBZagkwVuVBj6GtMBBzSslwVuVBj7kscBB/DwlwVuVBj7eNcFBQ4YlwVuVBj4m"
+			"P8FBJfYkwVuVBj6qNcFBFRgmwVuVBj5LmsBBntglwVuVBj7cv8BBZagkwVuVBj7kscBB/DwlwVuV"
+			"Bj4ENMFBdpslwVuVBj7eNcFBQ4YlwVuVBj6qNcFBFRgmwVuVBj5LmsBBntglwVuVBj7kscBB/Dwl"
+			"wVuVBj41sMBBtlAlwVuVBj4/McFB7qwlwVuVBj4ENMFBdpslwVuVBj6qNcFBFRgmwVuVBj5LmsBB"
+			"ntglwVuVBj41sMBBtlAlwVuVBj6gr8BB02YlwVuVBj5mLcFBvLwlwVuVBj4/McFB7qwlwVuVBj6q"
+			"NcFBFRgmwVuVBj5LmsBBntglwVuVBj6gr8BB02YlwVuVBj6kr8BBUmolwVuVBj7kKMFBo8klwVuV"
+			"Bj5mLcFBvLwlwVuVBj6qNcFBFRgmwVuVBj5LmsBBntglwVuVBj6kr8BBUmolwVuVBj4qssBBFZEl"
+			"wVuVBj5qI8FB5dQlwVuVBj7kKMFBo8klwVuVBj6qNcFBFRgmwVuVBj5LmsBBntglwVuVBj4qssBB"
+			"FZElwVuVBj6euMBBYbElwVuVBj5DHcFBAN4lwVuVBj5qI8FB5dQlwVuVBj6qNcFBFRgmwVuVBj5L"
+			"msBBntglwVuVBj6euMBBYbElwVuVBj6pwsBBZsslwVuVBj4wFsFBaOUlwVuVBj5DHcFBAN4lwVuV"
+			"Bj6qNcFBFRgmwVuVBj5LmsBBntglwVuVBj6pwsBBZsslwVuVBg=="
 		)
 	)
 	(symbol
@@ -2086,18 +2094,8 @@
 			)
 		)
 		(pin "GPS_FIX" output
-			(at 144.78 109.22 0)
+			(at 144.78 110.49 0)
 			(uuid "33833435-50f0-40c5-8d42-ec8c2c9bcba7")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "GPS_STBY" input
-			(at 144.78 111.76 0)
-			(uuid "da4d7de5-b73f-4d57-827a-8dcaa9c71b47")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2116,7 +2114,7 @@
 			)
 		)
 		(pin "GPS_~{RST}" input
-			(at 144.78 114.3 0)
+			(at 144.78 113.03 0)
 			(uuid "2e3765a8-3616-4dfb-a490-9e0e41fa6a4d")
 			(effects
 				(font
@@ -2317,18 +2315,8 @@
 				(justify left)
 			)
 		)
-		(pin "GPS_STBY" output
-			(at 160.02 111.76 180)
-			(uuid "afb8bbef-90e0-409e-b6ba-151e2b782f36")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "GPS_~{RST}" output
-			(at 160.02 114.3 180)
+			(at 160.02 113.03 180)
 			(uuid "ace378a8-3e15-420c-9fcc-2aad4c5f4b0f")
 			(effects
 				(font
@@ -2338,7 +2326,7 @@
 			)
 		)
 		(pin "GPS_FIX" input
-			(at 160.02 109.22 180)
+			(at 160.02 110.49 180)
 			(uuid "4341f6ac-63b1-4b15-9f76-8ee3fe2209c5")
 			(effects
 				(font
