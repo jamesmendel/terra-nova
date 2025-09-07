@@ -5852,6 +5852,17 @@
 		)
 		(uuid "2cf4d872-8626-4bef-acf5-388b8b91d446")
 	)
+	(hierarchical_label "SYS_PWROFF"
+		(shape output)
+		(at 266.7 107.95 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3e9809ee-b271-4d29-a07d-35943f6a9f93")
+	)
 	(hierarchical_label "VBAT_MON"
 		(shape input)
 		(at 266.7 111.76 0)
