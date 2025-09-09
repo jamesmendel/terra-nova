@@ -557,7 +557,7 @@
       "plot": "Outputs/X01-004/Fab/Gerber/",
       "pos_files": "Outputs/X01-004/Assy/",
       "specctra_dsn": "",
-      "step": "Outputs/X02/Terra-HW-X02-001-Simple.step",
+      "step": "Outputs/X02/Assembly/Terra-HW-X02-002-Detailed-foreal.step",
       "svg": "",
       "vrml": ""
     },
