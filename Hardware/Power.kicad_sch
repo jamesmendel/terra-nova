@@ -8882,6 +8882,24 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "SN74LVC1G14DRL"
+			(at 64.77 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Alt1" "74LVC1G14Z-7"
+			(at 64.77 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "a6248476-66d9-421c-a021-c7c06b8ea6d1")
 		)

@@ -554,8 +554,8 @@
       "gencad": "",
       "idf": "",
       "netlist": "./",
-      "plot": "Outputs/X01-004/Fab/Gerber/",
-      "pos_files": "Outputs/X01-004/Assy/",
+      "plot": "Outputs/X02/Fab/Gerber/",
+      "pos_files": "Outputs/X02/Fab/Assy/",
       "specctra_dsn": "",
       "step": "Outputs/X02/Assembly/Terra-HW-X02-002-Detailed-foreal.step",
       "svg": "",
@@ -565,7 +565,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "${PROJECTNAME}.csv",
+    "bom_export_filename": "Outputs/X02-001/Fab/Assy/Terra-HW.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
