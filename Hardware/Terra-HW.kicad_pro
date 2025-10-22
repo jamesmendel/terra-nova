@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 2.2,
-          "height": 4.4,
-          "width": 4.4
+          "drill": 0.0,
+          "height": 0.33,
+          "width": 0.675
         },
         "silk_line_width": 0.16,
         "silk_text_italic": false,
@@ -65,11 +65,19 @@
       ],
       "drc_exclusions": [
         [
-          "hole_clearance|147135761|120418743|394b8f32-66ed-4301-9224-2fef4c8b50a0|a4874f72-fbac-4bb0-adfd-9cfac4594d19",
+          "copper_edge_clearance|145725761|124998743|13b9ab8d-0010-4b17-813a-9ccda215ddc6|390356da-4266-4626-9092-0414ad4921b6",
           ""
         ],
         [
-          "hole_clearance|147135761|120418743|394b8f32-66ed-4301-9224-2fef4c8b50a0|f43706aa-46f1-4bf7-8801-f915fff2d298",
+          "copper_edge_clearance|154365761|124998743|7a66b24f-aeba-4c63-b47a-ccbe0e61bbf6|382e7bea-524b-40ef-96b3-15e86f0a1e3f",
+          ""
+        ],
+        [
+          "hole_clearance|147135761|120418743|a4874f72-fbac-4bb0-adfd-9cfac4594d19|394b8f32-66ed-4301-9224-2fef4c8b50a0",
+          ""
+        ],
+        [
+          "hole_clearance|147135761|120418743|f43706aa-46f1-4bf7-8801-f915fff2d298|394b8f32-66ed-4301-9224-2fef4c8b50a0",
           ""
         ],
         [
@@ -81,11 +89,11 @@
           ""
         ],
         [
-          "hole_clearance|152955761|120418743|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe|658713ee-2331-4231-a211-07265b6396a1",
+          "hole_clearance|152955761|120418743|658713ee-2331-4231-a211-07265b6396a1|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
           ""
         ],
         [
-          "hole_clearance|152955761|120418743|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe|98d5a255-13d2-4f40-9424-1a359d25fd1e",
+          "hole_clearance|152955761|120418743|98d5a255-13d2-4f40-9424-1a359d25fd1e|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
           ""
         ]
       ],
@@ -554,8 +562,8 @@
       "gencad": "",
       "idf": "",
       "netlist": "./",
-      "plot": "Outputs/X02/Fab/Gerber/",
-      "pos_files": "Outputs/X02/Fab/Assy/",
+      "plot": "Outputs/X02-002/Gerber/",
+      "pos_files": "Outputs/X02-002/Assy/",
       "specctra_dsn": "",
       "step": "Outputs/X02/Assembly/Terra-HW-X02-002-Detailed-foreal.step",
       "svg": "",
@@ -565,7 +573,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "Outputs/X02-001/Fab/Assy/Terra-HW.csv",
+    "bom_export_filename": "Outputs/X02-002/Assy/Terra-HW.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
