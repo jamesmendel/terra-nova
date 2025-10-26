@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-04-06")
+		(date "2025-08-29")
 		(rev "${REVISION}")
 		(company "${COMPANY}")
 		(comment 1 "${LICENSE}")
@@ -1669,7 +1669,7 @@
 				(pin bidirectional line
 					(at -2.54 40.64 0)
 					(length 2.54)
-					(name "RTC_GPIO7/GPIO7/TOUCH7/ADC1_CH6"
+					(name "RTC_GPIO8/GPIO8/TOUCH8/ADC1_CH7"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3471,6 +3471,12 @@
 		(uuid "7c7ac850-090f-4198-b67f-09279b00e15e")
 	)
 	(junction
+		(at 233.68 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "81050090-eca6-4ff3-85ac-d7bc854fcc67")
+	)
+	(junction
 		(at 229.87 83.82)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3561,8 +3567,16 @@
 		(uuid "e88d3c9e-119d-4ad4-ace0-70d9e9d4ffab")
 	)
 	(no_connect
+		(at 187.96 93.98)
+		(uuid "06be0e0a-8b49-4a8b-8631-21275af91cd7")
+	)
+	(no_connect
 		(at 241.3 80.01)
 		(uuid "0d854bb7-975e-4f26-b8e1-dec0f9b3b7f4")
+	)
+	(no_connect
+		(at 53.34 96.52)
+		(uuid "30dc18a6-aaf2-4d69-a441-6c49f7c841e9")
 	)
 	(no_connect
 		(at 187.96 71.12)
@@ -3585,10 +3599,6 @@
 		(uuid "7e4fdcf2-4961-4a62-8e91-1fed0ded2c90")
 	)
 	(no_connect
-		(at 187.96 101.6)
-		(uuid "9bab0ca0-d25e-4e90-8726-b63f0982a96a")
-	)
-	(no_connect
 		(at 68.58 81.28)
 		(uuid "b5e31cdc-d0dc-4a25-827f-c05092968bff")
 	)
@@ -3603,10 +3613,6 @@
 	(no_connect
 		(at 68.58 71.12)
 		(uuid "c397f9e0-4378-4e4f-b778-86da5159c76a")
-	)
-	(no_connect
-		(at 187.96 83.82)
-		(uuid "c7ef7c21-d76d-4438-ba69-7672adf08ccd")
 	)
 	(no_connect
 		(at 241.3 77.47)
@@ -3652,7 +3658,7 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 110.49) (xy 266.7 110.49)
+			(xy 252.73 107.95) (xy 266.7 107.95)
 		)
 		(stroke
 			(width 0)
@@ -3882,6 +3888,16 @@
 	)
 	(wire
 		(pts
+			(xy 233.68 101.6) (xy 233.68 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1d87794b-28dc-49b9-96cf-05cdd6ab61da")
+	)
+	(wire
+		(pts
 			(xy 229.87 83.82) (xy 226.06 83.82)
 		)
 		(stroke
@@ -3959,6 +3975,16 @@
 			(type default)
 		)
 		(uuid "2beb8f8e-f2b7-4181-9441-31ed5d19a496")
+	)
+	(wire
+		(pts
+			(xy 233.68 111.76) (xy 233.68 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2dfe20cc-98d6-4a92-9ac4-7fecf15180c2")
 	)
 	(wire
 		(pts
@@ -4122,6 +4148,16 @@
 	)
 	(wire
 		(pts
+			(xy 222.25 113.03) (xy 233.68 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4c8b9fda-1af7-408c-9be0-953f5d303634")
+	)
+	(wire
+		(pts
 			(xy 53.34 109.22) (xy 68.58 109.22)
 		)
 		(stroke
@@ -4272,6 +4308,16 @@
 	)
 	(wire
 		(pts
+			(xy 233.68 113.03) (xy 233.68 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6ce91edf-7f1f-47c6-9c42-c4e0296b9fb2")
+	)
+	(wire
+		(pts
 			(xy 67.31 170.18) (xy 67.31 173.99)
 		)
 		(stroke
@@ -4332,16 +4378,6 @@
 	)
 	(wire
 		(pts
-			(xy 187.96 93.98) (xy 203.2 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "783a9355-baa7-4c91-8a7b-12001b054775")
-	)
-	(wire
-		(pts
 			(xy 106.68 128.27) (xy 109.22 128.27)
 		)
 		(stroke
@@ -4382,7 +4418,7 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 114.3) (xy 266.7 114.3)
+			(xy 252.73 111.76) (xy 266.7 111.76)
 		)
 		(stroke
 			(width 0)
@@ -4482,6 +4518,16 @@
 	)
 	(wire
 		(pts
+			(xy 252.73 114.3) (xy 266.7 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ee6a9f5-68b2-4cad-b282-6a136c8319d8")
+	)
+	(wire
+		(pts
 			(xy 109.22 128.27) (xy 109.22 127)
 		)
 		(stroke
@@ -4499,6 +4545,16 @@
 			(type default)
 		)
 		(uuid "937f9274-eb6c-44fe-a622-51e124fda413")
+	)
+	(wire
+		(pts
+			(xy 187.96 83.82) (xy 203.2 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "939a6093-96f9-4ef9-a23d-e5b2af982979")
 	)
 	(wire
 		(pts
@@ -4552,7 +4608,7 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 107.95) (xy 266.7 107.95)
+			(xy 252.73 105.41) (xy 266.7 105.41)
 		)
 		(stroke
 			(width 0)
@@ -4659,6 +4715,26 @@
 			(type default)
 		)
 		(uuid "a7bca710-4e47-4f16-a4b3-06d03caf3bb2")
+	)
+	(wire
+		(pts
+			(xy 222.25 101.6) (xy 222.25 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aad959e4-a460-45f8-b75c-2bb9c60efb45")
+	)
+	(wire
+		(pts
+			(xy 233.68 121.92) (xy 233.68 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ad322c16-0c12-460b-b859-05c8074f08ce")
 	)
 	(wire
 		(pts
@@ -4789,6 +4865,16 @@
 			(type default)
 		)
 		(uuid "c394c381-78a7-44b1-86b9-fdb3976b5edb")
+	)
+	(wire
+		(pts
+			(xy 187.96 101.6) (xy 222.25 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c46c0096-cde1-41b1-82ff-e3432e5f9356")
 	)
 	(wire
 		(pts
@@ -4972,16 +5058,6 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 143.51) (xy 266.7 143.51)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e0927c76-30f6-469f-9335-29a8dab86cdb")
-	)
-	(wire
-		(pts
 			(xy 220.98 54.61) (xy 224.79 54.61)
 		)
 		(stroke
@@ -5012,7 +5088,7 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 146.05) (xy 266.7 146.05)
+			(xy 252.73 143.51) (xy 266.7 143.51)
 		)
 		(stroke
 			(width 0)
@@ -5331,7 +5407,7 @@
 		(uuid "37f1a862-3b35-407c-b3bc-62ea027510c0")
 	)
 	(label "VBAT_OVER_2"
-		(at 252.73 114.3 0)
+		(at 252.73 111.76 0)
 		(effects
 			(font
 				(size 1 1)
@@ -5410,16 +5486,6 @@
 		)
 		(uuid "5b32cc1b-4218-4a8f-9adf-a9a4e97e65ce")
 	)
-	(label "GPS_STBY"
-		(at 252.73 143.51 0)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "62618887-3e49-49e6-ad02-8942eb28df4b")
-	)
 	(label "CC1"
 		(at 241.3 54.61 180)
 		(effects
@@ -5440,8 +5506,18 @@
 		)
 		(uuid "63ebea88-8b9a-4040-a90b-51e869efa77c")
 	)
+	(label "USB_CONN"
+		(at 203.2 101.6 180)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify right bottom)
+		)
+		(uuid "6828947f-a9e6-488c-aa06-d0ed7958ccd1")
+	)
 	(label "PWROFF"
-		(at 252.73 110.49 0)
+		(at 252.73 107.95 0)
 		(effects
 			(font
 				(size 1 1)
@@ -5511,7 +5587,7 @@
 		(uuid "975bc8f2-ddde-478a-88c5-cb3e56c0e733")
 	)
 	(label "PWR_SW"
-		(at 252.73 107.95 0)
+		(at 252.73 105.41 0)
 		(effects
 			(font
 				(size 1 1)
@@ -5519,16 +5595,6 @@
 			(justify left bottom)
 		)
 		(uuid "9c3bf5d5-9b7d-4d69-ac85-cc87864d35ad")
-	)
-	(label "GPS_STBY"
-		(at 203.2 93.98 180)
-		(effects
-			(font
-				(size 1 1)
-			)
-			(justify right bottom)
-		)
-		(uuid "a08c807d-7bae-4ca0-ae20-1930439e6cc4")
 	)
 	(label "SPI_MISO"
 		(at 53.34 96.52 0)
@@ -5580,6 +5646,16 @@
 		)
 		(uuid "b7e7a56c-79d8-45d2-b6c1-3a17270a3cf3")
 	)
+	(label "BAT_~{CHG}"
+		(at 252.73 114.3 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "b9e99680-7aec-49a9-9180-2de4bafd8817")
+	)
 	(label "U1TXD"
 		(at 252.73 124.46 0)
 		(effects
@@ -5601,7 +5677,7 @@
 		(uuid "c669d1e0-83f0-4fc1-97ae-1386ea8e19d5")
 	)
 	(label "GPS_FIX"
-		(at 252.73 146.05 0)
+		(at 252.73 143.51 0)
 		(effects
 			(font
 				(size 1 1)
@@ -5639,6 +5715,16 @@
 			(justify right bottom)
 		)
 		(uuid "d964afee-437b-453c-a9e5-10afdd116a36")
+	)
+	(label "BAT_~{CHG}"
+		(at 203.2 83.82 180)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify right bottom)
+		)
+		(uuid "dc737fe5-42be-4d1c-be7b-d1f3d731f9ed")
 	)
 	(label "I2C_SDA"
 		(at 252.73 118.11 0)
@@ -5722,6 +5808,17 @@
 		)
 		(uuid "22932bd0-6774-4e2f-83f2-f5c15bed70f5")
 	)
+	(hierarchical_label "BAT_~{CHG}"
+		(shape input)
+		(at 266.7 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "27754bf2-d947-4b0c-8cc7-827d67a9be1b")
+	)
 	(hierarchical_label "RX"
 		(shape input)
 		(at 266.7 127 0)
@@ -5755,9 +5852,20 @@
 		)
 		(uuid "2cf4d872-8626-4bef-acf5-388b8b91d446")
 	)
+	(hierarchical_label "SYS_PWROFF"
+		(shape output)
+		(at 266.7 107.95 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3e9809ee-b271-4d29-a07d-35943f6a9f93")
+	)
 	(hierarchical_label "VBAT_MON"
 		(shape input)
-		(at 266.7 114.3 0)
+		(at 266.7 111.76 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5768,7 +5876,7 @@
 	)
 	(hierarchical_label "GPS_FIX"
 		(shape input)
-		(at 266.7 146.05 0)
+		(at 266.7 143.51 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5798,28 +5906,6 @@
 			(justify left)
 		)
 		(uuid "739fdd7c-c72f-44f4-bcb2-9f97abd6a3e9")
-	)
-	(hierarchical_label "SYS_PWROFF"
-		(shape output)
-		(at 266.7 110.49 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "81282042-cfa2-4fb6-8313-bfb751b53f43")
-	)
-	(hierarchical_label "GPS_STBY"
-		(shape output)
-		(at 266.7 143.51 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "82d548fa-ead0-4ea6-ae09-f4bc1af61938")
 	)
 	(hierarchical_label "CMP_INT"
 		(shape input)
@@ -5889,7 +5975,7 @@
 	)
 	(hierarchical_label "PWR_SW"
 		(shape input)
-		(at 266.7 107.95 0)
+		(at 266.7 105.41 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6049,6 +6135,74 @@
 			(project "Terra-HW"
 				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
 					(reference "#PWR064")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 233.68 124.46 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0f8bf171-f574-4c41-b7e5-3aad3abe8cc4")
+		(property "Reference" "#PWR09"
+			(at 233.68 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 233.68 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 233.68 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 233.68 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 233.68 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8e9406c1-7b38-4bd9-b449-fefad9d8115b")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -6269,6 +6423,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:VBUS")
+		(at 233.68 101.6 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4af93ba1-dfce-4342-b666-31151801762a")
+		(property "Reference" "#PWR052"
+			(at 233.68 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VUSB"
+			(at 233.68 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 233.68 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 233.68 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VBUS\""
+			(at 233.68 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ab272432-bbda-4499-8923-09f85c613fff")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "#PWR052")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 220.98 58.42 0)
 		(mirror y)
@@ -6481,6 +6702,83 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 233.68 118.11 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "593eb8c9-4ca6-4e0f-93eb-3092b5fa5c3b")
+		(property "Reference" "R23"
+			(at 235.712 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 233.68 118.364 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 231.902 118.11 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
+			(at 233.68 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 233.68 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-07100KL"
+			(at 233.68 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f0245d99-3c92-49de-9503-37143e4be426")
+		)
+		(pin "2"
+			(uuid "02adae3e-6cf1-4cf9-aa58-6c472343442d")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "R23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 147.32 39.37 0)
 		(mirror y)
@@ -6554,6 +6852,83 @@
 			(project "Terra-HW"
 				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
 					(reference "C1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 233.68 107.95 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "64cd5a97-26a8-4493-b84d-33c6b18222a7")
+		(property "Reference" "R24"
+			(at 235.712 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 233.68 108.204 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 231.902 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0603FR-071KL_C22548.pdf"
+			(at 233.68 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 233.68 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-07100KL"
+			(at 233.68 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5e73b7ca-edd0-4adf-8771-b08ef55eb4bf")
+		)
+		(pin "2"
+			(uuid "85863cee-5336-414b-af86-ed73b70d2770")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "R24")
 					(unit 1)
 				)
 			)
@@ -7051,74 +7426,6 @@
 			(project "Terra-HW"
 				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
 					(reference "TP11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 53.34 96.52 90)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "977e4b58-bf71-471d-aaa7-391889c39a9b")
-		(property "Reference" "TP12"
-			(at 48.26 96.52 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TXD0"
-			(at 48.26 97.7899 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "M20048-1:TestPoint_Pad_D1.5mm_WITH_LABEL"
-			(at 53.34 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 53.34 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 53.34 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "46a10b52-04c8-4996-a9d4-23f954b61ff8")
-		)
-		(instances
-			(project "Terra-HW"
-				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
-					(reference "TP12")
 					(unit 1)
 				)
 			)
@@ -7739,6 +8046,73 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 53.34 109.22 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "bd57051b-a98c-4bc2-a8ff-72ccaf08ad8b")
+		(property "Reference" "TP12"
+			(at 48.26 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "RXD1"
+			(at 48.26 107.9501 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "M20048-1:TestPoint_Pad_D1.5mm_WITH_LABEL"
+			(at 53.34 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 53.34 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 53.34 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "23905e88-157d-41f7-9742-7d45a91877c7")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "TP12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 137.16 39.37 0)
 		(mirror y)
@@ -7879,6 +8253,73 @@
 			(project "Terra-HW"
 				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
 					(reference "TP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 53.34 106.68 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "c388b961-7074-4d8a-9254-b0fb9aa034cd")
+		(property "Reference" "TP14"
+			(at 48.26 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TXD1"
+			(at 48.26 105.4101 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "M20048-1:TestPoint_Pad_D1.5mm_WITH_LABEL"
+			(at 53.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 53.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 53.34 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a39bb35a-8bdb-4b04-bc53-c90809ccd1b1")
+		)
+		(instances
+			(project "Terra-HW"
+				(path "/acca4a2f-1cc7-44b0-a26a-921257f6c268/88b70e7a-287d-4532-b010-31738ffe5518"
+					(reference "TP14")
 					(unit 1)
 				)
 			)

@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.0,
-          "height": 0.3,
-          "width": 1.45
+          "height": 0.33,
+          "width": 0.675
         },
         "silk_line_width": 0.16,
         "silk_text_italic": false,
@@ -65,43 +65,35 @@
       ],
       "drc_exclusions": [
         [
-          "courtyards_overlap|114490833|103371845|62d72b58-fa69-48e3-8c27-1ae99d7caf75|b0d071d5-884c-4e9a-97c7-d2be04fb56ad",
+          "copper_edge_clearance|145725761|124998743|13b9ab8d-0010-4b17-813a-9ccda215ddc6|390356da-4266-4626-9092-0414ad4921b6",
           ""
         ],
         [
-          "courtyards_overlap|185490833|103371845|b6ec3b95-45be-40fb-b1b8-61efa510d0f1|c03cc9e8-26a7-4299-a8eb-3cd6c9b432de",
+          "copper_edge_clearance|154365761|124998743|7a66b24f-aeba-4c63-b47a-ccbe0e61bbf6|382e7bea-524b-40ef-96b3-15e86f0a1e3f",
           ""
         ],
         [
-          "hole_clearance|146864349|77798322|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe|658713ee-2331-4231-a211-07265b6396a1",
+          "hole_clearance|147135761|120418743|a4874f72-fbac-4bb0-adfd-9cfac4594d19|394b8f32-66ed-4301-9224-2fef4c8b50a0",
           ""
         ],
         [
-          "hole_clearance|146864349|77798322|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe|98d5a255-13d2-4f40-9424-1a359d25fd1e",
+          "hole_clearance|147135761|120418743|f43706aa-46f1-4bf7-8801-f915fff2d298|394b8f32-66ed-4301-9224-2fef4c8b50a0",
           ""
         ],
         [
-          "hole_clearance|147364349|77753322|5457d8b2-03f5-4f8a-9afe-fa963b5027d6|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
+          "hole_clearance|152445761|120463743|5457d8b2-03f5-4f8a-9afe-fa963b5027d6|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
           ""
         ],
         [
-          "hole_clearance|147364349|77753322|d777c239-5726-4da1-a925-dbc3282fce17|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
+          "hole_clearance|152445761|120463743|d777c239-5726-4da1-a925-dbc3282fce17|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
           ""
         ],
         [
-          "hole_clearance|152664349|77798322|394b8f32-66ed-4301-9224-2fef4c8b50a0|a4874f72-fbac-4bb0-adfd-9cfac4594d19",
+          "hole_clearance|152955761|120418743|658713ee-2331-4231-a211-07265b6396a1|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
           ""
         ],
         [
-          "hole_clearance|152664349|77798322|394b8f32-66ed-4301-9224-2fef4c8b50a0|f43706aa-46f1-4bf7-8801-f915fff2d298",
-          ""
-        ],
-        [
-          "silk_edge_clearance|145184349|72275545|8fb0432a-7aef-4f65-b37c-c889131089d0|b8b54898-ace8-4e69-abed-cef93dd1c8c3",
-          ""
-        ],
-        [
-          "silk_edge_clearance|154344349|72275545|ffbeb92e-8bd0-42cb-97dc-3024bef180c9|771e031a-2d63-40be-b60d-9373fcab9734",
+          "hole_clearance|152955761|120418743|98d5a255-13d2-4f40-9424-1a359d25fd1e|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
           ""
         ]
       ],
@@ -153,6 +145,7 @@
         "solder_mask_bridge": "error",
         "starved_thermal": "error",
         "text_height": "warning",
+        "text_on_edge_cuts": "error",
         "text_thickness": "ignore",
         "through_hole_pad_without_hole": "error",
         "too_many_vias": "error",
@@ -168,7 +161,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.15,
+        "min_clearance": 0.1,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.25,
         "min_groove_width": 0.0,
@@ -178,10 +171,10 @@
         "min_microvia_drill": 0.15,
         "min_resolved_spokes": 1,
         "min_silk_clearance": 0.0,
-        "min_text_height": 0.9,
+        "min_text_height": 0.8,
         "min_text_thickness": 0.15,
         "min_through_hole_diameter": 0.2,
-        "min_track_width": 0.15,
+        "min_track_width": 0.1,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.25,
         "solder_mask_to_copper_clearance": 0.0,
@@ -540,8 +533,16 @@
         "diff_pair_width": 0.158242,
         "name": "DIFF90",
         "pcb_color": "rgb(0, 194, 0)",
-        "priority": 0,
+        "priority": 1,
         "schematic_color": "rgba(0, 0, 0, 0.000)"
+      },
+      {
+        "clearance": 0.16,
+        "name": "RF50",
+        "pcb_color": "rgb(255, 153, 0)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.3
       }
     ],
     "meta": {
@@ -561,10 +562,10 @@
       "gencad": "",
       "idf": "",
       "netlist": "./",
-      "plot": "Outputs/X01-004/Fab/Gerber/",
-      "pos_files": "Outputs/X01-004/Assy/",
+      "plot": "Outputs/X02-002/Gerber/",
+      "pos_files": "Outputs/X02-002/Assy/",
       "specctra_dsn": "",
-      "step": "Outputs/X01-003/Integration/Terra-HW-X01-003-Simple.step",
+      "step": "Outputs/X02/Assembly/Terra-HW-X02-002-Detailed-foreal.step",
       "svg": "",
       "vrml": ""
     },
@@ -572,7 +573,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "${PROJECTNAME}.csv",
+    "bom_export_filename": "Outputs/X02-002/Assy/Terra-HW.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -838,7 +839,7 @@
     "COPYRIGHT": "Copyright 2025",
     "DRAWN_BY": "J. MENDEL",
     "LICENSE": "Licensed under GNU GPL v3.0",
-    "REVISION": "X01",
+    "REVISION": "X02",
     "TITLE": "Terra 2.0"
   }
 }
