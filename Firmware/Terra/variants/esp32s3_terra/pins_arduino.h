@@ -45,6 +45,9 @@ static const uint8_t SCL = 9;   // SCL used by Wire.cpp
 // ================================
 //  Battery
 static const uint8_t PIN_BAT_VOLTAGE    = 1;
+static const uint8_t PIN_BAT_CHARGEn    = 36;
+
+static const uint8_t PIN_USB_CONN       = 45;
 
 //  Display
 #define PIN_DISPLAY_RST                   4    // active low display reset

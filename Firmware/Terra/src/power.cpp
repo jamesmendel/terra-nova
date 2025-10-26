@@ -49,6 +49,10 @@ void initPower() {
     adcAttachPin(PIN_BAT_VOLTAGE);
     analogReadResolution(12u);
     analogSetPinAttenuation(PIN_BAT_VOLTAGE, ADC_11db);
+    
+    // Charger status
+    pinMode(PIN_BAT_CHARGEn, INPUT);
+    pinMode(PIN_USB_CONN, INPUT);
 }
 
 void powerDownNow() {
@@ -75,7 +79,7 @@ uint16_t batteryReadVolatge() {
 
     for(uint8_t i = 0; i < BATT_VOLTAGE_SAMPLES; i++) {
         millivolts += analogReadMilliVolts(PIN_BAT_VOLTAGE) * BATT_SCALE_FACTOR;
-        delay(5);
+        delay(2);
     }
     millivolts /= BATT_VOLTAGE_SAMPLES;
 
@@ -86,13 +90,8 @@ void batteryCheckVolatgeTask() {
     while(1) {      
         batteryLastMillivolts = batteryReadVolatge();
 
-        if(batteryLastMillivolts <= BATT_CONNECTED_MV) {
-            // Battery is disconnected, running on USB only
-            return;
-        }
-
         if(batteryLastMillivolts <= BATT_MIN_VOLTS_MV || batteryLastMillivolts >= BATT_MAX_VOLTS_MV) {
-            ESP_LOGW(LOGTAG, "Battery in unsafe condition: %d mV", batteryLastMillivolts);
+            ESP_LOGE(LOGTAG, "Battery in unsafe condition: %d mV", batteryLastMillivolts);
             powerDownNow();
         } 
 
@@ -145,4 +144,12 @@ void powerCheckButton() {
     //         powerDownNow();
     //     }
     // }
+}
+
+bool batteryIsCharging() {
+    return !digitalRead(PIN_BAT_CHARGEn);
+}
+
+bool usbIsConnected() {
+    return digitalRead(PIN_USB_CONN);
 }
