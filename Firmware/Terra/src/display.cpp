@@ -141,7 +141,7 @@ void _displayFadeOut()
             displayBrightness = DISPLAY_BRIGHTNESS_OFF;
             displayCurrentState = DISPLAY_UPDATING;
         }
-        ESP_LOGD(LOGTAG, "out: %d dt: %d", displayBrightness, dt);
+        // ESP_LOGD(LOGTAG, "out: %d dt: %d", displayBrightness, dt);
         analogWrite(PIN_DISPLAY_PWM_BL, (uint8_t)displayBrightness);
     }
 }
@@ -164,7 +164,7 @@ void _displayFadeIn()
             displayBrightness = DISPLAY_BRIGHTNESS_ON;
             displayCurrentState = DISPLAY_STATIC;
         }
-        ESP_LOGD(LOGTAG, "in : %d dt %d", displayBrightness, dt);
+        // ESP_LOGD(LOGTAG, "in : %d dt %d", displayBrightness, dt);
         analogWrite(PIN_DISPLAY_PWM_BL, (uint8_t)displayBrightness);
     }
 }

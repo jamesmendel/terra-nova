@@ -67,7 +67,6 @@ static const uint8_t PIN_CMP_RST        = 38;   // active low compass reset
 
 //  GPS
 static const uint8_t PIN_GPS_RST        = 39;   // active low GPS reset
-static const uint8_t PIN_GPS_STBY       = 40;   // GPS standby mode
 static const uint8_t PIN_GPS_FIX        = 41;   // GPS fix indicator
 
 //  Haptics

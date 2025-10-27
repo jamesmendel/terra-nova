@@ -40,16 +40,12 @@ void initNav()
     // GPS
     pinMode(PIN_GPS_FIX, INPUT);
     pinMode(PIN_GPS_RST, OUTPUT);
-    pinMode(PIN_GPS_STBY, OUTPUT);
     pinMode(LED_BUILTIN,  OUTPUT);  // Using LED_BUILTIN as FIX indicator
 
     attachInterrupt(PIN_GPS_FIX, navGPSFixISR, CHANGE);
     gpsHWFix = digitalRead(PIN_GPS_FIX);
 
-    // digitalWrite(PIN_GPS_RST, !LOW);
-    digitalWrite(PIN_GPS_RST, LOW); // Disable integrated GPS
-    // digitalWrite(PIN_GPS_STBY, LOW);
-    digitalWrite(PIN_GPS_STBY, HIGH); // Disabled integrated GPS
+    digitalWrite(PIN_GPS_RST, !LOW);
     digitalWrite(LED_BUILTIN,  LOW);
 
 #ifndef DEBUG_NAVIGATION
@@ -72,6 +68,8 @@ void navUpdateTask()
         if(!cmpReady) {
             displaySetImage(I_PENDING);
             ESP_LOGW(LOGTAG, "Compass is not ready to navigate.");
+            initCompass();  // try to re-init
+            terraSleep(500);
             goto taskEnd;
         }
              
