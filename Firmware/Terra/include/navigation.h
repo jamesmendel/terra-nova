@@ -18,8 +18,8 @@
 #define DEBUG_GPS
 // #undef DEBUG_GPS
 
-// #define DEBUG_GPS_TO_SERIAL // prints unparsed GPS NMEA messages.
-#undef DEBUG_GPS_TO_SERIAL
+#define DEBUG_GPS_TO_SERIAL // prints unparsed GPS NMEA messages.
+// #undef DEBUG_GPS_TO_SERIAL
 /* ------------------------------------------------------------------ */
 
 #ifdef DEBUG_GPS

@@ -49,9 +49,9 @@ void initNav()
     gpsHWFix = digitalRead(PIN_GPS_FIX);
 
     // digitalWrite(PIN_GPS_RST, !LOW);
-    digitalWrite(PIN_GPS_RST, LOW); // Disable integrated GPS
+    digitalWrite(PIN_GPS_RST, !LOW); // Disable integrated GPS
     // digitalWrite(PIN_GPS_STBY, LOW);
-    digitalWrite(PIN_GPS_STBY, HIGH); // Disabled integrated GPS
+    // digitalWrite(PIN_GPS_STBY, HIGH); // Disabled integrated GPS
     digitalWrite(LED_BUILTIN,  LOW);
 
 #ifndef DEBUG_NAVIGATION
