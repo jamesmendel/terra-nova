@@ -8796,7 +8796,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/858/LTST-C190GKT.pdf"
+		(property "Datasheet" "https://www.inolux-corp.com/datasheet/SMDLED/Mono%20Color%20Top%20View/IN-S63AT%20Series_V1.4.pdf"
 			(at 208.28 115.57 0)
 			(effects
 				(font
@@ -8805,7 +8805,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Green"
+		(property "Description" "White"
 			(at 211.582 119.38 90)
 			(effects
 				(font
@@ -8823,7 +8823,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "LTST-C190GKT"
+		(property "MPN" "IN-S63AT5UW"
 			(at 208.28 115.57 90)
 			(effects
 				(font
