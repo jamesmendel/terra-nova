@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "${TITLE}")
-		(date "2025-08-29")
+		(date "2025-11-18")
 		(rev "${REVISION}")
 		(company "${COMPANY}")
 		(comment 1 "${LICENSE}")
@@ -5894,7 +5894,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "7b2548e3-17d4-4038-933b-6b2587735320")
 		(property "Reference" "J4"
 			(at 26.924 57.912 0)

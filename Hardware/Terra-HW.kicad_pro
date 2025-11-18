@@ -73,11 +73,11 @@
           ""
         ],
         [
-          "hole_clearance|147135761|120418743|a4874f72-fbac-4bb0-adfd-9cfac4594d19|394b8f32-66ed-4301-9224-2fef4c8b50a0",
+          "hole_clearance|147135761|120418743|394b8f32-66ed-4301-9224-2fef4c8b50a0|a4874f72-fbac-4bb0-adfd-9cfac4594d19",
           ""
         ],
         [
-          "hole_clearance|147135761|120418743|f43706aa-46f1-4bf7-8801-f915fff2d298|394b8f32-66ed-4301-9224-2fef4c8b50a0",
+          "hole_clearance|147135761|120418743|394b8f32-66ed-4301-9224-2fef4c8b50a0|f43706aa-46f1-4bf7-8801-f915fff2d298",
           ""
         ],
         [
@@ -89,11 +89,11 @@
           ""
         ],
         [
-          "hole_clearance|152955761|120418743|658713ee-2331-4231-a211-07265b6396a1|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
+          "hole_clearance|152955761|120418743|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe|658713ee-2331-4231-a211-07265b6396a1",
           ""
         ],
         [
-          "hole_clearance|152955761|120418743|98d5a255-13d2-4f40-9424-1a359d25fd1e|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe",
+          "hole_clearance|152955761|120418743|cfd9b04b-8d96-449d-a5a4-bbfc0c28eefe|98d5a255-13d2-4f40-9424-1a359d25fd1e",
           ""
         ]
       ],
@@ -562,10 +562,10 @@
       "gencad": "",
       "idf": "",
       "netlist": "./",
-      "plot": "Outputs/X02-002/Gerber/",
-      "pos_files": "Outputs/X02-002/Assy/",
+      "plot": "Outputs/A/FAB",
+      "pos_files": "Outputs/A/ASSY/",
       "specctra_dsn": "",
-      "step": "Outputs/X02/Assembly/Terra-HW-X02-002-Detailed-foreal.step",
+      "step": "Outputs/A/ASSY/Terra-HW-A_Simple.step",
       "svg": "",
       "vrml": ""
     },
@@ -573,7 +573,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "Outputs/X02-002/Assy/Terra-HW.csv",
+    "bom_export_filename": "Outputs/A/ASSY/Terra-HW-A-BOM.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -686,6 +686,12 @@
       "fields_ordered": [
         {
           "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": true
+        },
+        {
+          "group_by": false,
           "label": "Reference",
           "name": "Reference",
           "show": true
@@ -758,12 +764,6 @@
         },
         {
           "group_by": false,
-          "label": "#",
-          "name": "${ITEM_NUMBER}",
-          "show": false
-        },
-        {
-          "group_by": false,
           "label": "Alt2",
           "name": "Alt2",
           "show": true
@@ -773,8 +773,8 @@
       "group_symbols": true,
       "include_excluded_from_bom": false,
       "name": "",
-      "sort_asc": true,
-      "sort_field": "${EXCLUDE_FROM_BOM}"
+      "sort_asc": false,
+      "sort_field": "Datasheet"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -805,7 +805,7 @@
     },
     "net_format_name": "",
     "page_layout_descr_file": "",
-    "plot_directory": "Outputs/X01-003/Fab/",
+    "plot_directory": "Outputs/A/SCH",
     "space_save_all_events": true,
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",
