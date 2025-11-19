@@ -150,7 +150,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "Outputs/X02-002/Drill/")
+			(outputdirectory "Outputs/A/FAB")
 		)
 	)
 	(property "COMPANY" "JRM | MODEM WORKS")

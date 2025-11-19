@@ -8660,7 +8660,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "BQ21040DBV"
+		(property "MPN" "BQ21040DBVR"
 			(at 55.88 163.83 0)
 			(effects
 				(font
@@ -8969,7 +8969,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "SN74LVC1G14DRL"
+		(property "MPN" "SN74LVC1G14DRLR"
 			(at 64.77 55.88 0)
 			(effects
 				(font
@@ -10958,7 +10958,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "PMEG2010AEH"
+		(property "MPN" "PMEG2010AEH,115"
 			(at 137.16 129.54 0)
 			(effects
 				(font
