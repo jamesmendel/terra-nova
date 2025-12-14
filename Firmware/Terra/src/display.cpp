@@ -357,8 +357,8 @@ void _drawBitmap(const unsigned char *bitmap)
         0, 0,
         bitmap,
         BITMAP_WIDTH, BITMAP_HEIGHT,
-        TFT_WHITE,   // 1 bit
-        TFT_BLACK    // 0 bit
+        TFT_BLACK,   // 1 bit
+        TFT_WHITE    // 0 bit
     );
 
     fb.pushSprite(0, 0); // DMA push
