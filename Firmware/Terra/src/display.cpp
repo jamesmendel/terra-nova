@@ -20,6 +20,7 @@ void _displayDrawImage();
 void _displayFadeOut();
 void _displayFadeIn();
 void _drawBitmap(const unsigned char* bitmap);
+void _bitmapToRGB565(const uint8_t* src, uint16_t* dst);
 static SemaphoreHandle_t _displayMutex;
 class DisplayLock {
 public:
@@ -43,21 +44,10 @@ void displayInit()
     
     tft.init();
     tft.setRotation(1);
-
+    tft.initDMA(true);  
     ESP_LOGI(LOGTAG, "TFT_eSPI DMA: %s", tft.DMA_Enabled ? "ENABLED" : "DISABLED");
     
-    ESP_LOGI(LOGTAG, "PSRAM free before: %d", ESP.getFreePsram());
-    
-    fb.setColorDepth(16);
-    fb.createSprite(tft.width(), tft.height());   // PSRAM-backed if available
-    fb.setAttribute(PSRAM_ENABLE, true);
-    
-    ESP_LOGI(LOGTAG, "PSRAM free after: %d", ESP.getFreePsram());
-    
-    fb.fillSprite(TFT_BLACK);
-
-
-    tft.fillScreen(TFT_BLACK);
+    tft.pushImageDMA(0, 0, 240, 240, fb_dram);  // TFT_BLACK at Init
     //analogWrite(PIN_DISPLAY_PWM_BL, 100);
     
     tft.setTextColor(TFT_GREEN);
@@ -228,72 +218,72 @@ void _displayDrawImage()
     switch (displayImage)
     {
     case I_PENDING:
-        _drawBitmap(pending);
         ESP_LOGI(LOGTAG, "Draw pending.h");
+        _drawBitmap(pending);
         break;
     case I_GOTOSTART:
-        _drawBitmap(gotostart);
         ESP_LOGI(LOGTAG, "Draw gotostart.h");
+        _drawBitmap(gotostart);
         break;
     case I_ARROW_N:
-        _drawBitmap(arrow_N);
         ESP_LOGI(LOGTAG, "Draw arrow_N.h");
+        _drawBitmap(arrow_N);
         break;
     case I_ARROW_NNE:
-        _drawBitmap(arrow_NNE);
         ESP_LOGI(LOGTAG, "Draw arrow_NNE.h");
+        _drawBitmap(arrow_NNE);
         break;
     case I_ARROW_NE:
-        _drawBitmap(arrow_NE);
         ESP_LOGI(LOGTAG, "Draw arrow_NE.h");
+        _drawBitmap(arrow_NE);
         break;
     case I_ARROW_ENE:
-        _drawBitmap(arrow_ENE);
         ESP_LOGI(LOGTAG, "Draw arrow_ENE.h");
+        _drawBitmap(arrow_ENE);
         break;
     case I_ARROW_E:
-        _drawBitmap(arrow_E);
         ESP_LOGI(LOGTAG, "Draw arrow_E.h");
+        _drawBitmap(arrow_E);
         break;
     case I_ARROW_ESE:
-        _drawBitmap(arrow_ESE);
         ESP_LOGI(LOGTAG, "Draw arrow_ESE.h");
+        _drawBitmap(arrow_ESE);
         break;
     case I_ARROW_SE:
-        _drawBitmap(arrow_SE);
         ESP_LOGI(LOGTAG, "Draw arrow_SE.h");
+        _drawBitmap(arrow_SE);
         break;
     case I_ARROW_SSE:
-        _drawBitmap(arrow_SSE);
         ESP_LOGI(LOGTAG, "Draw arrow_SSE.h");
+        _drawBitmap(arrow_SSE);
         break;
     case I_ARROW_S:
-        _drawBitmap(arrow_S);
         ESP_LOGI(LOGTAG, "Draw arrow_S.h");
+        _drawBitmap(arrow_S);
         break;
     case I_ARROW_SSW:
-        _drawBitmap(arrow_SSW);
         ESP_LOGI(LOGTAG, "Draw arrow_SSW.h");
+        _drawBitmap(arrow_SSW);
         break;
     case I_ARROW_SW:
-        _drawBitmap(arrow_SW);
         ESP_LOGI(LOGTAG, "Draw arrow_SW.h");
+        _drawBitmap(arrow_SW);
         break;
     case I_ARROW_WSW:
-        _drawBitmap(arrow_WSW);
         ESP_LOGI(LOGTAG, "Draw arrow_WSW.h");
+        _drawBitmap(arrow_WSW);
         break;
     case I_ARROW_W:
-        _drawBitmap(arrow_W);
         ESP_LOGI(LOGTAG, "Draw arrow_W.h");
+        _drawBitmap(arrow_W);
         break;
     case I_ARROW_WNW:
-        _drawBitmap(arrow_WNW);
         ESP_LOGI(LOGTAG, "Draw arrow_WNW.h");
+        _drawBitmap(arrow_WNW);
         break;
     case I_ARROW_NW:
-        _drawBitmap(arrow_NW);
         ESP_LOGI(LOGTAG, "Draw arrow_NW.h");
+        _drawBitmap(arrow_NW);
         break;
     case I_ARROW_NNW:
         _drawBitmap(arrow_NNW);
@@ -348,19 +338,33 @@ void _drawBitmap(const unsigned char *bitmap)
 {
     DisplayLock lock(_displayMutex);
     
-    // Copy to FB for DMA access
-    fb.drawXBitmap(
-        0, 0,
-        bitmap,
-        BITMAP_WIDTH, BITMAP_HEIGHT,
-        TFT_BLACK,   // 1 bit
-        TFT_WHITE    // 0 bit
-    );
-
-    fb.pushSprite(0, 0); // DMA push
-
+    unsigned long mark0 = micros();
+    
+    _bitmapToRGB565(bitmap, fb_dram);
+    unsigned long mark1 = micros();
+       
+    tft.pushImageDMA(0, 0, BITMAP_WIDTH, BITMAP_HEIGHT, fb_dram);
+    tft.dmaWait();
+    unsigned long mark2 = micros();
+    
+    ESP_LOGD(LOGTAG, "DMA push done!");
+    
+    ESP_LOGD(LOGTAG, "BENCHMARK:\nmark1\t%d\nmark2\t%d", mark1-mark0, mark2-mark0);
     // tft.drawXBitmap(0, 0, bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, TFT_BLACK, TFT_WHITE);
     // tft.pushPixelsDMA
+}
+
+void _bitmapToRGB565(const uint8_t* src, uint16_t* dst)
+{
+    const int stride = (BITMAP_WIDTH + 7) / 8;
+
+    for (int y = 0; y < BITMAP_HEIGHT; y++) {
+        for (int x = 0; x < BITMAP_WIDTH; x++) {
+            uint8_t byte = src[y * stride + (x >> 3)];
+            bool bit = byte & (1 << (x & 7));  // LSB-first
+            dst[y * BITMAP_WIDTH + x] = bit ? TFT_BLACK : TFT_WHITE;
+        }
+    }
 }
 
 int16_t displayGetBrightness() {

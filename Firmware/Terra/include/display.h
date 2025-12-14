@@ -66,7 +66,7 @@ enum DisplayState
 };
 
 static TFT_eSPI tft = TFT_eSPI();
-static TFT_eSprite fb = TFT_eSprite(&tft);  // Global frame buffer
+static uint16_t fb_dram[240 * 240] DMA_ATTR = {TFT_BLACK}; // Global frame buffer (DRAM)
 
 static ImageType displayImage = I_NONE;
 static bool displayUpdating = false;
