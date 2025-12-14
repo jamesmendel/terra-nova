@@ -32,6 +32,9 @@ void setup() {
   printf("log filter: %d\n", CORE_DEBUG_LEVEL);
   printf("=========================\n");
   
+  ESP_LOGI("MEM", "PSRAM FOUND: %s", psramFound() ? "YES" : "NO");
+  ESP_LOGI("MEM", "PSRAM Size: %d", ESP.getPsramSize());
+
   Wire.begin(SDA, SCL);
 
   // Power management
