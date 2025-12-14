@@ -11,7 +11,7 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-// #define DISPLAY_NO_TRANSITION 1
+#define DISPLAY_NO_TRANSITION 1
 
 #define BITMAP_WIDTH 240
 #define BITMAP_HEIGHT 240
@@ -66,6 +66,8 @@ enum DisplayState
 };
 
 static TFT_eSPI tft = TFT_eSPI();
+static TFT_eSprite fb = TFT_eSprite(&tft);  // Global frame buffer
+
 static ImageType displayImage = I_NONE;
 static bool displayUpdating = false;
 #ifdef DISPLAY_NO_TRANSITION

@@ -43,7 +43,20 @@ void displayInit()
     
     tft.init();
     tft.setRotation(1);
+
+    ESP_LOGI(LOGTAG, "TFT_eSPI DMA: %s", tft.DMA_Enabled ? "ENABLED" : "DISABLED");
     
+    ESP_LOGI(LOGTAG, "PSRAM free before: %d", ESP.getFreePsram());
+    
+    fb.setColorDepth(16);
+    fb.createSprite(tft.width(), tft.height());   // PSRAM-backed if available
+    fb.setAttribute(PSRAM_ENABLE, true);
+    
+    ESP_LOGI(LOGTAG, "PSRAM free after: %d", ESP.getFreePsram());
+    
+    fb.fillSprite(TFT_BLACK);
+
+
     tft.fillScreen(TFT_BLACK);
     //analogWrite(PIN_DISPLAY_PWM_BL, 100);
     
@@ -338,7 +351,20 @@ void _displayDrawImage()
 void _drawBitmap(const unsigned char *bitmap)
 {
     DisplayLock lock(_displayMutex);
-    tft.drawXBitmap(0, 0, bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, TFT_BLACK, TFT_WHITE);
+    
+    // Copy to FB for DMA access
+    fb.drawXBitmap(
+        0, 0,
+        bitmap,
+        BITMAP_WIDTH, BITMAP_HEIGHT,
+        TFT_WHITE,   // 1 bit
+        TFT_BLACK    // 0 bit
+    );
+
+    fb.pushSprite(0, 0); // DMA push
+
+    // tft.drawXBitmap(0, 0, bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, TFT_BLACK, TFT_WHITE);
+    // tft.pushPixelsDMA
 }
 
 int16_t displayGetBrightness() {
@@ -346,8 +372,10 @@ int16_t displayGetBrightness() {
 }
 
 void tftDrawDebugOverlay(const char* str, float line, uint8_t size) {
+    #if 0
     DisplayLock lock(_displayMutex);
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.setTextSize(size);
     tft.drawString(str, 10, 100 + (uint8_t)(line*16));
+    #endif
 }
