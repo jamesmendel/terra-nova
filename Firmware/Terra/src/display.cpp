@@ -225,10 +225,6 @@ void _displayDrawImage()
     #else
     displayCurrentState = DISPLAY_FADEIN;
     #endif
-    {
-        DisplayLock lock(_displayMutex);
-        tft.fillScreen(TFT_BLACK);  // clear first
-    }
     switch (displayImage)
     {
     case I_PENDING:
