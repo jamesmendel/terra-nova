@@ -57,16 +57,9 @@ void initPower() {
 
 void powerDownNow() {
     printf("Powering down now!\n");
-
+    
     playEffect(HAP_EFFECT_PWRDOWN);
     while(isEffectPlaying()) usleep(1000);
-    
-    displaySetImage(I_NONE);
-    while(displayGetBrightness() >= DISPLAY_BRIGHTNESS_OFF) {
-        displayUpdate();
-        if(displayGetBrightness() <= DISPLAY_BRIGHTNESS_OFF)
-            break;
-    }
     
     pinMode(PIN_PWROFF, OUTPUT);
     while(1) {

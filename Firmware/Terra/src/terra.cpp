@@ -35,7 +35,7 @@ void setup() {
   ESP_LOGI("MEM", "PSRAM FOUND: %s", psramFound() ? "YES" : "NO");
   ESP_LOGI("MEM", "PSRAM Size: %d", ESP.getPsramSize());
 
-  Wire.begin(SDA, SCL);
+//   Wire.begin(SDA, SCL);
 
   // Power management
   initPower();
