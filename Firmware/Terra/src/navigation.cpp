@@ -68,7 +68,7 @@ void navUpdateTask()
         if(!cmpReady) {
             displaySetImage(I_PENDING);
             ESP_LOGW(LOGTAG, "Compass is not ready to navigate.");
-            initCompass();  // try to re-init
+            // initCompass();  // try to re-init
             terraSleep(500);
             goto taskEnd;
         }
@@ -76,8 +76,8 @@ void navUpdateTask()
         navFeedGPSData();
         navUpdateTrailStatusAndNavigate();
 
-        taskEnd:
-        vTaskDelay(NAV_UPDATE_INTERVAL_MS / portTICK_PERIOD_MS);
+    taskEnd:
+        terraSleep(NAV_UPDATE_INTERVAL_MS);
     }
 }
 
@@ -155,7 +155,7 @@ void navFeedGPSData()
     //TODO: REMOVE DEBUG PRINT
     #ifdef DEBUG_GPS
     char dbg[16];
-    snprintf(dbg, 16, "SAT: %d  FIX? %d", gps.satellites.value(), navLocationKknown());
+    snprintf(dbg, 16, "SATS: %02d  FIX? %d", gps.satellites.value(), navLocationKknown());
     tftDrawDebugOverlay(dbg, 0);
     char dbg3[16], dbg4[16];
     if(navLocationKknown()) {
