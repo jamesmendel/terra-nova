@@ -3,6 +3,7 @@
 
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
+#include <Preferences.h>
 
 #define COMPASS_UPDATE_MS 500  // ms
 
@@ -27,6 +28,10 @@
 // Global compass
 static Adafruit_BNO055 cmp = Adafruit_BNO055(55, BNO055_ADDRESS_A, &Wire);
 extern volatile bool cmpReady;
+
+static Preferences prefs;
+static const char *NVS_LBL_CMP          = "compass";    // Compass partition label
+static const char *NVS_KEY_CMP_CALDAT   = "caldat";     // Calibration data prefs key
 
 void initCompass();
 void initCompassNoMotionDetection(uint16_t timeout);

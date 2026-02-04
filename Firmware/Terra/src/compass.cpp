@@ -8,11 +8,18 @@
 inline uint8_t _encodeNoMotionDuration(uint16_t target);
 void IRAM_ATTR _compassIntISR();
 void _compassUpdateHeading();
+
+bool _checkCalReady();
+bool _loadCalibration();
+void _saveCalibration();
+void _clearCalibration();
+
 SemaphoreHandle_t _compassMutex;
 
 static const char* LOGTAG = "Compass";
 static volatile bool compassPendingInterrupt = false;
 volatile bool cmpReady = false;
+volatile bool calibrated = false;
 
 int lastHeading = 0;
 
@@ -32,12 +39,25 @@ void initCompass() {
 
     attachInterrupt(PIN_CMP_INT, _compassIntISR, RISING);
 
-    if (!cmp.begin(OPERATION_MODE_NDOF)) {
-        ESP_LOGE(LOGTAG, "Could not find BNO055");
+    if (!cmp.begin(OPERATION_MODE_CONFIG)) {
+        ESP_LOGE(LOGTAG, "Could not find BNO055.\n---->This is a known issue that occurs when Terra is reset without power cycle. Try turning Terra off then back on again.");
         return;
     }
+
     cmp.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P1);  // TODO: tune this value! (see 3.4 of BNO055 datasheet)
     cmp.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P1);   // TODO: tune this value! (see 3.4 of BNO055 datasheet)
+    cmp.setMode(OPERATION_MODE_COMPASS);
+
+    if(_loadCalibration())
+    {
+        calibrated = true;
+    }
+    else
+    {
+        ESP_LOGW(LOGTAG, "NOTE: The device has not been calibrated! Please move the device in a 'FIGURE 8' pattern until prompted.");
+        calibrated = false;
+    }
+
     ESP_LOGI(LOGTAG, "BNO55 Initialized!");
     cmpReady = true;
 }
@@ -92,7 +112,18 @@ void compassUpdateTask() {
     // Main compass update loop
     while(1) {
         _compassUpdateHeading();
-
+        
+        if(!calibrated)
+        {
+            if(_checkCalReady()) 
+            {
+                calibrated = true;
+            }
+        }
+        
+        // static uint8_t sys, gyro, accel, mag;
+        // cmp.getCalibration(&sys, &gyro, &accel, &mag);
+        // ESP_LOGD(LOGTAG, "-- calibration status -- mag: %d, sys: %d, gyro: %d, accel: %d", mag, sys, gyro, accel);
         terraSleep(COMPASS_UPDATE_MS);
     }
 }
@@ -191,4 +222,57 @@ inline uint8_t _encodeNoMotionDuration(uint16_t target)
         if (v > 31)  v = 31;
         return uint8_t(0x20 | v);
     }
+}
+
+bool _checkCalReady() {
+
+    uint8_t sys, gyro, accel, mag;
+
+    cmp.getCalibration(&sys, &gyro, &accel, &mag);
+    ESP_LOGD(LOGTAG, "-- calibration -- mag: %d, sys: %d, gyro: %d, accel: %d", mag, sys, gyro, accel);
+
+    if (mag >= 2) {
+        ESP_LOGW(LOGTAG, "CALIBRATION READY! Saving.");
+        _saveCalibration();
+        return true;
+    }
+    return false;
+}
+
+void _saveCalibration() {
+    adafruit_bno055_offsets_t offsets;
+    cmp.getSensorOffsets(offsets);
+
+    prefs.begin(NVS_LBL_CMP, false);
+    prefs.putBytes(NVS_KEY_CMP_CALDAT, &offsets, sizeof(offsets));
+    prefs.end();
+}
+
+bool _loadCalibration() {
+    adafruit_bno055_offsets_t offsets;
+
+    prefs.begin(NVS_LBL_CMP, true);
+    size_t len = prefs.getBytesLength(NVS_KEY_CMP_CALDAT);
+    
+    // Uninitialized?
+    if (len != sizeof(offsets)) {
+        prefs.end();
+        ESP_LOGI(LOGTAG, "No calibration data saved. Continuing.");
+        return false;
+    }
+    
+    ESP_LOGI(LOGTAG, "Calibration data found in device preferences! Applying.");
+    prefs.getBytes(NVS_KEY_CMP_CALDAT, &offsets, sizeof(offsets));
+    prefs.end();
+    
+    ESP_LOGD(LOGTAG, "Loaded mag cal! x: %d, y: %d, z: %d", offsets.mag_offset_x, offsets.mag_offset_y, offsets.mag_offset_z);
+
+    cmp.setSensorOffsets(offsets);
+    return true;
+}
+
+void _clearCalibration() {
+    prefs.begin(NVS_LBL_CMP, false);
+    prefs.remove(NVS_KEY_CMP_CALDAT);
+    prefs.end();
 }
